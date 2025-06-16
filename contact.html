@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | Banda ki Seva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      color: #007bff;
+    }
+    form {
+      max-width: 400px;
+      margin-top: 20px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #msg {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <p>Have a question or feedback? Send us a message below:</p>
+
+  <form id="contactForm">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" rows="5" required></textarea>
+
+    <button type="submit">Send</button>
+  </form>
+
+  <p id="msg"></p>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('msg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // आप इसे backend या Google Sheet API से जोड़ सकते हैं। अभी localStorage में सेव कर रहे हैं।
+      let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+      contacts.push({ name, email, message, date: new Date().toLocaleString() });
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+
+      msg.textContent = "Thank you for contacting us!";
+      msg.style.color = "green";
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
