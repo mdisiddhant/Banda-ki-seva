@@ -1,63 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to Banda Ki Seva</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banda Ki Seva - Home</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      padding: 20px;
+      margin: 0;
+      background: #f8f9fa;
     }
-    h1 {
-      font-size: 28px;
-      color: #2e2e2e;
+
+    header {
+      background: #007bff;
+      color: white;
+      padding: 16px;
+      text-align: center;
     }
-    ul {
-      list-style: none;
-      padding: 0;
+
+    nav {
+      background: #343a40;
+      padding: 10px;
+      text-align: center;
     }
-    li {
-      margin: 10px 0;
-    }
-    a {
+
+    nav a {
+      color: white;
       text-decoration: none;
-      font-size: 18px;
-      color: #4b0082;
+      margin: 0 12px;
+      font-weight: bold;
     }
-    a:hover {
-      color: #ff6600;
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .download-section {
+      margin-top: 40px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      font-size: 18px;
+      color: white;
+      background-color: #28a745;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .download-btn:hover {
+      background-color: #218838;
+    }
+
+    .msg {
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      padding: 10px;
+      background: #eee;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to Banda Ki Seva</h1>
-  <ul>
-    <li>📦 <a href="courier.html">Courier Service</a></li>
-    <li>💻 <a href="digital.html">Digital Seva</a></li>
-    <li>🚚 <a href="local.html">Local Delivery</a></li>
-    <li>📍 <a href="track.html">Track Order</a></li>
-    <li>🎁 <a href="refer.html">Refer & Earn</a></li>
-    <li>👑 <a href="vip.html">VIP Member</a></li>
-    <li>👷‍♂️ <a href="employee.html">Employee Panel</a></li>
-    <li>🛠️ <a href="admin.html">Admin Panel</a></li>
-    <li>📝 <a href="register.html">Register</a></li>
-    <li>🔐 <a href="login.html">Login</a></li>
-    <li>🏷️ <a href="offers.html">Offers</a></li>
-    <li>🌐 <a href="language.html">Language</a></li>
-    <li>📌 <a href="area.html">Select Area</a></li>
-    <li>ℹ️ <a href="about.html">About Us</a></li>
-    <li>📞 <a href="contact.html">Contact Us</a></li>
-    <li>🔑 <a href="forget.html">Forgot Password</a></li>
-    <li>🚪 <a href="logout.html">Logout</a></li>
-  </ul>
+
+  <header>
+    <h1>📦 Banda Ki Seva</h1>
+    <p>1 Day Courier | Digital Seva | Local Delivery</p>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 होम</a>
+    <a href="digital.html">💻 Digital Seva</a>
+    <a href="courier.html">🚚 Courier</a>
+    <a href="local.html">🛒 Local Delivery</a>
+    <a href="track.html">🔎 Track</a>
+    <a href="vip.html">👑 VIP</a>
+    <a href="refer.html">🎁 Refer</a>
+    <a href="contact.html">📞 Contact</a>
+  </nav>
+
+  <div class="content">
+    <h2>🙏 आपका स्वागत है!</h2>
+    <p>हमारी सेवाओं का लाभ उठाने के लिए ऐप डाउनलोड करें।</p>
+
+    <div class="download-section">
+      <h3>📲 हमारा मोबाइल ऐप डाउनलोड करें</h3>
+      <p>Banda Ki Seva App में सारी सेवाएं एक जगह!</p>
+
+      <button class="download-btn" onclick="downloadApp()">⬇️ Download APK</button>
+
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Banda Ki Seva | Powered by बंदा के सेवा दल
+  </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log("✅ Banda Ki Seva Home Page Loaded");
-    });
+    function downloadApp() {
+      const apkUrl = "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID"; // 🔁 Replace this with your real APK link
+      document.getElementById("msg").textContent = "⏳ Download शुरू हो रहा है...";
+      window.location.href = apkUrl;
+
+      setTimeout(() => {
+        document.getElementById("msg").textContent = "✅ Download शुरू हो गया! अगर नहीं हुआ तो कृपया दोबारा क्लिक करें।";
+      }, 2000);
+    }
   </script>
+
 </body>
 </html>
