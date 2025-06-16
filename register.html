@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | Banda ki Seva</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <h2>Banda ki Seva</h2>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <main>
+    <h1>User Registration</h1>
+    <form id="registerForm">
+      <label for="name">Full Name</label><br/>
+      <input type="text" id="name" name="name" required><br/><br/>
+
+      <label for="phone">Phone Number</label><br/>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br/><br/>
+
+      <label for="email">Email</label><br/>
+      <input type="email" id="email" name="email" required><br/><br/>
+
+      <label for="password">Password</label><br/>
+      <input type="password" id="password" name="password" required><br/><br/>
+
+      <button type="submit">Register</button>
+    </form>
+    <p id="msg"></p>
+  </main>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const msg = document.getElementById('msg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const userData = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        email: form.email.value.trim(),
+        password: form.password.value.trim(),
+      };
+
+      // Simulate storing in localStorage (you can change it to API call later)
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      const userExists = users.find(u => u.phone === userData.phone || u.email === userData.email);
+
+      if (userExists) {
+        msg.textContent = 'User already registered with this phone or email.';
+        msg.style.color = 'red';
+      } else {
+        users.push(userData);
+        localStorage.setItem('users', JSON.stringify(users));
+        msg.textContent = 'Registration successful! You can now login.';
+        msg.style.color = 'green';
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
