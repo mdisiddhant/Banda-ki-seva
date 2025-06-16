@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Offers - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .offer-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .offer {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-left: 5px solid #007bff;
+    }
+
+    .offer h3 {
+      margin: 0 0 10px;
+      color: #2c3e50;
+    }
+
+    .offer p {
+      margin: 0;
+      color: #555;
+    }
+
+    .offer small {
+      color: green;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 30px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🎁 बंदा की सेवा - ऑफर्स</header>
+
+  <div class="offer-container" id="offersList">
+    <!-- Offers will be loaded here by JavaScript -->
+  </div>
+
+  <footer>© 2025 Banda Ki Seva</footer>
+
+  <script>
+    const offers = [
+      {
+        title: "🎉 VIP मेंबर बनो और पाओ ₹50 का Welcome Cashback!",
+        description: "केवल पहले 100 यूज़र्स के लिए, VIP मेंबरशिप लेते ही तुरंत ₹50 का कैशबैक मिलेगा।",
+        valid: "मान्य: 30 जून 2025 तक"
+      },
+      {
+        title: "🚚 1-Day Courier पर ₹10 की छूट",
+        description: "अपने पहले कोरियर बुकिंग पर ₹10 का इंस्टेंट डिस्काउंट।",
+        valid: "मान्य: 20 जुलाई 2025 तक"
+      },
+      {
+        title: "🛒 Grocery & Medicine Delivery सिर्फ ₹5!",
+        description: "लोकल ऑर्डर (1–2 घंटे डिलीवरी) पर सर्विस चार्ज केवल ₹5!",
+        valid: "मान्य: अभी उपलब्ध"
+      }
+    ];
+
+    const container = document.getElementById("offersList");
+
+    offers.forEach(offer => {
+      const div = document.createElement("div");
+      div.className = "offer";
+      div.innerHTML = `
+        <h3>${offer.title}</h3>
+        <p>${offer.description}</p>
+        <small>${offer.valid}</small>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>
