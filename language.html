@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Language Settings - Banda Ki Seva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f2f5;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 id="heading">Choose Language</h2>
+
+    <select id="languageSelector">
+      <option value="en">English</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+
+    <button onclick="saveLanguage()">Save Language</button>
+
+    <div class="message" id="messageBox"></div>
+  </div>
+
+  <script>
+    // Load saved language
+    const savedLang = localStorage.getItem("appLanguage");
+    if (savedLang) {
+      document.getElementById("languageSelector").value = savedLang;
+      applyLanguage(savedLang);
+    }
+
+    function saveLanguage() {
+      const selected = document.getElementById("languageSelector").value;
+      localStorage.setItem("appLanguage", selected);
+      applyLanguage(selected);
+      document.getElementById("messageBox").innerText = selected === "hi"
+        ? "भाषा सेव हो गई है!"
+        : "Language has been saved!";
+    }
+
+    function applyLanguage(lang) {
+      const heading = document.getElementById("heading");
+      if (lang === "hi") {
+        heading.innerText = "भाषा चुनें";
+      } else {
+        heading.innerText = "Choose Language";
+      }
+    }
+  </script>
+
+</body>
+</html>
