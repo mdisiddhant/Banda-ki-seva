@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Banda ki Seva</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <h2>Banda ki Seva</h2>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+  </nav>
+
+  <main>
+    <h1>User Login</h1>
+    <form id="loginForm">
+      <label for="emailOrPhone">Email or Phone</label><br/>
+      <input type="text" id="emailOrPhone" required><br/><br/>
+
+      <label for="password">Password</label><br/>
+      <input type="password" id="password" required><br/><br/>
+
+      <button type="submit">Login</button>
+    </form>
+    <p id="msg"></p>
+    <p><a href="forgetpassword.html">Forgot Password?</a></p>
+  </main>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('msg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const emailOrPhone = document.getElementById('emailOrPhone').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u =>
+        (u.phone === emailOrPhone || u.email === emailOrPhone) && u.password === password
+      );
+
+      if (user) {
+        msg.textContent = 'Login successful!';
+        msg.style.color = 'green';
+
+        // Store login status (optional)
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+        // Redirect to home or dashboard after 1s
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        msg.textContent = 'Invalid credentials!';
+        msg.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>
