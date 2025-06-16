@@ -3,144 +3,215 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>किराना सूची - Banda Ki Seva</title>
+  <title>किराना सेवा बुकिंग</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f6f9fc;
+      background: #f7f7f7;
       margin: 0;
       padding: 0;
     }
     header {
-      background: #008060;
+      background: #ff7f50;
       color: white;
-      padding: 15px;
+      padding: 20px;
       text-align: center;
       font-size: 24px;
       font-weight: bold;
     }
-    .category {
+    .container {
       padding: 20px;
+      max-width: 600px;
+      margin: auto;
     }
-    .category h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #333;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 5px;
+    .form-group {
+      margin-bottom: 15px;
     }
-    .items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-    }
-    .item {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
-      transition: transform 0.2s;
-    }
-    .item:hover {
-      transform: scale(1.05);
-    }
-    .item span {
-      font-size: 30px;
+    label {
+      font-weight: 500;
       display: block;
       margin-bottom: 5px;
     }
-    .item-name {
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .item {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .item label {
       font-size: 16px;
-      color: #444;
+      margin-bottom: 5px;
+    }
+    .item input {
+      width: 100%;
+      padding: 5px;
+      text-align: center;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .whatsapp-btn {
+      background: #25d366;
+      margin-top: 10px;
+    }
+    .result {
+      margin-top: 20px;
+      background: #d4edda;
+      padding: 15px;
+      border-left: 5px solid #28a745;
+      border-radius: 10px;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-<header>🛒 किराना सूची - Banda Ki Seva</header>
+  <header>🛒 किराना सेवा बुकिंग</header>
 
-<div class="category">
-  <h2>🧂 अनाज एवं दालें</h2>
-  <div class="items">
-    <div class="item"><span>🍚</span><div class="item-name">चावल</div></div>
-    <div class="item"><span>🌾</span><div class="item-name">गेहूं आटा</div></div>
-    <div class="item"><span>🌽</span><div class="item-name">मक्का आटा</div></div>
-    <div class="item"><span>🍘</span><div class="item-name">पोहा</div></div>
-    <div class="item"><span>🍚</span><div class="item-name">सूजी</div></div>
-    <div class="item"><span>🥣</span><div class="item-name">बेसन</div></div>
-    <div class="item"><span>🍲</span><div class="item-name">अरहर दाल</div></div>
-    <div class="item"><span>🥣</span><div class="item-name">मूंग दाल</div></div>
-    <div class="item"><span>🥜</span><div class="item-name">मूंगफली</div></div>
-    <div class="item"><span>🍢</span><div class="item-name">सोया चंक्स</div></div>
-  </div>
-</div>
+  <div class="container">
+    <div class="form-group">
+      <label>👤 नाम</label>
+      <input type="text" id="name" placeholder="अपना नाम लिखें">
+    </div>
+    <div class="form-group">
+      <label>📞 मोबाइल नंबर</label>
+      <input type="tel" id="mobile" placeholder="10 अंकों का नंबर">
+    </div>
+    <div class="form-group">
+      <label>📍 एरिया</label>
+      <select id="area">
+        <option value="">-- एरिया चुनें --</option>
+        <option>City</option>
+        <option>Civil Line</option>
+        <option>Station Road</option>
+      </select>
+    </div>
 
-<div class="category">
-  <h2>🧴 तेल, मसाले और नमक</h2>
-  <div class="items">
-    <div class="item"><span>🛢️</span><div class="item-name">सरसों तेल</div></div>
-    <div class="item"><span>🧴</span><div class="item-name">रिफाइंड तेल</div></div>
-    <div class="item"><span>🧂</span><div class="item-name">नमक</div></div>
-    <div class="item"><span>🌶️</span><div class="item-name">लाल मिर्च</div></div>
-    <div class="item"><span>🍛</span><div class="item-name">हल्दी</div></div>
-    <div class="item"><span>🫚</span><div class="item-name">धनिया पाउडर</div></div>
-    <div class="item"><span>⚗️</span><div class="item-name">बेकिंग सोडा</div></div>
-    <div class="item"><span>🫙</span><div class="item-name">अचार</div></div>
-  </div>
-</div>
+    <h3>📦 किराना आइटम चुनें</h3>
+    <div class="items">
+      <div class="item">
+        <label>🌾 आटा</label>
+        <input type="number" id="atta" min="0" placeholder="किलो">
+      </div>
+      <div class="item">
+        <label>🫘 दाल</label>
+        <input type="number" id="dal" min="0" placeholder="किलो">
+      </div>
+      <div class="item">
+        <label>🧂 नमक</label>
+        <input type="number" id="namak" min="0" placeholder="पैकेट">
+      </div>
+      <div class="item">
+        <label>🛢️ तेल</label>
+        <input type="number" id="tel" min="0" placeholder="लीटर">
+      </div>
+      <div class="item">
+        <label>🍪 बिस्किट</label>
+        <input type="number" id="biscuit" min="0" placeholder="पैकेट">
+      </div>
+      <div class="item">
+        <label>🧴 साबुन</label>
+        <input type="number" id="soap" min="0" placeholder="पीस">
+      </div>
+    </div>
 
-<div class="category">
-  <h2>🍪 स्नैक्स, चाय और ड्रिंक्स</h2>
-  <div class="items">
-    <div class="item"><span>🍵</span><div class="item-name">चाय पत्ती</div></div>
-    <div class="item"><span>🍬</span><div class="item-name">शक्कर</div></div>
-    <div class="item"><span>🍪</span><div class="item-name">बिस्किट</div></div>
-    <div class="item"><span>🍫</span><div class="item-name">चॉकलेट</div></div>
-    <div class="item"><span>🍜</span><div class="item-name">मैगी</div></div>
-    <div class="item"><span>🍥</span><div class="item-name">नमकीन</div></div>
-    <div class="item"><span>🍘</span><div class="item-name">पापड़</div></div>
-    <div class="item"><span>🥤</span><div class="item-name">कोल्ड ड्रिंक</div></div>
-    <div class="item"><span>🧃</span><div class="item-name">फ्रूट जूस</div></div>
-    <div class="item"><span>🍅</span><div class="item-name">टमाटर सॉस</div></div>
-  </div>
-</div>
+    <button onclick="submitOrder()">🧾 ऑर्डर देखें</button>
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()">📲 व्हाट्सएप भेजें</button>
 
-<div class="category">
-  <h2>🧼 साफ़-सफ़ाई और पर्सनल केयर</h2>
-  <div class="items">
-    <div class="item"><span>🧼</span><div class="item-name">साबुन</div></div>
-    <div class="item"><span>🧴</span><div class="item-name">शैम्पू</div></div>
-    <div class="item"><span>🪥</span><div class="item-name">ब्रश</div></div>
-    <div class="item"><span>🧴</span><div class="item-name">फेस वॉश</div></div>
-    <div class="item"><span>💇‍♂️</span><div class="item-name">हेयर ऑयल</div></div>
-    <div class="item"><span>💧</span><div class="item-name">क्रीम</div></div>
-    <div class="item"><span>💄</span><div class="item-name">लिप बाम</div></div>
-    <div class="item"><span>🧴</span><div class="item-name">डियोडरेंट</div></div>
-    <div class="item"><span>🪮</span><div class="item-name">हेयर ब्रश</div></div>
-    <div class="item"><span>✂️</span><div class="item-name">नेल कटर</div></div>
-    <div class="item"><span>🩸</span><div class="item-name">सेनेटरी नैपकिन</div></div>
-    <div class="item"><span>🪒</span><div class="item-name">रेज़र</div></div>
-    <div class="item"><span>🧣</span><div class="item-name">रुमाल</div></div>
+    <div class="result" id="resultBox"></div>
   </div>
-</div>
 
-<div class="category">
-  <h2>🧺 घर के उपयोग और अन्य सामान</h2>
-  <div class="items">
-    <div class="item"><span>🧺</span><div class="item-name">वॉशिंग पाउडर</div></div>
-    <div class="item"><span>🧽</span><div class="item-name">डिश वॉश</div></div>
-    <div class="item"><span>🧻</span><div class="item-name">टॉयलेट पेपर</div></div>
-    <div class="item"><span>🕯️</span><div class="item-name">माचिस</div></div>
-    <div class="item"><span>🧹</span><div class="item-name">झाड़ू</div></div>
-    <div class="item"><span>🪣</span><div class="item-name">बाल्टी</div></div>
-    <div class="item"><span>🔘</span><div class="item-name">बटन</div></div>
-    <div class="item"><span>🪡</span><div class="item-name">सुई-धागा</div></div>
-    <div class="item"><span>🧽</span><div class="item-name">सफाई कपड़ा</div></div>
-    <div class="item"><span>💈</span><div class="item-name">कंघी</div></div>
-    <div class="item"><span>🧻</span><div class="item-name">कॉटन</div></div>
-  </div>
-</div>
+  <script>
+    const whatsappNumber = "916351598832"; // ← अब सही नंबर है
+
+    function getOrderData() {
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const area = document.getElementById("area").value;
+
+      const items = {
+        '🌾 आटा': document.getElementById("atta").value,
+        '🫘 दाल': document.getElementById("dal").value,
+        '🧂 नमक': document.getElementById("namak").value,
+        '🛢️ तेल': document.getElementById("tel").value,
+        '🍪 बिस्किट': document.getElementById("biscuit").value,
+        '🧴 साबुन': document.getElementById("soap").value
+      };
+
+      return { name, mobile, area, items };
+    }
+
+    function submitOrder() {
+      const { name, mobile, area, items } = getOrderData();
+      if (!name || !mobile || !area) {
+        alert("कृपया नाम, मोबाइल नंबर और एरिया भरें।");
+        return;
+      }
+
+      let summary = `✅ <strong>ऑर्डर डिटेल्स:</strong><br>👤 ${name}<br>📞 ${mobile}<br>📍 ${area}<br><br><strong>आइटम:</strong><br>`;
+      let selected = false;
+      for (const item in items) {
+        if (items[item] && parseFloat(items[item]) > 0) {
+          selected = true;
+          summary += `${item} : ${items[item]}<br>`;
+        }
+      }
+
+      if (!selected) {
+        alert("कृपया कम से कम एक आइटम चुनें।");
+        return;
+      }
+
+      document.getElementById("resultBox").innerHTML = summary;
+      document.getElementById("resultBox").style.display = "block";
+    }
+
+    function sendToWhatsApp() {
+      const { name, mobile, area, items } = getOrderData();
+      if (!name || !mobile || !area) {
+        alert("कृपया सभी जानकारी भरें।");
+        return;
+      }
+
+      let message = `*🛒 किराना ऑर्डर बुकिंग*%0A👤 नाम: ${name}%0A📞 मोबाइल: ${mobile}%0A📍 एरिया: ${area}%0A%0A*आइटम:*%0A`;
+      let selected = false;
+
+      for (const item in items) {
+        if (items[item] && parseFloat(items[item]) > 0) {
+          selected = true;
+          message += `${item} : ${items[item]}%0A`;
+        }
+      }
+
+      if (!selected) {
+        alert("कृपया कम से कम एक आइटम चुनें।");
+        return;
+      }
+
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+      window.open(whatsappURL, '_blank');
+    }
+  </script>
 
 </body>
 </html>
