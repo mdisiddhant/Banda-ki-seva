@@ -30,3 +30,14 @@
 <a href="courier.html">📦 1-Day Courier</a>
 <a href="digitalseva.html">📄 Digital Seva</a>
 <a href="logout.html">Logout</a>
+<!-- manifest.json के लिए -->
+<link rel="manifest" href="manifest.json">
+
+<!-- service worker के लिए JavaScript -->
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("✅ Service Worker Registered"))
+      .catch(err => console.log("❌ SW Registration Failed", err));
+  }
+</script>
