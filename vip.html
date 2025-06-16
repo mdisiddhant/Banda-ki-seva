@@ -1,25 +1,67 @@
-<!-- vip.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VIP Member - Banda Ki Seva</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f8f8f8;
+      color: #333;
+    }
+    h1 {
+      color: #d00000;
+    }
+    ul {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #008000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005d00;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #0077cc;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <h1>VIP Membership Benefits</h1>
-  <p>Become a VIP member and enjoy exclusive benefits like:</p>
+  <p>Become a VIP member and enjoy exclusive benefits:</p>
   <ul>
-    <li>Priority Courier Delivery</li>
-    <li>Free Digital Seva Access</li>
-    <li>Special Discounts on Local Deliveries</li>
-    <li>Early Access to Offers</li>
+    <li>🚀 Priority Courier Delivery</li>
+    <li>📄 Free Digital Seva Access</li>
+    <li>💰 Special Discounts on Local Deliveries</li>
+    <li>🎁 Early Access to Offers & Rewards</li>
   </ul>
 
-  <button onclick="alert('Thank you for becoming a VIP member!')">Join VIP Now</button>
+  <button onclick="joinVip()">Join VIP Now</button>
 
-  <br /><br />
+  <script>
+    function joinVip() {
+      alert("🎉 Thank you for becoming a VIP member of Banda Ki Seva!");
+    }
+  </script>
+
   <a href="index.html">⬅️ Back to Home</a>
 </body>
 </html>
