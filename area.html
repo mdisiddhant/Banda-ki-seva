@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>सेवा क्षेत्र चुनें - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .confirmation {
+      text-align: center;
+      color: green;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>सेवा क्षेत्र चुनें</h2>
+
+  <form id="areaForm">
+    <label for="area">अपना क्षेत्र चुनें:</label>
+    <select id="area" required>
+      <option value="">-- क्षेत्र का चयन करें --</option>
+      <option value="Banda City">Banda City</option>
+      <option value="Tindwari">Tindwari</option>
+      <option value="Oran">Oran</option>
+      <option value="Atarra">Atarra</option>
+      <option value="Naraini">Naraini</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <button type="submit">जमा करें</button>
+  </form>
+
+  <div class="confirmation" id="confirmationMsg"></div>
+
+  <script>
+    document.getElementById("areaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const area = document.getElementById("area").value;
+
+      if (area !== "") {
+        // Save to localStorage for later use
+        localStorage.setItem("selectedArea", area);
+        document.getElementById("confirmationMsg").innerText = "आपका क्षेत्र '" + area + "' सफलतापूर्वक चुना गया है!";
+      } else {
+        document.getElementById("confirmationMsg").innerText = "कृपया एक क्षेत्र चुनें।";
+      }
+    });
+  </script>
+
+</body>
+</html>
