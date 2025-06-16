@@ -2,104 +2,153 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>Courier Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>कोरियर बुकिंग | Banda Ki Seva</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f1f8e9;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
       padding: 20px;
     }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
     h2 {
-      color: #2e7d32;
       text-align: center;
+      color: #1e90ff;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
     }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border-radius: 6px;
       border: 1px solid #ccc;
+      border-radius: 8px;
     }
     button {
       margin-top: 20px;
-      padding: 12px;
       width: 100%;
-      background: #43a047;
-      color: white;
+      padding: 12px;
+      background-color: #28a745;
       border: none;
-      border-radius: 8px;
+      color: white;
       font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .track-id {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-left: 6px solid #2e7d32;
-      border-radius: 6px;
+    button:hover {
+      background-color: #218838;
+    }
+    .whatsapp {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .whatsapp a {
+      text-decoration: none;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+    .features {
+      max-width: 600px;
+      margin: 40px auto 20px;
+      background: #fff;
+      padding: 20px;
+      border-left: 5px solid #1e90ff;
+      border-radius: 15px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+    .features h3 {
+      color: #1e90ff;
+      margin-bottom: 10px;
+    }
+    .features ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .features ul li {
+      margin-bottom: 8px;
       font-size: 16px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h2>📦 Courier Booking Form</h2>
-    <form id="courierForm">
-      <label>ग्राहक का नाम:</label>
-      <input type="text" name="name" required>
+<h2>📦 कोरियर बुकिंग फॉर्म</h2>
 
-      <label>मोबाइल नंबर:</label>
-      <input type="tel" name="mobile" required>
+<form id="courierForm">
+  <label>नाम:</label>
+  <input type="text" id="name" required>
 
-      <label>पिकअप पता:</label>
-      <textarea name="pickup" required></textarea>
+  <label>मोबाइल नंबर:</label>
+  <input type="tel" id="mobile" required>
 
-      <label>डिलीवरी पता:</label>
-      <textarea name="delivery" required></textarea>
+  <label>पिकअप एड्रेस:</label>
+  <textarea id="pickup" required></textarea>
 
-      <label>पार्सल वजन (KG):</label>
-      <input type="number" name="weight" required>
+  <label>डिलीवरी एड्रेस:</label>
+  <textarea id="delivery" required></textarea>
 
-      <button type="submit">बुकिंग सबमिट करें</button>
-    </form>
+  <label>सामान का विवरण:</label>
+  <input type="text" id="parcelDetails" required>
 
-    <div class="track-id" id="trackMessage"></div>
-  </div>
+  <label>वजन (kg):</label>
+  <input type="number" id="weight" required>
 
-  <script>
-    function generateTrackingID() {
-      const prefix = "BKSC";
-      const random = Math.floor(100000 + Math.random() * 900000);
-      return prefix + random;
-    }
+  <label>डिलीवरी का प्रकार:</label>
+  <select id="deliveryType">
+    <option value="Normal">नॉर्मल (1-2 दिन)</option>
+    <option value="Urgent">जरूरी (1 दिन)</option>
+  </select>
 
-    document.getElementById("courierForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  <button type="submit">✅ कोरियर बुक करें</button>
+</form>
 
-      const trackingID = generateTrackingID();
+<div class="whatsapp">
+  <p>या WhatsApp से बुक करें:</p>
+  <a href="https://wa.me/916351598832?text=मैं कोरियर बुक करना चाहता हूँ। कृपया जानकारी लें।" target="_blank">📲 WhatsApp Now</a>
+</div>
 
-      const msg = document.getElementById("trackMessage");
-      msg.style.display = "block";
-      msg.innerHTML = `✅ आपकी बुकिंग सफल रही!<br><strong>📦 ट्रैकिंग ID:</strong> ${trackingID}<br>इसे कॉपी करें और ट्रैकिंग पेज पर दर्ज करें।`;
+<div class="features">
+  <h3>✅ हमारी सेवा के फायदे:</h3>
+  <ul>
+    <li>🔐 100% सुरक्षित पैकेज हैंडलिंग</li>
+    <li>📅 सेम डे पिकअप और डिलीवरी (1-Day Courier)</li>
+    <li>🧑‍💼 ट्रेंडेड डिलीवरी स्टाफ</li>
+    <li>📍 लाइव ट्रैकिंग सुविधा</li>
+    <li>💬 व्हाट्सएप से डायरेक्ट बुकिंग</li>
+    <li>🏠 घर बैठे कलेक्शन और डिलीवरी</li>
+  </ul>
+</div>
 
-      this.reset();
-    });
-  </script>
+<script>
+  document.getElementById('courierForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const mobile = document.getElementById('mobile').value;
+    const pickup = document.getElementById('pickup').value;
+    const delivery = document.getElementById('delivery').value;
+    const parcelDetails = document.getElementById('parcelDetails').value;
+    const weight = document.getElementById('weight').value;
+    const deliveryType = document.getElementById('deliveryType').value;
+
+    const message = `🚚 *कोरियर बुकिंग डिटेल्स*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n🏠 पिकअप एड्रेस: ${pickup}\n📦 डिलीवरी एड्रेस: ${delivery}\n📋 सामान: ${parcelDetails}\n⚖ वजन: ${weight} KG\n🚀 डिलीवरी: ${deliveryType}`;
+
+    window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, '_blank');
+  });
+</script>
 
 </body>
 </html>
