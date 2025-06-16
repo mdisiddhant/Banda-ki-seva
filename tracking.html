@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Your Courier - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 12px 20px;
+      background-color: #009688;
+      color: white;
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00796b;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e0f7fa;
+      border-left: 5px solid #009688;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Courier Tracking</h2>
+  <input type="text" id="trackingId" placeholder="Enter your Tracking ID" />
+  <button onclick="trackOrder()">Track</button>
+  <div id="result" class="result" style="display:none;"></div>
+</div>
+
+<script>
+  const dummyTrackingData = {
+    "BKS12345": {
+      status: "Out for delivery",
+      location: "Banda City Center",
+      expected: "Today 4:00 PM"
+    },
+    "BKS98765": {
+      status: "Delivered",
+      location: "Civil Lines",
+      expected: "Yesterday 3:00 PM"
+    },
+    "BKS11111": {
+      status: "In Transit",
+      location: "Lucknow Dispatch Center",
+      expected: "Tomorrow 2:00 PM"
+    }
+  };
+
+  function trackOrder() {
+    const trackingId = document.getElementById("trackingId").value.trim().toUpperCase();
+    const resultBox = document.getElementById("result");
+
+    if (trackingId in dummyTrackingData) {
+      const data = dummyTrackingData[trackingId];
+      resultBox.innerHTML = `
+        <strong>Status:</strong> ${data.status}<br>
+        <strong>Location:</strong> ${data.location}<br>
+        <strong>Expected Delivery:</strong> ${data.expected}
+      `;
+    } else {
+      resultBox.innerHTML = `<span style="color:red;">Invalid Tracking ID. Please try again.</span>`;
+    }
+
+    resultBox.style.display = "block";
+  }
+</script>
+
+</body>
+</html>
