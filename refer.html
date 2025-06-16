@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Refer & Earn - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0055a5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+
+    .code-box {
+      background-color: #eee;
+      padding: 15px;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #0055a5;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #003f7d;
+    }
+
+    .status {
+      margin-top: 15px;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Refer & Earn</h1>
+</header>
+
+<div class="container">
+  <h2>Invite Your Friends & Earn Rewards!</h2>
+  <p>Share your unique referral code with friends and earn ₹10 per referral.</p>
+
+  <div class="code-box" id="referralCode">BANDA10</div>
+  
+  <button onclick="copyCode()">📋 Copy Referral Code</button>
+  <p class="status" id="statusMsg"></p>
+</div>
+
+<script>
+  function copyCode() {
+    const code = document.getElementById("referralCode").textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      document.getElementById("statusMsg").innerText = "Referral code copied!";
+    }).catch(err => {
+      document.getElementById("statusMsg").innerText = "Failed to copy.";
+    });
+  }
+</script>
+
+</body>
+</html>
