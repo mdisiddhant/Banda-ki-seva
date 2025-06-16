@@ -8,37 +8,26 @@
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 20px;
-      background: linear-gradient(to right, #f1f8e9, #e0f7fa);
+      background: linear-gradient(to right, #e3f2fd, #f1f8e9);
     }
 
     .container {
-      max-width: 900px;
+      max-width: 960px;
       margin: auto;
       background: #fff;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
       color: #2e7d32;
-    }
-
-    .section-title {
-      background: #c8e6c9;
-      padding: 10px;
-      font-weight: bold;
-      border-left: 6px solid #2e7d32;
-      margin-top: 25px;
-      border-radius: 6px;
-      color: #1b5e20;
     }
 
     label {
       display: block;
-      margin-top: 12px;
+      margin-top: 10px;
       font-weight: 500;
     }
 
@@ -50,15 +39,34 @@
       margin-top: 5px;
     }
 
+    .section {
+      margin-top: 25px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-left: 6px solid #388e3c;
+      border-radius: 8px;
+    }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .item-grid label {
+      margin-top: 8px;
+    }
+
     button {
       width: 100%;
       padding: 14px;
       font-size: 18px;
-      margin-top: 30px;
       background: linear-gradient(to right, #66bb6a, #43a047);
-      color: #fff;
+      color: white;
       border: none;
       border-radius: 30px;
+      margin-top: 30px;
       cursor: pointer;
     }
 
@@ -71,92 +79,129 @@
 <body>
 
 <div class="container">
-  <form id="orderForm">
-    <h2>🛒 किराना ऑर्डर फॉर्म</h2>
+  <form id="kiranaForm">
+    <h2>🛍️ किराना ऑर्डर फॉर्म</h2>
 
-    <!-- Customer Details -->
-    <label>👤 नाम</label>
-    <input type="text" required name="name">
+    <!-- Customer Info -->
+    <label>👤 ग्राहक का नाम</label>
+    <input type="text" name="name" required>
 
     <label>📱 मोबाइल नंबर</label>
-    <input type="tel" required name="mobile">
+    <input type="tel" name="mobile" required>
 
     <label>🏠 पूरा पता</label>
-    <textarea required name="address" rows="2"></textarea>
+    <textarea name="address" rows="2" required></textarea>
 
     <label>📍 एरिया</label>
-    <select required name="area">
+    <select name="area" required>
       <option value="">-- एरिया चुनें --</option>
-      <option>City Center</option>
       <option>Station Road</option>
       <option>Kalu Kuwan</option>
-      <option>Shastri Nagar</option>
+      <option>City Center</option>
+      <option>Indra Nagar</option>
       <option>Others</option>
     </select>
 
-    <!-- Anaj -->
-    <div class="section-title">🍚 अनाज & दाल</div>
-    <label>चावल</label><input type="number">
-    <label>बासमती चावल</label><input type="number">
-    <label>गेहूं</label><input type="number">
-    <label>मक्का</label><input type="number">
-    <label>चना दाल</label><input type="number">
-    <label>मसूर दाल</label><input type="number">
-    <label>अरहर दाल</label><input type="number">
-    <label>उड़द दाल</label><input type="number">
-    <label>मूंग दाल</label><input type="number">
-    <label>राजमा</label><input type="number">
-    <label>चना सफेद/काला</label><input type="number">
+    <!-- Sections -->
+    <div class="section">
+      <h3>🍚 अनाज व दालें</h3>
+      <div class="item-grid">
+        <label>चावल <input type="text" name="chawal" placeholder="कितना चाहिए (KG)"></label>
+        <label>बासमती चावल <input type="text" name="basmati" placeholder="कितना चाहिए"></label>
+        <label>गेहूं <input type="text" name="gehu"></label>
+        <label>मक्का <input type="text" name="makka"></label>
+        <label>चना दाल <input type="text" name="chana_dal"></label>
+        <label>अरहर दाल <input type="text" name="arhar_dal"></label>
+        <label>मसूर दाल <input type="text" name="masoor_dal"></label>
+        <label>उड़द दाल <input type="text" name="urad_dal"></label>
+        <label>राजमा <input type="text" name="rajma"></label>
+        <label>साबुत चना <input type="text" name="chana_sabut"></label>
+        <label>चना बेसन <input type="text" name="besan"></label>
+        <label>दलिया <input type="text" name="daliya"></label>
+        <label>सूजी <input type="text" name="suji"></label>
+        <label>मैदा <input type="text" name="maida"></label>
+        <label>मूंग दाल <input type="text" name="moong_dal"></label>
+        <label>काबुली चना <input type="text" name="kabuli_chana"></label>
+      </div>
+    </div>
 
-    <!-- Tel & Masale -->
-    <div class="section-title">🛢️ तेल & मसाले</div>
-    <label>सरसों तेल</label><input type="number">
-    <label>Refined Oil</label><input type="number">
-    <label>घी</label><input type="number">
-    <label>हल्दी पाउडर</label><input type="number">
-    <label>लाल मिर्च</label><input type="number">
-    <label>धनिया</label><input type="number">
-    <label>गरम मसाला</label><input type="number">
-    <label>जीरा</label><input type="number">
-    <label>सौंफ</label><input type="number">
-    <label>हींग</label><input type="number">
-    <label>नमक</label><input type="number>
-    <label>काला नमक</label><input type="number">
+    <div class="section">
+      <h3>🛢️ तेल और मसाले</h3>
+      <div class="item-grid">
+        <label>सरसों तेल <input type="text" name="mustard_oil"></label>
+        <label>रिफाइंड तेल <input type="text" name="refined_oil"></label>
+        <label>घी <input type="text" name="ghee"></label>
+        <label>हल्दी पाउडर <input type="text" name="haldi"></label>
+        <label>लाल मिर्च <input type="text" name="mirch"></label>
+        <label>धनिया पाउडर <input type="text" name="dhania"></label>
+        <label>गरम मसाला <input type="text" name="garam_masala"></label>
+        <label>जीरा <input type="text" name="jeera"></label>
+        <label>हींग <input type="text" name="hing"></label>
+        <label>साबुत मिर्च <input type="text" name="sabut_mirch"></label>
+        <label>नमक <input type="text" name="salt"></label>
+        <label>काला नमक <input type="text" name="kala_namak"></label>
+      </div>
+    </div>
 
-    <!-- Namkeen & Snacks -->
-    <div class="section-title">🍬 नमकीन & स्नैक्स</div>
-    <label>बिस्किट</label><input type="number">
-    <label>मैगी</label><input type="number">
-    <label>नमकीन</label><input type="number">
-    <label>पापड़</label><input type="number">
-    <label>सॉस</label><input type="number">
-    <label>मूंगफली</label><input type="number">
-    <label>सेव</label><input type="number">
-    <label>नूडल्स</label><input type="number">
+    <div class="section">
+      <h3>🍪 स्नैक्स और नमकीन</h3>
+      <div class="item-grid">
+        <label>बिस्किट <input type="text" name="biscuit"></label>
+        <label>मैगी <input type="text" name="maggi"></label>
+        <label>पापड़ <input type="text" name="papad"></label>
+        <label>सेव <input type="text" name="sev"></label>
+        <label>नमकीन <input type="text" name="namkeen"></label>
+        <label>सॉस <input type="text" name="sauce"></label>
+        <label>चना जोर गरम <input type="text" name="chana_zor"></label>
+        <label>मूंगफली <input type="text" name="moongfali"></label>
+        <label>नूडल्स <input type="text" name="noodles"></label>
+      </div>
+    </div>
 
-    <!-- Vegetables -->
-    <div class="section-title">🥦 सब्जियाँ</div>
-    <label>आलू</label><input type="number">
-    <label>प्याज</label><input type="number">
-    <label>भिंडी</label><input type="number">
-    <label>टमाटर</label><input type="number">
-    <label>लौकी</label><input type="number">
-    <label>परवल</label><input type="number">
-    <label>शिमला मिर्च</label><input type="number">
-    <label>गाजर</label><input type="number">
-    <label>धनिया पत्ता</label><input type="number">
-    <label>हरी मिर्च</label><input type="number">
+    <div class="section">
+      <h3>🧼 पर्सनल केयर</h3>
+      <div class="item-grid">
+        <label>साबुन <input type="text" name="soap"></label>
+        <label>शैम्पू <input type="text" name="shampoo"></label>
+        <label>टूथपेस्ट <input type="text" name="toothpaste"></label>
+        <label>तेल (बालों के लिए) <input type="text" name="hair_oil"></label>
+        <label>डिओड्रेंट <input type="text" name="deodorant"></label>
+        <label>फेस वॉश <input type="text" name="face_wash"></label>
+        <label>क्रीम/लोशन <input type="text" name="lotion"></label>
+      </div>
+    </div>
 
-    <!-- Personal Care -->
-    <div class="section-title">🧼 पर्सनल केयर</div>
-    <label>साबुन</label><input type="number">
-    <label>शैम्पू</label><input type="number">
-    <label>टूथपेस्ट</label><input type="number">
-    <label>तेल (बालों के लिए)</label><input type="number">
-    <label>डिओड्रेंट</label><input type="number">
-    <label>फेस वॉश</label><input type="number">
-    <label>लोशन</label><input type="number">
+    <div class="section">
+      <h3>🏠 घरेलू उपयोगी सामान</h3>
+      <div class="item-grid">
+        <label>डिटर्जेंट <input type="text" name="detergent"></label>
+        <label>फिनाइल <input type="text" name="phenyl"></label>
+        <label>बर्तन साबुन <input type="text" name="bartan_soap"></label>
+        <label>झाड़ू <input type="text" name="jhaadu"></label>
+        <label>मोप <input type="text" name="mop"></label>
+        <label>माचिस <input type="text" name="matchbox"></label>
+        <label>अगरबत्ती <input type="text" name="agarbatti"></label>
+        <label>रूम फ्रेशनर <input type="text" name="room_freshener"></label>
+        <label>टिश्यू पेपर <input type="text" name="tissue"></label>
+        <label>डस्टबिन बैग <input type="text" name="dustbin_bag"></label>
+      </div>
+    </div>
 
-    <!-- Baby Items -->
-    <div class="section-title">🍼 बच्चों के उत्पाद</div>
-    <label>द
+    <button type="submit">✅ ऑर्डर सबमिट करें</button>
+  </form>
+
+  <a href="https://wa.me/916351598832?text=मुझे%20किराना%20ऑर्डर%20भेजना%20है" target="_blank">
+    <button class="whatsapp-btn">📲 WhatsApp से संपर्क करें</button>
+  </a>
+</div>
+
+<script>
+  document.getElementById("kiranaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("🎉 आपका ऑर्डर सबमिट हो गया है!");
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
