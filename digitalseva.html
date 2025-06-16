@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,124 +7,85 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
       padding: 20px;
     }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+
     h1 {
       text-align: center;
-      color: #007bff;
-      margin-bottom: 20px;
+      color: #0066cc;
     }
+
+    .services {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    }
+
+    .services h2 {
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
     ul {
-      padding-left: 20px;
-      line-height: 1.7;
+      list-style: none;
+      padding: 0;
     }
+
     li {
-      font-size: 16px;
-    }
-    form {
-      margin-top: 30px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      margin-top: 20px;
-      background-color: #007bff;
-      color: white;
-      font-size: 16px;
+      background-color: #f1f1f1;
       padding: 12px;
-      border: none;
-      border-radius: 5px;
+      margin: 8px 0;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.3s;
     }
-    button:hover {
-      background-color: #0056b3;
+
+    li:hover {
+      background-color: #e0f7fa;
     }
-    .back-link {
-      display: block;
-      text-align: center;
+
+    .message {
       margin-top: 20px;
-      color: #007bff;
-      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
+      color: green;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>🖥️ डिजिटल सेवा</h1>
-    <p>हमारी सेवाएं:</p>
-    <ul>
-      <li>✅ आधार कार्ड अपडेट/नया</li>
-      <li>✅ पैन कार्ड आवेदन</li>
-      <li>✅ बिजली बिल भुगतान</li>
-      <li>✅ मोबाइल रिचार्ज</li>
-      <li>✅ बैंक खाता खोलना</li>
-      <li>✅ ऑनलाइन फॉर्म भरना</li>
-      <li>✅ जाति/निवास/आय प्रमाण पत्र</li>
+  <h1>💻 Digital Seva Services</h1>
+
+  <div class="services">
+    <h2>Available Services:</h2>
+    <ul id="serviceList">
+      <li data-name="Aadhar Update">🔐 Aadhar Update</li>
+      <li data-name="PAN Card Apply">🧾 PAN Card Apply</li>
+      <li data-name="Electricity Bill Payment">💡 Electricity Bill</li>
+      <li data-name="Mobile Recharge">📱 Mobile Recharge</li>
+      <li data-name="DTH Recharge">📺 DTH Recharge</li>
+      <li data-name="Online Form Fillup">📝 Online Form Fillup</li>
+      <li data-name="Bank Account Opening">🏦 Bank Account Opening</li>
     </ul>
-
-    <form id="sevaForm">
-      <label for="name">आपका नाम:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="mobile">मोबाइल नंबर:</label>
-      <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}" placeholder="10-digit number">
-
-      <label for="service">सेवा चुनें:</label>
-      <select id="service" name="service" required>
-        <option value="">-- सेवा चुनें --</option>
-        <option value="aadhaar">Aadhaar अपडेट/नया</option>
-        <option value="pan">PAN Card</option>
-        <option value="bill">बिजली बिल</option>
-        <option value="recharge">मोबाइल रिचार्ज</option>
-        <option value="bank">बैंक खाता</option>
-        <option value="form">ऑनलाइन फॉर्म</option>
-        <option value="certificate">प्रमाण पत्र</option>
-      </select>
-
-      <label for="details">अधिक जानकारी (ऐच्छिक):</label>
-      <textarea id="details" name="details" rows="3"></textarea>
-
-      <button type="submit">सेवा बुक करें</button>
-    </form>
-
-    <a href="index.html" class="back-link">⬅️ होम पर जाएं</a>
   </div>
 
-  <script>
-    document.getElementById("sevaForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const mobile = document.getElementById("mobile").value.trim();
-      const service = document.getElementById("service").value;
+  <div class="message" id="message"></div>
 
-      if (name && mobile && service) {
-        alert("✅ आपकी सेवा बुकिंग सफल रही! हम जल्द ही आपसे संपर्क करेंगे।");
-        this.reset();
-      } else {
-        alert("❌ कृपया सभी आवश्यक जानकारी भरें।");
-      }
+  <script>
+    const items = document.querySelectorAll('#serviceList li');
+    const message = document.getElementById('message');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const service = item.getAttribute('data-name');
+        message.textContent = `✅ You selected: ${service}. Our team will contact you shortly!`;
+      });
     });
   </script>
 
