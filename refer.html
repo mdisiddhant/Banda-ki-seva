@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Refer & Earn - Banda Ki Seva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f0f8ff;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
       padding: 20px;
     }
+
     h2 {
       text-align: center;
       color: #2c3e50;
+      font-size: 28px;
       margin-bottom: 20px;
     }
+
     form {
-      background: white;
+      background: #ffffff;
       padding: 25px;
-      border-radius: 12px;
+      border-radius: 16px;
       max-width: 500px;
       margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
+
     input, button {
       width: 100%;
       padding: 12px;
@@ -30,55 +37,92 @@
       border: 1px solid #ccc;
       font-size: 16px;
     }
+
     button {
       background-color: #27ae60;
       color: white;
       border: none;
       cursor: pointer;
+      transition: background 0.3s;
     }
+
     button:hover {
       background-color: #1e8449;
     }
+
+    .socials {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .socials a {
+      display: inline-block;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 28px;
+      transition: transform 0.2s;
+    }
+
+    .socials a:hover {
+      transform: scale(1.2);
+    }
+
+    .instagram { color: #C13584; }
+    .facebook { color: #1877F2; }
+    .whatsapp { color: #25D366; }
   </style>
 </head>
 <body>
 
-<h2>🎁 Refer & Earn - Banda Ki Seva</h2>
+  <h2>🎁 Refer & Earn - Banda Ki Seva</h2>
 
-<form id="referForm">
-  <input type="text" name="Name" placeholder="आपका नाम" required>
-  <input type="text" name="Mobile" placeholder="आपका मोबाइल नंबर" required>
-  <input type="text" name="Referred Person Name" placeholder="जिसे रेफर किया उसका नाम" required>
-  <input type="text" name="Referred Mobile" placeholder="जिसका मोबाइल नंबर" required>
-  <button type="submit">✅ रेफर करें और कमाएं</button>
-</form>
+  <form id="referForm">
+    <input type="text" name="Name" placeholder="आपका नाम" required>
+    <input type="text" name="Mobile" placeholder="आपका मोबाइल नंबर" required>
+    <input type="text" name="Referred Person Name" placeholder="जिसे रेफर किया उसका नाम" required>
+    <input type="text" name="Referred Mobile" placeholder="जिसका मोबाइल नंबर" required>
+    <button type="submit">✅ रेफर करें और कमाएं</button>
+  </form>
 
-<script>
-document.getElementById("referForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+  <div class="socials">
+    <p>📢 हमें फ़ॉलो करें:</p>
+    <a class="instagram" href="https://instagram.com/yourpage" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a class="facebook" href="https://facebook.com/yourpage" target="_blank">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a class="whatsapp" href="https://wa.me/916351598832" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
 
-  const formData = new FormData(this);
-  const data = {};
-  formData.forEach((value, key) => { data[key] = value });
+  <script>
+    document.getElementById("referForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-  fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (response.ok) {
-      alert("✅ आपका रेफर सबमिट हो गया है! धन्यवाद 🙏");
-      document.getElementById("referForm").reset();
-    } else {
-      alert("⚠️ कुछ गलत हुआ, कृपया फिर से कोशिश करें।");
-    }
-  })
-  .catch(error => {
-    alert("🚫 नेटवर्क त्रुटि: " + error.message);
-  });
-});
-</script>
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => { data[key] = value });
+
+      fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("✅ आपका रेफर सबमिट हो गया है! धन्यवाद 🙏");
+          document.getElementById("referForm").reset();
+        } else {
+          alert("⚠️ कुछ गलत हुआ, कृपया फिर से कोशिश करें।");
+        }
+      })
+      .catch(error => {
+        alert("🚫 नेटवर्क त्रुटि: " + error.message);
+      });
+    });
+  </script>
 
 </body>
 </html>
