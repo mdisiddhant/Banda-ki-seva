@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Seva - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      max-width: 500px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #d00000;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #1a73e8;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0f5ec2;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      text-decoration: none;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📄 Digital Seva Form</h1>
+    <form id="digitalSevaForm">
+      <label for="name">आपका नाम:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="mobile">मोबाइल नंबर:</label>
+      <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}" placeholder="10-digit number">
+
+      <label for="service">सेवा चुनें:</label>
+      <select id="service" name="service" required>
+        <option value="">-- सेवा का चयन करें --</option>
+        <option value="aadhar">आधार अपडेट</option>
+        <option value="pan">PAN कार्ड</option>
+        <option value="voter">वोटर आईडी</option>
+        <option value="passport">पासपोर्ट सेवा</option>
+        <option value="others">अन्य</option>
+      </select>
+
+      <label for="details">सेवा विवरण (वैकल्पिक):</label>
+      <textarea id="details" name="details" rows="3"></textarea>
+
+      <button type="submit">🔐 सेवा बुक करें</button>
+    </form>
+
+    <a href="index.html" class="back-link">⬅️ मुख्य पेज पर जाएं</a>
+  </div>
+
+  <script>
+    document.getElementById("digitalSevaForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const service = document.getElementById("service").value;
+
+      if(name && service) {
+        alert("✅ " + service + " सेवा के लिए अनुरोध सफलतापूर्वक दर्ज किया गया।");
+        this.reset();
+      } else {
+        alert("❌ कृपया सभी आवश्यक जानकारी भरें।");
+      }
+    });
+  </script>
+
+</body>
+</html>
