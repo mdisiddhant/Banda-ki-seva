@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🌟 VIP+ किराना ऑर्डर</title>
+  <title>🌟 VIP++ किराना ऑर्डर</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff2cc, #ffe9a7);
+      background: linear-gradient(to right, #fff0c2, #ffe39f);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -21,27 +18,28 @@
     }
 
     .form-container {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(12px);
+      border: 2px solid gold;
       border-radius: 25px;
-      border: 3px solid gold;
-      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
-      padding: 40px;
+      box-shadow: 0 10px 35px rgba(255, 215, 0, 0.4);
+      padding: 35px;
       width: 95%;
       max-width: 600px;
-      margin: 20px;
-      transition: all 0.3s ease-in-out;
+      animation: float 4s infinite ease-in-out;
     }
 
-    .form-container:hover {
-      box-shadow: 0 10px 40px rgba(218, 165, 32, 0.6);
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
     }
 
     h2 {
       text-align: center;
-      font-size: 32px;
+      font-size: 30px;
       color: #b8860b;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-shadow: 1px 1px #fff;
     }
 
@@ -59,14 +57,14 @@
       border: 1px solid #ccc;
       border-radius: 12px;
       font-size: 16px;
-      background: #fffef8;
+      background: #fffef4;
       transition: all 0.3s ease;
     }
 
     input:focus, textarea:focus, select:focus {
       border-color: gold;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
       outline: none;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
 
     button {
@@ -80,8 +78,7 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.5);
-      transition: transform 0.2s;
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
     }
 
     button:hover {
@@ -110,12 +107,18 @@
       background: #1ebc59;
       box-shadow: 0 0 12px #25D366;
     }
+
+    .note {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
   <div class="form-container">
-    <h2>🛒 VIP+ किराना ऑर्डर</h2>
+    <h2>🛒 VIP++ किराना ऑर्डर</h2>
 
     <form id="kiranaForm">
       <label>👤 ग्राहक का नाम:</label>
@@ -131,7 +134,10 @@
       <input type="text" id="quantity" required>
 
       <label>🔢 कितने पीस चाहिए:</label>
-      <input type="number" id="pieces" min="1" placeholder="उदाहरण: 2, 5">
+      <input type="number" id="pieces" min="1" required>
+
+      <label>💰 अनुमानित कीमत (₹ में):</label>
+      <input type="number" id="price" min="1" required>
 
       <label>🏠 पूरा पता:</label>
       <textarea id="address" required></textarea>
@@ -141,11 +147,13 @@
         <option value="स्वराज कॉलोनी">स्वराज कॉलोनी</option>
       </select>
 
+      <div class="note">⚠ न्यूनतम ऑर्डर ₹100 जरूरी है।</div>
+
       <button type="submit">✅ ऑर्डर भेजें</button>
     </form>
 
     <div class="whatsapp">
-      <p>या WhatsApp पर ऑर्डर भेजें:</p>
+      <p>या WhatsApp से ऑर्डर करें:</p>
       <a href="https://wa.me/916351598832?text=मैं किराना का ऑर्डर करना चाहता हूँ।" target="_blank">📲 WhatsApp Now</a>
     </div>
   </div>
@@ -158,11 +166,17 @@
       const mobile = document.getElementById("mobile").value;
       const item = document.getElementById("itemName").value;
       const qty = document.getElementById("quantity").value;
-      const pcs = document.getElementById("pieces").value || "N/A";
+      const pcs = document.getElementById("pieces").value;
+      const price = parseInt(document.getElementById("price").value);
       const address = document.getElementById("address").value;
       const area = document.getElementById("area").value;
 
-      const message = `🛒 *VIP+ किराना ऑर्डर*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📋 आइटम: ${item}\n⚖ मात्रा: ${qty}\n🔢 पीस: ${pcs}\n🏠 पता: ${address}\n📍 एरिया: ${area}`;
+      if (price < 100) {
+        alert("न्यूनतम ऑर्डर ₹100 जरूरी है। कृपया कीमत चेक करें।");
+        return;
+      }
+
+      const message = `🛒 *VIP++ किराना ऑर्डर*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📋 आइटम: ${item}\n⚖ मात्रा: ${qty}\n🔢 पीस: ${pcs}\n💰 अनुमानित कीमत: ₹${price}\n🏠 पता: ${address}\n📍 एरिया: ${area}`;
 
       window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, "_blank");
     });
