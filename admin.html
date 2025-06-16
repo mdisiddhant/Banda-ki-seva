@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f3f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      color: red;
+      font-size: 14px;
+    }
+    #employeeList p {
+      background: #e7f1ff;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>एडमिन पैनल (Admin Panel)</h2>
+
+  <!-- Login Box -->
+  <div class="container" id="adminLoginBox">
+    <label for="adminUser">यूज़रनेम:</label>
+    <input type="text" id="adminUser" placeholder="उदा. admin" />
+    
+    <label for="adminPass">पासवर्ड:</label>
+    <input type="password" id="adminPass" placeholder="********" />
+    
+    <button onclick="adminLogin()">लॉगिन</button>
+    <p class="message" id="adminLoginError"></p>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="container hidden" id="adminPanel">
+    <h3>👷 नया कर्मचारी जोड़ें</h3>
+    <input type="text" id="newEmpName" placeholder="कर्मचारी का नाम" />
+    <input type="text" id="newEmpID" placeholder="ID (जैसे employee3)" />
+    <input type="password" id="newEmpPass" placeholder="पासवर्ड" />
+    <button onclick="addEmployee()">जोड़ें</button>
+
+    <div id="employeeList"></div>
+
+    <hr style="margin: 25px 0;" />
+    
+    <h3>📦 ऑर्डर लिस्ट</h3>
+    <ul>
+      <li><b>ORD001:</b> Courier - <span style="color:orange;">Pending</span></li>
+      <li><b>ORD002:</b> Digital Seva - <span style="color:green;">Completed</span></li>
+      <li><b>ORD003:</b> Grocery Delivery - <span style="color:red;">Cancelled</span></li>
+    </ul>
+  </div>
+
+  <script>
+    function adminLogin() {
+      const user = document.getElementById("adminUser").value.trim();
+      const pass = document.getElementById("adminPass").value.trim();
+
+      if (user === "admin" && pass === "12345") {
+        document.getElementById("adminLoginBox").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
+      } else {
+        document.getElementById("adminLoginError").innerText = "गलत लॉगिन डिटेल्स!";
+      }
+    }
+
+    function addEmployee() {
+      const name = document.getElementById("newEmpName").value.trim();
+      const id = document.getElementById("newEmpID").value.trim();
+      const pass = document.getElementById("newEmpPass").value.trim();
+
+      if (name && id && pass) {
+        const entry = document.createElement("p");
+        entry.textContent = `👤 ${name} (${id}) - पासवर्ड: ${pass}`;
+        document.getElementById("employeeList").appendChild(entry);
+
+        // Reset form
+        document.getElementById("newEmpName").value = "";
+        document.getElementById("newEmpID").value = "";
+        document.getElementById("newEmpPass").value = "";
+      } else {
+        alert("कृपया सभी फील्ड भरें!");
+      }
+    }
+  </script>
+
+</body>
+</html>
