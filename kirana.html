@@ -2,185 +2,109 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🌟 VIP++ किराना ऑर्डर</title>
+  <title>किराना ऑर्डर फॉर्म</title>
   <style>
-    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff0c2, #ffe39f);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: #f5f5f5;
+      padding: 20px;
     }
-
-    .form-container {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      border: 2px solid gold;
-      border-radius: 25px;
-      box-shadow: 0 10px 35px rgba(255, 215, 0, 0.4);
-      padding: 35px;
-      width: 95%;
+    .container {
+      background: white;
+      padding: 20px;
       max-width: 600px;
-      animation: float 4s infinite ease-in-out;
+      margin: auto;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0px); }
-    }
-
     h2 {
       text-align: center;
-      font-size: 30px;
-      color: #b8860b;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px #fff;
+      color: #333;
     }
-
     label {
       font-weight: bold;
-      color: #444;
-      margin-top: 15px;
       display: block;
+      margin-top: 15px;
     }
-
-    input, textarea, select {
+    input, select, textarea {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 12px;
-      font-size: 16px;
-      background: #fffef4;
-      transition: all 0.3s ease;
     }
-
-    input:focus, textarea:focus, select:focus {
-      border-color: gold;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-      outline: none;
-    }
-
-    button {
-      margin-top: 25px;
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(to right, #ffd700, #ffb300);
-      color: #222;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-    }
-
-    button:hover {
-      transform: scale(1.02);
-      background: linear-gradient(to right, #ffcc00, #ffc107);
-    }
-
-    .whatsapp {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .whatsapp a {
-      text-decoration: none;
+    .whatsapp-btn {
       background: #25D366;
       color: white;
-      padding: 14px 30px;
-      border-radius: 50px;
-      font-weight: bold;
+      padding: 12px;
+      border: none;
+      margin-top: 20px;
+      width: 100%;
       font-size: 16px;
-      display: inline-block;
-      transition: all 0.3s ease;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
     }
-
-    .whatsapp a:hover {
-      background: #1ebc59;
-      box-shadow: 0 0 12px #25D366;
-    }
-
-    .note {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
+    .whatsapp-btn:hover {
+      background: #1ebe5a;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>🛒 किराना ऑर्डर फॉर्म</h2>
 
-  <div class="form-container">
-    <h2>🛒 VIP++ किराना ऑर्डर</h2>
+    <label>👤 ग्राहक का नाम:</label>
+    <input type="text" id="name" required>
 
-    <form id="kiranaForm">
-      <label>👤 ग्राहक का नाम:</label>
-      <input type="text" id="custName" required>
+    <label>📱 मोबाइल नंबर:</label>
+    <input type="tel" id="mobile" required>
 
-      <label>📞 मोबाइल नंबर:</label>
-      <input type="tel" id="mobile" required>
+    <label>🏠 पूरा पता:</label>
+    <textarea id="address" rows="2" required></textarea>
 
-      <label>📋 क्या लेना है (आइटम का नाम):</label>
-      <input type="text" id="itemName" required>
+    <label>📍 एरिया (सिर्फ स्वराज कॉलोनी):</label>
+    <input type="text" id="area" value="स्वराज कॉलोनी" readonly>
 
-      <label>⚖ कितना चाहिए (ग्राम/किलो में):</label>
-      <input type="text" id="quantity" required>
+    <label>🛒 आपको क्या लेना है (एक से अधिक चुनें):</label>
+    <select id="items" multiple size="8">
+      <option value="आटा">आटा</option>
+      <option value="चावल">चावल</option>
+      <option value="तेल">तेल</option>
+      <option value="दाल">दाल</option>
+      <option value="शक्कर">शक्कर</option>
+      <option value="नमक">नमक</option>
+      <option value="साबुन">साबुन</option>
+      <option value="बिस्किट">बिस्किट</option>
+      <!-- आप यहां 70+ आइटम जोड़ सकते हैं -->
+    </select>
 
-      <label>🔢 कितने पीस चाहिए:</label>
-      <input type="number" id="pieces" min="1" required>
+    <label>📦 Quantity (किसको कितना चाहिए, आइटम के अनुसार लिखें):</label>
+    <textarea id="quantity" placeholder="उदाहरण: आटा 5kg, दाल 1kg, साबुन 3 pcs"></textarea>
 
-      <label>💰 अनुमानित कीमत (₹ में):</label>
-      <input type="number" id="price" min="1" required>
-
-      <label>🏠 पूरा पता:</label>
-      <textarea id="address" required></textarea>
-
-      <label>📍 एरिया (केवल स्वराज कॉलोनी):</label>
-      <select id="area">
-        <option value="स्वराज कॉलोनी">स्वराज कॉलोनी</option>
-      </select>
-
-      <div class="note">⚠ न्यूनतम ऑर्डर ₹100 जरूरी है।</div>
-
-      <button type="submit">✅ ऑर्डर भेजें</button>
-    </form>
-
-    <div class="whatsapp">
-      <p>या WhatsApp से ऑर्डर करें:</p>
-      <a href="https://wa.me/916351598832?text=मैं किराना का ऑर्डर करना चाहता हूँ।" target="_blank">📲 WhatsApp Now</a>
-    </div>
+    <button class="whatsapp-btn" onclick="sendWhatsApp()">📤 WhatsApp पर ऑर्डर भेजें</button>
   </div>
 
   <script>
-    document.getElementById("kiranaForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const name = document.getElementById("custName").value;
+    function sendWhatsApp() {
+      const name = document.getElementById("name").value;
       const mobile = document.getElementById("mobile").value;
-      const item = document.getElementById("itemName").value;
-      const qty = document.getElementById("quantity").value;
-      const pcs = document.getElementById("pieces").value;
-      const price = parseInt(document.getElementById("price").value);
       const address = document.getElementById("address").value;
       const area = document.getElementById("area").value;
+      const items = Array.from(document.getElementById("items").selectedOptions).map(option => option.value).join(', ');
+      const quantity = document.getElementById("quantity").value;
 
-      if (price < 100) {
-        alert("न्यूनतम ऑर्डर ₹100 जरूरी है। कृपया कीमत चेक करें।");
+      if (!name || !mobile || !address || !quantity || !items) {
+        alert("कृपया सभी जानकारी भरें।");
         return;
       }
 
-      const message = `🛒 *VIP++ किराना ऑर्डर*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📋 आइटम: ${item}\n⚖ मात्रा: ${qty}\n🔢 पीस: ${pcs}\n💰 अनुमानित कीमत: ₹${price}\n🏠 पता: ${address}\n📍 एरिया: ${area}`;
+      const message = `🛍️ *नया किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🛒 सामान: ${items}\n📦 कितनी मात्रा: ${quantity}\n\n➡️ Minimum Order ₹100`;
 
-      window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, "_blank");
-    });
+      const whatsappNumber = "916351598832"; // यहाँ अपना नंबर डालें
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
   </script>
-
 </body>
 </html>
