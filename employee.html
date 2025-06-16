@@ -5,79 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Employee Login - Banda Ki Seva</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
-    .login-box {
-      max-width: 300px;
-      margin: 100px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 40px;
     }
-    input { width: 100%; margin-bottom: 10px; padding: 10px; }
-    button { width: 100%; padding: 10px; background: green; color: white; border: none; border-radius: 4px; }
+    .login-box {
+      background: #fff;
+      max-width: 300px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    input, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
   <div class="login-box">
     <h2>👷‍♂️ Employee Login</h2>
-    <input type="text" id="username" placeholder="Username" />
+    <input id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
     <button onclick="login()">Login</button>
-    <p id="msg" style="color:red;"></p>
+    <p id="error" style="color:red;"></p>
   </div>
 
   <script>
     function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-      if (user === "employee" && pass === "1234") {
-        localStorage.setItem("employeeLogin", "true");
-        window.location.href = "employee-panel.html";
+      if (username === 'employee' && password === '1234') {
+        localStorage.setItem('employeeLoggedIn', 'true');
+        window.location.href = 'employee-panel.html';
       } else {
-        document.getElementById("msg").innerText = "गलत यूजरनेम या पासवर्ड!";
-      }
-    }
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Employee Panel</title>
-  <style>
-    body { font-family: Arial; margin: 0; background: #f5f5f5; }
-    header { background: green; color: white; padding: 20px; text-align: center; font-size: 20px; }
-    .card {
-      background: white;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h3 { margin: 0 0 10px; }
-  </style>
-</head>
-<body onload="checkLogin()">
-  <header>👷‍♂️ Banda Ki Seva - Employee Panel</header>
-
-  <div class="card">
-    <h3>📦 Orders to Deliver</h3>
-    <p>5 Local Orders Pending</p>
-  </div>
-
-  <div class="card">
-    <h3>📋 Update Order Status</h3>
-    <p>Use admin approval system after delivery</p>
-  </div>
-
-  <script>
-    function checkLogin() {
-      if (localStorage.getItem("employeeLogin") !== "true") {
-        window.location.href = "employee-login.html";
+        document.getElementById('error').innerText = '❌ गलत यूजरनेम या पासवर्ड';
       }
     }
   </script>
