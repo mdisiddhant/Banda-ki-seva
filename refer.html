@@ -1,91 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Refer & Earn - Banda Ki Seva</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #0055a5;
-      color: white;
+      font-family: 'Arial', sans-serif;
+      background: #f0f8ff;
       padding: 20px;
+    }
+    h2 {
       text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
     }
-
-    .container {
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
+    form {
       background: white;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      margin-top: 30px;
     }
-
-    .code-box {
-      background-color: #eee;
-      padding: 15px;
-      font-size: 18px;
-      text-align: center;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    button {
-      background-color: #0055a5;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
+    input, button {
       width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
     }
-
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
     button:hover {
-      background-color: #003f7d;
-    }
-
-    .status {
-      margin-top: 15px;
-      text-align: center;
-      color: green;
-      font-weight: bold;
+      background-color: #1e8449;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Refer & Earn</h1>
-</header>
+<h2>🎁 Refer & Earn - Banda Ki Seva</h2>
 
-<div class="container">
-  <h2>Invite Your Friends & Earn Rewards!</h2>
-  <p>Share your unique referral code with friends and earn ₹10 per referral.</p>
-
-  <div class="code-box" id="referralCode">BANDA10</div>
-  
-  <button onclick="copyCode()">📋 Copy Referral Code</button>
-  <p class="status" id="statusMsg"></p>
-</div>
+<form id="referForm">
+  <input type="text" name="Name" placeholder="आपका नाम" required>
+  <input type="text" name="Mobile" placeholder="आपका मोबाइल नंबर" required>
+  <input type="text" name="Referred Person Name" placeholder="जिसे रेफर किया उसका नाम" required>
+  <input type="text" name="Referred Mobile" placeholder="जिसका मोबाइल नंबर" required>
+  <button type="submit">✅ रेफर करें और कमाएं</button>
+</form>
 
 <script>
-  function copyCode() {
-    const code = document.getElementById("referralCode").textContent;
-    navigator.clipboard.writeText(code).then(() => {
-      document.getElementById("statusMsg").innerText = "Referral code copied!";
-    }).catch(err => {
-      document.getElementById("statusMsg").innerText = "Failed to copy.";
-    });
-  }
+document.getElementById("referForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  const data = {};
+  formData.forEach((value, key) => { data[key] = value });
+
+  fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("✅ आपका रेफर सबमिट हो गया है! धन्यवाद 🙏");
+      document.getElementById("referForm").reset();
+    } else {
+      alert("⚠️ कुछ गलत हुआ, कृपया फिर से कोशिश करें।");
+    }
+  })
+  .catch(error => {
+    alert("🚫 नेटवर्क त्रुटि: " + error.message);
+  });
+});
 </script>
 
 </body>
