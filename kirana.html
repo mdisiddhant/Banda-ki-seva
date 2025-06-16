@@ -2,93 +2,137 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>किराना ऑर्डर फॉर्म</title>
+  <title>VIP किराना ऑर्डर</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      background: linear-gradient(to right, #fffbe6, #ffe8cc);
+      font-family: 'Segoe UI', sans-serif;
       padding: 20px;
     }
-    .container {
-      background: #fff;
-      padding: 20px;
-      max-width: 600px;
+    .vip-container {
+      background: white;
+      max-width: 750px;
       margin: auto;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      border-radius: 25px;
+      border: 4px solid gold;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
     h2 {
       text-align: center;
-      color: #333;
+      color: #d4af37;
+      font-size: 30px;
+      margin-bottom: 25px;
     }
     label {
       font-weight: bold;
       margin-top: 10px;
       display: block;
+      color: #333;
     }
     input, select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #ccc;
       margin-top: 5px;
       margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #d4af37;
+      outline: none;
+      box-shadow: 0 0 6px gold;
     }
     .item-row {
       display: flex;
       gap: 10px;
-      margin-bottom: 10px;
     }
     .item-row input, .item-row select {
       flex: 1;
     }
     .add-btn, .whatsapp-btn {
-      background: #25D366;
+      background: #d4af37;
       color: white;
-      padding: 12px;
+      padding: 14px;
       border: none;
       width: 100%;
       font-size: 16px;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-    }
-    .add-btn {
-      background: #007bff;
-      margin-bottom: 15px;
+      font-weight: bold;
+      margin-top: 10px;
     }
     .add-btn:hover {
-      background: #0056b3;
+      background: #b58d28;
+    }
+    .whatsapp-btn {
+      background: #25D366;
+      margin-top: 25px;
     }
     .whatsapp-btn:hover {
-      background: #1ebe5a;
+      background: #1da851;
     }
     ul {
       padding-left: 20px;
+      font-size: 16px;
+      list-style-type: none;
+      color: #333;
+    }
+    li {
+      margin-bottom: 10px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-left: 4px solid gold;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-text {
+      flex: 1;
+    }
+    .item-actions button {
+      margin-left: 5px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .edit-btn {
+      background-color: #ffc107;
+      color: white;
+      border: none;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>🛒 किराना ऑर्डर फॉर्म</h2>
+  <div class="vip-container">
+    <h2>✨ VIP किराना ऑर्डर फॉर्म ✨</h2>
 
     <label>👤 ग्राहक का नाम:</label>
-    <input type="text" id="custName" required>
+    <input type="text" id="custName" placeholder="नाम दर्ज करें">
 
     <label>📱 मोबाइल नंबर:</label>
-    <input type="tel" id="custMobile" required>
+    <input type="tel" id="custMobile" placeholder="मोबाइल नंबर">
 
     <label>🏠 पूरा पता:</label>
-    <textarea id="custAddress" rows="2" required></textarea>
+    <textarea id="custAddress" rows="2" placeholder="गली / मकान / लैंडमार्क"></textarea>
 
     <label>📍 एरिया (सिर्फ स्वराज कॉलोनी):</label>
     <input type="text" id="custArea" value="स्वराज कॉलोनी" readonly>
 
-    <hr>
+    <hr style="margin: 20px 0;">
 
     <label>🧾 नया आइटम डालें:</label>
     <div class="item-row">
-      <input type="text" id="itemName" placeholder="आइटम का नाम" required>
-      <input type="number" id="itemQty" placeholder="मात्रा" min="1" required>
+      <input type="text" id="itemName" placeholder="आइटम का नाम">
+      <input type="number" id="itemQty" placeholder="Qty" min="1">
       <select id="itemUnit">
         <option value="Kg">Kg</option>
         <option value="Gram">Gram</option>
@@ -104,7 +148,8 @@
   </div>
 
   <script>
-    const orderItems = [];
+    let orderItems = [];
+    let editIndex = -1;
 
     function addItem() {
       const name = document.getElementById("itemName").value.trim();
@@ -112,20 +157,75 @@
       const unit = document.getElementById("itemUnit").value;
 
       if (!name || !qty) {
-        alert("कृपया आइटम और मात्रा भरें");
+        alert("कृपया आइटम और मात्रा भरें।");
         return;
       }
 
       const fullItem = `${name} - ${qty} ${unit}`;
-      orderItems.push(fullItem);
 
-      const li = document.createElement("li");
-      li.textContent = fullItem;
-      document.getElementById("orderList").appendChild(li);
+      if (editIndex === -1) {
+        orderItems.push(fullItem);
+      } else {
+        orderItems[editIndex] = fullItem;
+        editIndex = -1;
+      }
 
-      // Reset fields
       document.getElementById("itemName").value = "";
       document.getElementById("itemQty").value = "";
+
+      renderList();
+    }
+
+    function renderList() {
+      const ul = document.getElementById("orderList");
+      ul.innerHTML = "";
+
+      orderItems.forEach((item, i) => {
+        const li = document.createElement("li");
+
+        const span = document.createElement("span");
+        span.className = "item-text";
+        span.textContent = `${i + 1}. ${item}`;
+
+        const actions = document.createElement("div");
+        actions.className = "item-actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.className = "edit-btn";
+        editBtn.onclick = () => editItem(i);
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.className = "delete-btn";
+        delBtn.onclick = () => deleteItem(i);
+
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+
+        li.appendChild(span);
+        li.appendChild(actions);
+        ul.appendChild(li);
+      });
+    }
+
+    function editItem(i) {
+      const itemParts = orderItems[i].split(" - ");
+      const name = itemParts[0];
+      const [qty, unit] = itemParts[1].split(" ");
+
+      document.getElementById("itemName").value = name;
+      document.getElementById("itemQty").value = qty;
+      document.getElementById("itemUnit").value = unit;
+
+      editIndex = i;
+    }
+
+    function deleteItem(i) {
+      if (confirm("क्या आप इस आइटम को हटाना चाहते हैं?")) {
+        orderItems.splice(i, 1);
+        renderList();
+      }
     }
 
     function sendWhatsApp() {
@@ -135,14 +235,14 @@
       const area = document.getElementById("custArea").value.trim();
 
       if (!name || !mobile || !address || orderItems.length === 0) {
-        alert("कृपया सभी विवरण भरें और कम से कम एक आइटम जोड़ें।");
+        alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
         return;
       }
 
       const itemsText = orderItems.map((item, i) => `${i + 1}. ${item}`).join("\n");
-      const message = `🛍️ *किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ Minimum Order ₹100`;
+      const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ Minimum ₹100`;
 
-      const whatsappNumber = "916351598832"; // अपना नंबर डालें
+      const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     }
