@@ -1,82 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us | Banda ki Seva</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Us - Banda Ki Seva</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #4CAF50;
+      padding: 15px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+    }
+    .container {
       padding: 20px;
-    }
-    h1 {
-      color: #007bff;
-    }
-    form {
-      max-width: 400px;
-      margin-top: 20px;
+      background: white;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 500px;
+      margin: 20px auto;
     }
     input, textarea {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
     button {
-      background-color: #007bff;
+      background-color: #25D366;
       color: white;
-      padding: 10px 15px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
+      width: 100%;
     }
-    #msg {
-      margin-top: 10px;
-      font-weight: bold;
+    button:hover {
+      background-color: #1ebe5d;
     }
   </style>
 </head>
 <body>
-  <h1>Contact Us</h1>
-  <p>Have a question or feedback? Send us a message below:</p>
 
-  <form id="contactForm">
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" required>
+<header>
+  Contact Us - Banda Ki Seva
+</header>
 
-    <label for="email">Your Email:</label>
-    <input type="email" id="email" required>
+<div class="container">
+  <h3>हमसे संपर्क करें</h3>
+  <form onsubmit="sendToWhatsApp(); return false;">
+    <label>आपका नाम:</label>
+    <input type="text" id="name" placeholder="अपना नाम लिखें" required>
 
-    <label for="message">Message:</label>
-    <textarea id="message" rows="5" required></textarea>
+    <label>मोबाइल नंबर:</label>
+    <input type="tel" id="mobile" placeholder="10 अंकों का मोबाइल नंबर" required>
 
-    <button type="submit">Send</button>
+    <label>मैसेज:</label>
+    <textarea id="message" rows="5" placeholder="अपना मैसेज लिखें" required></textarea>
+
+    <button type="submit">📩 WhatsApp पर भेजें</button>
   </form>
+</div>
 
-  <p id="msg"></p>
+<script>
+  function sendToWhatsApp() {
+    var name = document.getElementById("name").value;
+    var mobile = document.getElementById("mobile").value;
+    var message = document.getElementById("message").value;
 
-  <script>
-    const form = document.getElementById('contactForm');
-    const msg = document.getElementById('msg');
+    var whatsappMessage =
+      "*New Contact Message*\n" +
+      "👤 नाम: " + name + "\n" +
+      "📱 मोबाइल: " + mobile + "\n" +
+      "💬 मैसेज: " + message;
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+    var url = "https://wa.me/916351598832?text=" + encodeURIComponent(whatsappMessage);
+    window.open(url, '_blank');
+  }
+</script>
 
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      // आप इसे backend या Google Sheet API से जोड़ सकते हैं। अभी localStorage में सेव कर रहे हैं।
-      let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-      contacts.push({ name, email, message, date: new Date().toLocaleString() });
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-
-      msg.textContent = "Thank you for contacting us!";
-      msg.style.color = "green";
-
-      form.reset();
-    });
-  </script>
 </body>
 </html>
