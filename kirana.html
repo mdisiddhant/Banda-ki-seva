@@ -2,206 +2,171 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>किराना ऑर्डर फॉर्म</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🌟 VIP+ किराना ऑर्डर</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: linear-gradient(to right, #e3f2fd, #f1f8e9);
+    * {
+      box-sizing: border-box;
     }
 
-    .container {
-      max-width: 960px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fff2cc, #ffe9a7);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border-radius: 25px;
+      border: 3px solid gold;
+      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+      padding: 40px;
+      width: 95%;
+      max-width: 600px;
+      margin: 20px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 10px 40px rgba(218, 165, 32, 0.6);
     }
 
     h2 {
       text-align: center;
-      color: #2e7d32;
+      font-size: 32px;
+      color: #b8860b;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px #fff;
     }
 
     label {
+      font-weight: bold;
+      color: #444;
+      margin-top: 15px;
       display: block;
-      margin-top: 10px;
-      font-weight: 500;
     }
 
-    input, select, textarea {
+    input, textarea, select {
       width: 100%;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      margin-top: 6px;
       border: 1px solid #ccc;
-      margin-top: 5px;
+      border-radius: 12px;
+      font-size: 16px;
+      background: #fffef8;
+      transition: all 0.3s ease;
     }
 
-    .section {
-      margin-top: 25px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-left: 6px solid #388e3c;
-      border-radius: 8px;
-    }
-
-    .item-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .item-grid label {
-      margin-top: 8px;
+    input:focus, textarea:focus, select:focus {
+      border-color: gold;
+      outline: none;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
 
     button {
+      margin-top: 25px;
       width: 100%;
       padding: 14px;
+      background: linear-gradient(to right, #ffd700, #ffb300);
+      color: #222;
       font-size: 18px;
-      background: linear-gradient(to right, #66bb6a, #43a047);
-      color: white;
+      font-weight: bold;
       border: none;
-      border-radius: 30px;
-      margin-top: 30px;
+      border-radius: 12px;
       cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.5);
+      transition: transform 0.2s;
     }
 
-    .whatsapp-btn {
-      background-color: #25D366;
-      margin-top: 15px;
+    button:hover {
+      transform: scale(1.02);
+      background: linear-gradient(to right, #ffcc00, #ffc107);
+    }
+
+    .whatsapp {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .whatsapp a {
+      text-decoration: none;
+      background: #25D366;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 16px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp a:hover {
+      background: #1ebc59;
+      box-shadow: 0 0 12px #25D366;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <form id="kiranaForm">
-    <h2>🛍️ किराना ऑर्डर फॉर्म</h2>
+  <div class="form-container">
+    <h2>🛒 VIP+ किराना ऑर्डर</h2>
 
-    <!-- Customer Info -->
-    <label>👤 ग्राहक का नाम</label>
-    <input type="text" name="name" required>
+    <form id="kiranaForm">
+      <label>👤 ग्राहक का नाम:</label>
+      <input type="text" id="custName" required>
 
-    <label>📱 मोबाइल नंबर</label>
-    <input type="tel" name="mobile" required>
+      <label>📞 मोबाइल नंबर:</label>
+      <input type="tel" id="mobile" required>
 
-    <label>🏠 पूरा पता</label>
-    <textarea name="address" rows="2" required></textarea>
+      <label>📋 क्या लेना है (आइटम का नाम):</label>
+      <input type="text" id="itemName" required>
 
-    <label>📍 एरिया</label>
-    <select name="area" required>
-      <option value="">-- एरिया चुनें --</option>
-      <option>Station Road</option>
-      <option>Kalu Kuwan</option>
-      <option>City Center</option>
-      <option>Indra Nagar</option>
-      <option>Others</option>
-    </select>
+      <label>⚖ कितना चाहिए (ग्राम/किलो में):</label>
+      <input type="text" id="quantity" required>
 
-    <!-- Sections -->
-    <div class="section">
-      <h3>🍚 अनाज व दालें</h3>
-      <div class="item-grid">
-        <label>चावल <input type="text" name="chawal" placeholder="कितना चाहिए (KG)"></label>
-        <label>बासमती चावल <input type="text" name="basmati" placeholder="कितना चाहिए"></label>
-        <label>गेहूं <input type="text" name="gehu"></label>
-        <label>मक्का <input type="text" name="makka"></label>
-        <label>चना दाल <input type="text" name="chana_dal"></label>
-        <label>अरहर दाल <input type="text" name="arhar_dal"></label>
-        <label>मसूर दाल <input type="text" name="masoor_dal"></label>
-        <label>उड़द दाल <input type="text" name="urad_dal"></label>
-        <label>राजमा <input type="text" name="rajma"></label>
-        <label>साबुत चना <input type="text" name="chana_sabut"></label>
-        <label>चना बेसन <input type="text" name="besan"></label>
-        <label>दलिया <input type="text" name="daliya"></label>
-        <label>सूजी <input type="text" name="suji"></label>
-        <label>मैदा <input type="text" name="maida"></label>
-        <label>मूंग दाल <input type="text" name="moong_dal"></label>
-        <label>काबुली चना <input type="text" name="kabuli_chana"></label>
-      </div>
+      <label>🔢 कितने पीस चाहिए:</label>
+      <input type="number" id="pieces" min="1" placeholder="उदाहरण: 2, 5">
+
+      <label>🏠 पूरा पता:</label>
+      <textarea id="address" required></textarea>
+
+      <label>📍 एरिया (केवल स्वराज कॉलोनी):</label>
+      <select id="area">
+        <option value="स्वराज कॉलोनी">स्वराज कॉलोनी</option>
+      </select>
+
+      <button type="submit">✅ ऑर्डर भेजें</button>
+    </form>
+
+    <div class="whatsapp">
+      <p>या WhatsApp पर ऑर्डर भेजें:</p>
+      <a href="https://wa.me/916351598832?text=मैं किराना का ऑर्डर करना चाहता हूँ।" target="_blank">📲 WhatsApp Now</a>
     </div>
+  </div>
 
-    <div class="section">
-      <h3>🛢️ तेल और मसाले</h3>
-      <div class="item-grid">
-        <label>सरसों तेल <input type="text" name="mustard_oil"></label>
-        <label>रिफाइंड तेल <input type="text" name="refined_oil"></label>
-        <label>घी <input type="text" name="ghee"></label>
-        <label>हल्दी पाउडर <input type="text" name="haldi"></label>
-        <label>लाल मिर्च <input type="text" name="mirch"></label>
-        <label>धनिया पाउडर <input type="text" name="dhania"></label>
-        <label>गरम मसाला <input type="text" name="garam_masala"></label>
-        <label>जीरा <input type="text" name="jeera"></label>
-        <label>हींग <input type="text" name="hing"></label>
-        <label>साबुत मिर्च <input type="text" name="sabut_mirch"></label>
-        <label>नमक <input type="text" name="salt"></label>
-        <label>काला नमक <input type="text" name="kala_namak"></label>
-      </div>
-    </div>
+  <script>
+    document.getElementById("kiranaForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    <div class="section">
-      <h3>🍪 स्नैक्स और नमकीन</h3>
-      <div class="item-grid">
-        <label>बिस्किट <input type="text" name="biscuit"></label>
-        <label>मैगी <input type="text" name="maggi"></label>
-        <label>पापड़ <input type="text" name="papad"></label>
-        <label>सेव <input type="text" name="sev"></label>
-        <label>नमकीन <input type="text" name="namkeen"></label>
-        <label>सॉस <input type="text" name="sauce"></label>
-        <label>चना जोर गरम <input type="text" name="chana_zor"></label>
-        <label>मूंगफली <input type="text" name="moongfali"></label>
-        <label>नूडल्स <input type="text" name="noodles"></label>
-      </div>
-    </div>
+      const name = document.getElementById("custName").value;
+      const mobile = document.getElementById("mobile").value;
+      const item = document.getElementById("itemName").value;
+      const qty = document.getElementById("quantity").value;
+      const pcs = document.getElementById("pieces").value || "N/A";
+      const address = document.getElementById("address").value;
+      const area = document.getElementById("area").value;
 
-    <div class="section">
-      <h3>🧼 पर्सनल केयर</h3>
-      <div class="item-grid">
-        <label>साबुन <input type="text" name="soap"></label>
-        <label>शैम्पू <input type="text" name="shampoo"></label>
-        <label>टूथपेस्ट <input type="text" name="toothpaste"></label>
-        <label>तेल (बालों के लिए) <input type="text" name="hair_oil"></label>
-        <label>डिओड्रेंट <input type="text" name="deodorant"></label>
-        <label>फेस वॉश <input type="text" name="face_wash"></label>
-        <label>क्रीम/लोशन <input type="text" name="lotion"></label>
-      </div>
-    </div>
+      const message = `🛒 *VIP+ किराना ऑर्डर*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📋 आइटम: ${item}\n⚖ मात्रा: ${qty}\n🔢 पीस: ${pcs}\n🏠 पता: ${address}\n📍 एरिया: ${area}`;
 
-    <div class="section">
-      <h3>🏠 घरेलू उपयोगी सामान</h3>
-      <div class="item-grid">
-        <label>डिटर्जेंट <input type="text" name="detergent"></label>
-        <label>फिनाइल <input type="text" name="phenyl"></label>
-        <label>बर्तन साबुन <input type="text" name="bartan_soap"></label>
-        <label>झाड़ू <input type="text" name="jhaadu"></label>
-        <label>मोप <input type="text" name="mop"></label>
-        <label>माचिस <input type="text" name="matchbox"></label>
-        <label>अगरबत्ती <input type="text" name="agarbatti"></label>
-        <label>रूम फ्रेशनर <input type="text" name="room_freshener"></label>
-        <label>टिश्यू पेपर <input type="text" name="tissue"></label>
-        <label>डस्टबिन बैग <input type="text" name="dustbin_bag"></label>
-      </div>
-    </div>
-
-    <button type="submit">✅ ऑर्डर सबमिट करें</button>
-  </form>
-
-  <a href="https://wa.me/916351598832?text=मुझे%20किराना%20ऑर्डर%20भेजना%20है" target="_blank">
-    <button class="whatsapp-btn">📲 WhatsApp से संपर्क करें</button>
-  </a>
-</div>
-
-<script>
-  document.getElementById("kiranaForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    alert("🎉 आपका ऑर्डर सबमिट हो गया है!");
-    this.reset();
-  });
-</script>
+      window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, "_blank");
+    });
+  </script>
 
 </body>
 </html>
