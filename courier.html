@@ -1,112 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>1-Day Courier Booking - Banda Ki Seva</title>
+  <meta charset="UTF-8">
+  <title>Courier Booking</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
+      font-family: sans-serif;
+      background: #f1f8e9;
       padding: 20px;
     }
     .container {
-      background: #fff;
-      padding: 25px;
       max-width: 500px;
       margin: auto;
+      background: white;
+      padding: 25px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    h1 {
-      color: #d00000;
+    h2 {
+      color: #2e7d32;
       text-align: center;
-      margin-bottom: 20px;
     }
     label {
-      font-weight: bold;
-      margin-top: 15px;
       display: block;
+      margin-top: 10px;
+      font-weight: bold;
     }
-    input, textarea, select {
+    input, textarea {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border-radius: 5px;
+      border-radius: 6px;
       border: 1px solid #ccc;
     }
     button {
       margin-top: 20px;
-      width: 100%;
       padding: 12px;
-      background-color: #008000;
+      width: 100%;
+      background: #43a047;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #005d00;
-    }
-    .back-link {
-      display: block;
-      text-align: center;
+    .track-id {
+      display: none;
       margin-top: 20px;
-      text-decoration: none;
-      color: #007bff;
+      padding: 15px;
+      background: #e8f5e9;
+      border-left: 6px solid #2e7d32;
+      border-radius: 6px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>📦 1-Day Courier Booking</h1>
+    <h2>📦 Courier Booking Form</h2>
     <form id="courierForm">
-      <label for="sender">Sender Name:</label>
-      <input type="text" id="sender" name="sender" required>
+      <label>ग्राहक का नाम:</label>
+      <input type="text" name="name" required>
 
-      <label for="receiver">Receiver Name:</label>
-      <input type="text" id="receiver" name="receiver" required>
+      <label>मोबाइल नंबर:</label>
+      <input type="tel" name="mobile" required>
 
-      <label for="pickup">Pickup Address:</label>
-      <textarea id="pickup" name="pickup" required></textarea>
+      <label>पिकअप पता:</label>
+      <textarea name="pickup" required></textarea>
 
-      <label for="delivery">Delivery Address:</label>
-      <textarea id="delivery" name="delivery" required></textarea>
+      <label>डिलीवरी पता:</label>
+      <textarea name="delivery" required></textarea>
 
-      <label for="contact">Receiver Mobile Number:</label>
-      <input type="tel" id="contact" name="contact" required pattern="[0-9]{10}" placeholder="10-digit number">
+      <label>पार्सल वजन (KG):</label>
+      <input type="number" name="weight" required>
 
-      <label for="weight">Parcel Weight (in KG):</label>
-      <input type="number" id="weight" name="weight" step="0.1" required>
-
-      <label for="type">Delivery Type:</label>
-      <select id="type" name="type" required>
-        <option value="normal">Normal (Same Day)</option>
-        <option value="express">Express (1-2 Hours)</option>
-      </select>
-
-      <button type="submit">📨 Book Now</button>
+      <button type="submit">बुकिंग सबमिट करें</button>
     </form>
 
-    <a href="index.html" class="back-link">⬅️ Back to Home</a>
+    <div class="track-id" id="trackMessage"></div>
   </div>
 
   <script>
-    document.getElementById("courierForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+    function generateTrackingID() {
+      const prefix = "BKSC";
+      const random = Math.floor(100000 + Math.random() * 900000);
+      return prefix + random;
+    }
 
-      const sender = document.getElementById("sender").value;
-      const receiver = document.getElementById("receiver").value;
+    document.getElementById("courierForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-      if(sender && receiver) {
-        alert("✅ Courier booked successfully for " + receiver + "!\nहम जल्द ही Pickup के लिए संपर्क करेंगे।");
-        this.reset(); // clear form
-      } else {
-        alert("❌ कृपया सभी जानकारी भरें।");
-      }
+      const trackingID = generateTrackingID();
+
+      const msg = document.getElementById("trackMessage");
+      msg.style.display = "block";
+      msg.innerHTML = `✅ आपकी बुकिंग सफल रही!<br><strong>📦 ट्रैकिंग ID:</strong> ${trackingID}<br>इसे कॉपी करें और ट्रैकिंग पेज पर दर्ज करें।`;
+
+      this.reset();
     });
   </script>
 
