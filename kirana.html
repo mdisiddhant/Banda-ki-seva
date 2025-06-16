@@ -6,33 +6,37 @@
   <style>
     body {
       font-family: sans-serif;
-      background: #f6f6f6;
-      margin: 0;
+      background: #f5f5f5;
       padding: 20px;
     }
-    h2 {
-      background: #ffd700;
+    h1, h2 {
+      background: #ffc107;
       padding: 10px;
       border-radius: 8px;
     }
+    .input-group {
+      margin-bottom: 10px;
+    }
+    input[type="text"], input[type="tel"] {
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
     .category {
-      margin-bottom: 20px;
-      padding: 10px;
       background: #fff;
-      border-radius: 10px;
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 8px;
       box-shadow: 0 0 5px #ccc;
     }
     .item {
-      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      margin-bottom: 8px;
     }
-    input[type="text"] {
+    .item input {
       width: 80px;
-      padding: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
     }
     button {
       padding: 12px 20px;
@@ -47,7 +51,20 @@
   </style>
 </head>
 <body>
-  <h1>🛒 किराना ऑर्डर करें</h1>
+  <h1>🛒 किराना ऑर्डर फॉर्म</h1>
+
+  <div class="input-group">
+    <label>नाम:</label>
+    <input type="text" id="customerName" placeholder="आपका नाम">
+  </div>
+  <div class="input-group">
+    <label>मोबाइल नंबर:</label>
+    <input type="tel" id="customerPhone" placeholder="10-digit मोबाइल नंबर">
+  </div>
+  <div class="input-group">
+    <label>एरिया / पता:</label>
+    <input type="text" id="customerArea" placeholder="आपका एरिया / मोहल्ला">
+  </div>
 
   <div class="category">
     <h2>1. अनाज</h2>
@@ -61,79 +78,61 @@
     <div class="item">मक्का आटा <input type="text" id="makka"></div>
     <div class="item">सूजी <input type="text" id="suji"></div>
     <div class="item">पोहा <input type="text" id="poha"></div>
-    <div class="item">दलिया <input type="text" id="daliya"></div>
   </div>
 
   <div class="category">
     <h2>2. मसाले</h2>
     <div class="item">हल्दी <input type="text" id="haldi"></div>
     <div class="item">मिर्च पाउडर <input type="text" id="mirch"></div>
-    <div class="item">धनिया पाउडर <input type="text" id="dhaniya"></div>
+    <div class="item">धनिया <input type="text" id="dhaniya"></div>
     <div class="item">गरम मसाला <input type="text" id="garam"></div>
     <div class="item">जीरा <input type="text" id="jeera"></div>
     <div class="item">राई <input type="text" id="rai"></div>
-    <div class="item">अजवाइन <input type="text" id="ajwain"></div>
-    <div class="item">काली मिर्च <input type="text" id="kalimirch"></div>
-    <div class="item">हींग <input type="text" id="heeng"></div>
-    <div class="item">कसूरी मेथी <input type="text" id="kasuri"></div>
   </div>
 
-  <div class="category">
-    <h2>3. तेल / घी</h2>
-    <div class="item">सरसों तेल <input type="text" id="mustard"></div>
-    <div class="item">रिफाइंड तेल <input type="text" id="refined"></div>
-    <div class="item">नारियल तेल <input type="text" id="coconut"></div>
-    <div class="item">देशी घी <input type="text" id="desi"></div>
-    <div class="item">वनस्पति घी <input type="text" id="vanaspati"></div>
-  </div>
-
-  <div class="category">
-    <h2>4. स्नैक्स और नाश्ता</h2>
-    <div class="item">बिस्किट <input type="text" id="biscuit"></div>
-    <div class="item">नमकीन <input type="text" id="namkeen"></div>
-    <div class="item">सेव <input type="text" id="sev"></div>
-    <div class="item">मुरमुरा <input type="text" id="murmura"></div>
-    <div class="item">मैगी <input type="text" id="maggi"></div>
-    <div class="item">ब्रेड <input type="text" id="bread"></div>
-    <div class="item">टोस्ट <input type="text" id="toast"></div>
-    <div class="item">पापड़ <input type="text" id="papad"></div>
-    <div class="item">अचार <input type="text" id="achar"></div>
-  </div>
-
-  <div class="category">
-    <h2>5. घरेलू सामान</h2>
-    <div class="item">साबुन <input type="text" id="soap"></div>
-    <div class="item">डिटर्जेंट पाउडर <input type="text" id="detergent"></div>
-    <div class="item">बर्तन साबुन <input type="text" id="dishsoap"></div>
-    <div class="item">झाड़ू <input type="text" id="broom"></div>
-    <div class="item">फिनाइल <input type="text" id="phenyl"></div>
-    <div class="item">टूथपेस्ट <input type="text" id="paste"></div>
-    <div class="item">टूथब्रश <input type="text" id="brush"></div>
-    <div class="item">शैंपू <input type="text" id="shampoo"></div>
-    <div class="item">बाल्टी <input type="text" id="bucket"></div>
-    <div class="item">मग <input type="text" id="mug"></div>
-  </div>
-
-  <button onclick="sendOrder()">व्हाट्सएप पर ऑर्डर भेजें</button>
+  <button onclick="sendOrder()">📲 WhatsApp पर ऑर्डर भेजें</button>
 
   <script>
     function sendOrder() {
-      let ids = [
-        "atta", "rice", "chana", "arhar", "moong", "urad", "besan", "makka", "suji", "poha", "daliya",
-        "haldi", "mirch", "dhaniya", "garam", "jeera", "rai", "ajwain", "kalimirch", "heeng", "kasuri",
-        "mustard", "refined", "coconut", "desi", "vanaspati",
-        "biscuit", "namkeen", "sev", "murmura", "maggi", "bread", "toast", "papad", "achar",
-        "soap", "detergent", "dishsoap", "broom", "phenyl", "paste", "brush", "shampoo", "bucket", "mug"
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const area = document.getElementById("customerArea").value.trim();
+
+      if (!name || !phone || !area) {
+        alert("कृपया नाम, मोबाइल नंबर और एरिया भरें।");
+        return;
+      }
+
+      const items = [
+        ["आटा", "atta"],
+        ["चावल", "rice"],
+        ["चना दाल", "chana"],
+        ["अरहर दाल", "arhar"],
+        ["मूंग दाल", "moong"],
+        ["उड़द दाल", "urad"],
+        ["बेसन", "besan"],
+        ["मक्का आटा", "makka"],
+        ["सूजी", "suji"],
+        ["पोहा", "poha"],
+        ["हल्दी", "haldi"],
+        ["मिर्च पाउडर", "mirch"],
+        ["धनिया", "dhaniya"],
+        ["गरम मसाला", "garam"],
+        ["जीरा", "jeera"],
+        ["राई", "rai"]
       ];
 
-      let message = "🛒 मेरा किराना ऑर्डर:\n";
-      ids.forEach(id => {
-        let val = document.getElementById(id).value;
-        if(val) message += `👉 ${document.querySelector("label[for="+id+"]")?.innerText || id} - ${val}\n`;
+      let message = `👤 नाम: ${name}\n📱 मोबाइल: ${phone}\n📍 एरिया: ${area}\n\n🛒 ऑर्डर लिस्ट:\n`;
+
+      items.forEach(([label, id]) => {
+        const val = document.getElementById(id).value.trim();
+        if (val) {
+          message += `👉 ${label}: ${val}\n`;
+        }
       });
 
-      let url = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
+      const whatsappURL = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank");
     }
   </script>
 </body>
