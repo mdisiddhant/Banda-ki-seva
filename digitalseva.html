@@ -7,63 +7,84 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f2f2f2;
+      background-color: #f4f4f4;
+      margin: 0;
       padding: 20px;
     }
     .container {
-      background: #fff;
-      max-width: 500px;
+      max-width: 700px;
       margin: auto;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      color: #d00000;
+      color: #007bff;
       margin-bottom: 20px;
     }
+    ul {
+      padding-left: 20px;
+      line-height: 1.7;
+    }
+    li {
+      font-size: 16px;
+    }
+    form {
+      margin-top: 30px;
+    }
     label {
-      font-weight: bold;
-      margin-top: 12px;
       display: block;
+      margin-top: 10px;
+      font-weight: bold;
     }
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      margin-top: 6px;
-      border-radius: 6px;
+      margin-top: 5px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      font-size: 15px;
     }
     button {
       width: 100%;
-      padding: 12px;
       margin-top: 20px;
-      background-color: #1a73e8;
+      background-color: #007bff;
       color: white;
       font-size: 16px;
+      padding: 12px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #0f5ec2;
+      background-color: #0056b3;
     }
     .back-link {
       display: block;
       text-align: center;
-      margin-top: 18px;
+      margin-top: 20px;
+      color: #007bff;
       text-decoration: none;
-      color: #555;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>📄 Digital Seva Form</h1>
-    <form id="digitalSevaForm">
+    <h1>🖥️ डिजिटल सेवा</h1>
+    <p>हमारी सेवाएं:</p>
+    <ul>
+      <li>✅ आधार कार्ड अपडेट/नया</li>
+      <li>✅ पैन कार्ड आवेदन</li>
+      <li>✅ बिजली बिल भुगतान</li>
+      <li>✅ मोबाइल रिचार्ज</li>
+      <li>✅ बैंक खाता खोलना</li>
+      <li>✅ ऑनलाइन फॉर्म भरना</li>
+      <li>✅ जाति/निवास/आय प्रमाण पत्र</li>
+    </ul>
+
+    <form id="sevaForm">
       <label for="name">आपका नाम:</label>
       <input type="text" id="name" name="name" required>
 
@@ -72,32 +93,34 @@
 
       <label for="service">सेवा चुनें:</label>
       <select id="service" name="service" required>
-        <option value="">-- सेवा का चयन करें --</option>
-        <option value="aadhar">आधार अपडेट</option>
-        <option value="pan">PAN कार्ड</option>
-        <option value="voter">वोटर आईडी</option>
-        <option value="passport">पासपोर्ट सेवा</option>
-        <option value="others">अन्य</option>
+        <option value="">-- सेवा चुनें --</option>
+        <option value="aadhaar">Aadhaar अपडेट/नया</option>
+        <option value="pan">PAN Card</option>
+        <option value="bill">बिजली बिल</option>
+        <option value="recharge">मोबाइल रिचार्ज</option>
+        <option value="bank">बैंक खाता</option>
+        <option value="form">ऑनलाइन फॉर्म</option>
+        <option value="certificate">प्रमाण पत्र</option>
       </select>
 
-      <label for="details">सेवा विवरण (वैकल्पिक):</label>
+      <label for="details">अधिक जानकारी (ऐच्छिक):</label>
       <textarea id="details" name="details" rows="3"></textarea>
 
-      <button type="submit">🔐 सेवा बुक करें</button>
+      <button type="submit">सेवा बुक करें</button>
     </form>
 
-    <a href="index.html" class="back-link">⬅️ मुख्य पेज पर जाएं</a>
+    <a href="index.html" class="back-link">⬅️ होम पर जाएं</a>
   </div>
 
   <script>
-    document.getElementById("digitalSevaForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value;
+    document.getElementById("sevaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
       const service = document.getElementById("service").value;
 
-      if(name && service) {
-        alert("✅ " + service + " सेवा के लिए अनुरोध सफलतापूर्वक दर्ज किया गया।");
+      if (name && mobile && service) {
+        alert("✅ आपकी सेवा बुकिंग सफल रही! हम जल्द ही आपसे संपर्क करेंगे।");
         this.reset();
       } else {
         alert("❌ कृपया सभी आवश्यक जानकारी भरें।");
