@@ -1,69 +1,91 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>कोरियर बुकिंग | Banda Ki Seva</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VIP कोरियर बुकिंग | Banda Ki Seva</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f8ff;
+      background: linear-gradient(to right, #fff8dc, #fef6e4);
+      margin: 0;
       padding: 20px;
     }
+
     h2 {
       text-align: center;
-      color: #1e90ff;
+      color: #b8860b;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px #fff;
     }
+
     form {
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border: 2px solid gold;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
+      backdrop-filter: blur(10px);
     }
+
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
+      color: #444;
     }
+
     input, textarea, select {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
       padding: 12px;
-      background-color: #28a745;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fffaf0;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #ffd700, #ffcc00);
       border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 8px;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
+
     button:hover {
-      background-color: #218838;
+      background: linear-gradient(to right, #ffcc00, #ffc107);
     }
+
     .whatsapp {
-      margin-top: 15px;
+      margin-top: 20px;
       text-align: center;
     }
+
     .whatsapp a {
       text-decoration: none;
       background-color: #25D366;
       color: white;
-      padding: 10px 20px;
+      padding: 12px 25px;
       border-radius: 50px;
+      font-weight: bold;
+      font-size: 16px;
       display: inline-block;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     /* 🎖 VIP Styled Features Section */
     .features {
-      max-width: 600px;
+      max-width: 650px;
       margin: 40px auto 20px;
       background: linear-gradient(to right, #fff8dc, #fffacd);
       padding: 25px;
@@ -71,6 +93,7 @@
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
       border: 2px solid gold;
     }
+
     .features h3 {
       color: #b8860b;
       font-size: 22px;
@@ -78,10 +101,12 @@
       margin-bottom: 15px;
       text-shadow: 1px 1px 1px #fff;
     }
+
     .features ul {
       list-style: none;
       padding-left: 0;
     }
+
     .features ul li {
       margin-bottom: 10px;
       font-size: 17px;
@@ -92,6 +117,7 @@
       box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
       font-weight: 500;
     }
+
     .features ul li::before {
       content: "🌟 ";
       color: gold;
@@ -100,28 +126,28 @@
 </head>
 <body>
 
-<h2>📦 कोरियर बुकिंग फॉर्म</h2>
+<h2>🎁 VIP कोरियर बुकिंग फॉर्म</h2>
 
 <form id="courierForm">
-  <label>नाम:</label>
+  <label>👤 नाम:</label>
   <input type="text" id="name" required>
 
-  <label>मोबाइल नंबर:</label>
+  <label>📞 मोबाइल नंबर:</label>
   <input type="tel" id="mobile" required>
 
-  <label>पिकअप एड्रेस:</label>
+  <label>🏠 पिकअप एड्रेस:</label>
   <textarea id="pickup" required></textarea>
 
-  <label>डिलीवरी एड्रेस:</label>
+  <label>📦 डिलीवरी एड्रेस:</label>
   <textarea id="delivery" required></textarea>
 
-  <label>सामान का विवरण:</label>
+  <label>🧾 सामान का विवरण:</label>
   <input type="text" id="parcelDetails" required>
 
-  <label>वजन (kg):</label>
+  <label>⚖ वजन (kg):</label>
   <input type="number" id="weight" required>
 
-  <label>डिलीवरी का प्रकार:</label>
+  <label>🚚 डिलीवरी का प्रकार:</label>
   <select id="deliveryType">
     <option value="Normal">नॉर्मल (1-2 दिन)</option>
     <option value="Urgent">जरूरी (1 दिन)</option>
