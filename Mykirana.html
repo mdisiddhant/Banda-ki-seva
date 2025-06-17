@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>किराना सेंटर - बंदा की सेवा</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .form-box, .center-list {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      background: #fafafa;
+      margin-bottom: 15px;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    .info {
+      margin: 6px 0;
+      color: #555;
+    }
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-edit {
+      background: #ffc107;
+      color: black;
+      flex: 1;
+    }
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+      flex: 1;
+    }
+    .btn-whatsapp {
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+    .btn-whatsapp:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-box">
+    <h2>➕ नया किराना सेंटर जोड़ें</h2>
+    <input type="text" id="name" placeholder="दुकान का नाम">
+    <input type="text" id="address" placeholder="पता">
+    <input type="text" id="phone" placeholder="मोबाइल नंबर">
+    <input type="text" id="timing" placeholder="समय (जैसे: 9AM - 9PM)">
+    <button onclick="addOrUpdateCenter()">सहेजें</button>
+  </div>
+
+  <div class="center-list">
+    <h2>🏪 सभी किराना सेंटर</h2>
+    <div id="centerList"></div>
+  </div>
+</div>
+
+<script>
+  let editIndex = -1;
+
+  function addOrUpdateCenter() {
+    const name = document.getElementById('name').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const timing = document.getElementById('timing').value.trim();
+
+    if (!name || !address || !phone || !timing) {
+      alert("सभी फ़ील्ड भरें");
+      return;
+    }
+
+    const centers = JSON.parse(localStorage.getItem("centers") || "[]");
+
+    if (editIndex >= 0) {
+      centers[editIndex] = { name, address, phone, timing };
+      editIndex = -1;
+    } else {
+      centers.push({ name, address, phone, timing });
+    }
+
+    localStorage.setItem("centers", JSON.stringify(centers));
+    clearForm();
+    loadCenters();
+  }
+
+  function clearForm() {
+    document.getElementById('name').value = "";
+    document.getElementById('address').value = "";
+    document.getElementById('phone').value = "";
+    document.getElementById('timing').value = "";
+  }
+
+  function loadCenters() {
+    const centers = JSON.parse(localStorage.getItem("centers") || "[]");
+    const container = document.getElementById("centerList");
+    container.innerHTML = "";
+
+    if (centers.length === 0) {
+      container.innerHTML = "<p>कोई सेंटर उपलब्ध नहीं है।</p>";
+      return;
+    }
+
+    centers.forEach((center, index) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <h3>${center.name}</h3>
+        <div class="info"><strong>📍 पता:</strong> ${center.address}</div>
+        <div class="info"><strong>📞 मोबाइल:</strong> ${center.phone}</div>
+        <div class="info"><strong>⏰ समय:</strong> ${center.timing}</div>
+        <div class="actions">
+          <button class="btn-edit" onclick="editCenter(${index})">✏️ Edit</button>
+          <button class="btn-delete" onclick="deleteCenter(${index})">🗑 Delete</button>
+        </div>
+        <a class="btn-whatsapp" href="https://wa.me/91${center.phone}?text=नमस्ते%2C%20हमें%20${center.name}%20से%20किराना%20लेना%20है।" target="_blank">
+          📱 WhatsApp पर संपर्क करें
+        </a>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function editCenter(index) {
+    const centers = JSON.parse(localStorage.getItem("centers") || "[]");
+    const center = centers[index];
+    document.getElementById('name').value = center.name;
+    document.getElementById('address').value = center.address;
+    document.getElementById('phone').value = center.phone;
+    document.getElementById('timing').value = center.timing;
+    editIndex = index;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function deleteCenter(index) {
+    if (confirm("क्या आप इस सेंटर को हटाना चाहते हैं?")) {
+      const centers = JSON.parse(localStorage.getItem("centers") || "[]");
+      centers.splice(index, 1);
+      localStorage.setItem("centers", JSON.stringify(centers));
+      loadCenters();
+    }
+  }
+
+  window.onload = loadCenters;
+</script>
+
+</body>
+</html>
