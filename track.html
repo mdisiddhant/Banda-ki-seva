@@ -80,15 +80,4 @@
 
 </body>
 </html>
-function generateTrackingID() {
-  const prefix = "BKSC"; // Banda Ki Seva Courier
-  const randomNumber = Math.floor(100000 + Math.random() * 900000); // 6-digit number
-  return prefix + randomNumber;
-}
 
-document.getElementById("courierForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const trackingID = generateTrackingID();
-  alert("✅ आपका ऑर्डर सफल रहा!\n📦 आपकी ट्रैकिंग ID है: " + trackingID);
-  // आप इसे WhatsApp, Email या Track Page पर भी भेज सकते हैं
-});
