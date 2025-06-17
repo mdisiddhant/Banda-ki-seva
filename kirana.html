@@ -5,43 +5,97 @@
   <title>VIP किराना ऑर्डर</title>
   <style>
     body {
-      font-family: Arial;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffe259, #ffa751);
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      background: #ff6f00;
+      color: white;
+      margin: 0;
+      padding: 15px;
+      text-align: center;
+      border-radius: 0 0 15px 15px;
+      font-size: 26px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 15px;
       padding: 20px;
-      background: #fdfdfd;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
+
     input, select, button {
-      padding: 10px;
-      margin: 5px 0;
+      padding: 12px;
+      margin: 6px 0;
       width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       box-sizing: border-box;
+      font-size: 16px;
     }
-    .form-group {
-      margin-bottom: 15px;
+
+    button {
+      background: #ff6f00;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
+
+    button:hover {
+      background: #e65100;
+    }
+
     .item-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #eee;
-      padding: 8px;
-      margin: 5px 0;
-      border-radius: 5px;
+      background: #f5f5f5;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .item-text {
       flex: 1;
+      font-size: 16px;
     }
+
     .item-actions button {
-      margin-left: 10px;
+      margin-left: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
     }
+
     ul {
       padding-left: 0;
       list-style: none;
     }
-    h2 {
-      background: #ffc107;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .whatsapp-button {
+      background: #25D366;
+      color: white;
+      font-size: 18px;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    .whatsapp-button:hover {
+      background: #1ebe5d;
     }
   </style>
 </head>
@@ -49,28 +103,30 @@
 
   <h2>🛒 VIP किराना ऑर्डर</h2>
 
-  <div class="form-group">
-    <input id="custName" placeholder="ग्राहक नाम" required>
-    <input id="custMobile" placeholder="मोबाइल नंबर" required>
-    <input id="custAddress" placeholder="पूरा पता" required>
-    <input id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
+  <div class="container">
+    <div class="form-group">
+      <input id="custName" placeholder="ग्राहक नाम" required>
+      <input id="custMobile" placeholder="मोबाइल नंबर" required>
+      <input id="custAddress" placeholder="पूरा पता" required>
+      <input id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
+    </div>
+
+    <div class="form-group">
+      <input id="itemName" placeholder="आइटम का नाम">
+      <input id="itemQty" placeholder="कितना चाहिए (संख्या)">
+      <select id="itemUnit">
+        <option value="Kg">Kg</option>
+        <option value="g">g</option>
+        <option value="pcs">pcs</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="addItem()">➕ जोड़ें</button>
+    </div>
+
+    <ul id="orderList"></ul>
+
+    <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
   </div>
-
-  <div class="form-group">
-    <input id="itemName" placeholder="आइटम का नाम">
-    <input id="itemQty" placeholder="कितना चाहिए (संख्या)">
-    <select id="itemUnit">
-      <option value="Kg">Kg</option>
-      <option value="g">g</option>
-      <option value="pcs">pcs</option>
-      <option value="L">L</option>
-    </select>
-    <button onclick="addItem()">➕ जोड़ें</button>
-  </div>
-
-  <ul id="orderList"></ul>
-
-  <button onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
 
   <script>
     let orderItems = [];
@@ -162,7 +218,6 @@
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
 
-      // Save to Google Sheet
       const sheetData = {
         "Name": name,
         "Mobile": mobile,
