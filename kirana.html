@@ -2,8 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title> किराना ऑर्डर</title>
-   <title> minimum order</title>
+  <title>किराना ऑर्डर</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -11,7 +10,6 @@
       margin: 0;
       padding: 0;
     }
-
     h2 {
       background: #ff6f00;
       color: white;
@@ -21,7 +19,6 @@
       border-radius: 0 0 15px 15px;
       font-size: 26px;
     }
-
     .container {
       max-width: 600px;
       margin: 20px auto;
@@ -30,7 +27,6 @@
       padding: 20px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
-
     input, select, button {
       padding: 12px;
       margin: 6px 0;
@@ -40,7 +36,6 @@
       box-sizing: border-box;
       font-size: 16px;
     }
-
     button {
       background: #ff6f00;
       color: white;
@@ -48,11 +43,9 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-
     button:hover {
       background: #e65100;
     }
-
     .item-row {
       display: flex;
       justify-content: space-between;
@@ -63,27 +56,22 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
     .item-text {
       flex: 1;
       font-size: 16px;
     }
-
     .item-actions button {
       margin-left: 8px;
       padding: 8px 12px;
       font-size: 14px;
     }
-
     ul {
       padding-left: 0;
       list-style: none;
     }
-
     .form-group {
       margin-bottom: 15px;
     }
-
     .whatsapp-button {
       background: #25D366;
       color: white;
@@ -94,9 +82,14 @@
       margin-top: 20px;
       border-radius: 10px;
     }
-
     .whatsapp-button:hover {
       background: #1ebe5d;
+    }
+    #totalAmount {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
     }
   </style>
 </head>
@@ -121,10 +114,13 @@
         <option value="pcs">pcs</option>
         <option value="L">L</option>
       </select>
+      <input id="itemPrice" placeholder="₹ प्रति यूनिट (optional)">
       <button onclick="addItem()">➕ जोड़ें</button>
     </div>
 
     <ul id="orderList"></ul>
+
+    <p id="totalAmount">🔢 कुल रकम: ₹0.00</p>
 
     <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
   </div>
@@ -135,15 +131,18 @@
 
     function addItem() {
       const name = document.getElementById("itemName").value.trim();
-      const qty = document.getElementById("itemQty").value.trim();
+      const qty = parseFloat(document.getElementById("itemQty").value.trim());
       const unit = document.getElementById("itemUnit").value;
+      const price = parseFloat(document.getElementById("itemPrice").value.trim()) || 0;
 
-      if (!name || !qty) {
+      if (!name || isNaN(qty)) {
         alert("कृपया आइटम और मात्रा भरें");
         return;
       }
 
-      const fullItem = `${name} - ${qty} ${unit}`;
+      const total = qty * price;
+      const fullItem = { name, qty, unit, price, total };
+
       if (editIndex === -1) {
         orderItems.push(fullItem);
       } else {
@@ -153,7 +152,10 @@
 
       document.getElementById("itemName").value = "";
       document.getElementById("itemQty").value = "";
+      document.getElementById("itemPrice").value = "";
+
       renderList();
+      updateTotal();
     }
 
     function renderList() {
@@ -166,7 +168,7 @@
 
         const span = document.createElement("span");
         span.className = "item-text";
-        span.textContent = `${i + 1}. ${item}`;
+        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit} @ ₹${item.price} = ₹${item.total.toFixed(2)}`;
 
         const actions = document.createElement("div");
         actions.className = "item-actions";
@@ -187,18 +189,24 @@
       });
     }
 
+    function updateTotal() {
+      const total = orderItems.reduce((sum, item) => sum + item.total, 0);
+      document.getElementById("totalAmount").innerText = `🔢 कुल रकम: ₹${total.toFixed(2)}`;
+    }
+
     function editItem(index) {
-      const [name, qtyunit] = orderItems[index].split(" - ");
-      const [qty, unit] = qtyunit.split(" ");
-      document.getElementById("itemName").value = name;
-      document.getElementById("itemQty").value = qty;
-      document.getElementById("itemUnit").value = unit;
+      const item = orderItems[index];
+      document.getElementById("itemName").value = item.name;
+      document.getElementById("itemQty").value = item.qty;
+      document.getElementById("itemUnit").value = item.unit;
+      document.getElementById("itemPrice").value = item.price;
       editIndex = index;
     }
 
     function deleteItem(index) {
       orderItems.splice(index, 1);
       renderList();
+      updateTotal();
     }
 
     function sendWhatsApp() {
@@ -212,8 +220,12 @@
         return;
       }
 
-      const itemsText = orderItems.map((item, i) => `${i + 1}. ${item}`).join("\n");
-      const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ Minimum ₹100`;
+      const itemsText = orderItems.map((item, i) =>
+        `${i + 1}. ${item.name} - ${item.qty} ${item.unit} @ ₹${item.price} = ₹${item.total.toFixed(2)}`
+      ).join("\n");
+
+      const total = orderItems.reduce((sum, item) => sum + item.total, 0);
+      const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ कुल रकम: ₹${total.toFixed(2)} (Minimum ₹100)`;
 
       const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -225,6 +237,7 @@
         "Address": address,
         "Area": area,
         "Order Items": itemsText,
+        "Total": total.toFixed(2),
         "Time": new Date().toLocaleString()
       };
 
