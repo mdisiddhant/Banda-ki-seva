@@ -1,325 +1,78 @@
-<!DOCTYPE html><html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <title>VIP किराना ऑर्डर</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #fffbe6, #ffe8cc);
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
-    }
-    .vip-container {
-      background: white;
-      max-width: 750px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 25px;
-      border: 4px solid gold;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    }
-    h2 {
-      text-align: center;
-      color: #d4af37;
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-    .min-order-warning {
-      background-color:#fff8e1;
-      border:2px dashed #d4af37;
-      padding:12px 20px;
-      border-radius:12px;
-      color:#444;
-      font-size:16px;
-      margin-bottom:20px;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-      color: #333;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 2px solid #ccc;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      font-size: 16px;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: #d4af37;
-      outline: none;
-      box-shadow: 0 0 6px gold;
-    }
-    .item-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .item-row input, .item-row select {
-      flex: 1;
-      min-width: 100px;
-    }
-    .add-btn, .whatsapp-btn {
-      background: #d4af37;
-      color: white;
-      padding: 14px;
-      border: none;
-      width: 100%;
-      font-size: 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .add-btn:hover {
-      background: #b58d28;
-    }
-    .whatsapp-btn {
-      background: #25D366;
-      margin-top: 25px;
-    }
-    .whatsapp-btn:hover {
-      background: #1da851;
-    }
-    ul {
-      padding-left: 20px;
-      font-size: 16px;
-      list-style-type: none;
-      color: #333;
-    }
-    li {
-      margin-bottom: 10px;
-      background: #f9f9f9;
-      padding: 10px;
-      border-left: 4px solid gold;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .item-text {
-      flex: 1;
-    }
-    .item-actions button {
-      margin-left: 5px;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .edit-btn {
-      background-color: #ffc107;
-      color: white;
-      border: none;
-    }
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="vip-container">
-    <h2>✨ VIP किराना ऑर्डर फॉर्म ✨</h2>
-    <div class="min-order-warning">
-      🔔 <strong>कृपया ध्यान दें:</strong> न्यूनतम ऑर्डर ₹100 होना आवश्यक है।
-    </div>
-  </<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
   <title>VIP किराना ऑर्डर</title>
   <style>
     body {
-      background: linear-gradient(to right, #fffbe6, #ffe8cc);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial;
       padding: 20px;
+      background: #fdfdfd;
     }
-    .vip-container {
-      background: white;
-      max-width: 750px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 25px;
-      border: 4px solid gold;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    }
-    h2 {
-      text-align: center;
-      color: #d4af37;
-      font-size: 30px;
-      margin-bottom: 25px;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-      color: #333;
-    }
-    input, select, textarea {
+    input, select, button {
+      padding: 10px;
+      margin: 5px 0;
       width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 2px solid #ccc;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      font-size: 16px;
+      box-sizing: border-box;
     }
-    input:focus, textarea:focus, select:focus {
-      border-color: #d4af37;
-      outline: none;
-      box-shadow: 0 0 6px gold;
+    .form-group {
+      margin-bottom: 15px;
     }
     .item-row {
       display: flex;
-      gap: 10px;
-    }
-    .item-row input, .item-row select {
-      flex: 1;
-    }
-    .add-btn, .whatsapp-btn {
-      background: #d4af37;
-      color: white;
-      padding: 14px;
-      border: none;
-      width: 100%;
-      font-size: 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .add-btn:hover {
-      background: #b58d28;
-    }
-    .whatsapp-btn {
-      background: #25D366;
-      margin-top: 25px;
-    }
-    .whatsapp-btn:hover {
-      background: #1da851;
-    }
-    ul {
-      padding-left: 20px;
-      font-size: 16px;
-      list-style-type: none;
-      color: #333;
-    }
-    li {
-      margin-bottom: 10px;
-      background: #f9f9f9;
-      padding: 10px;
-      border-left: 4px solid gold;
-      border-radius: 8px;
-      display: flex;
       justify-content: space-between;
       align-items: center;
+      background: #eee;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
     }
     .item-text {
       flex: 1;
     }
     .item-actions button {
-      margin-left: 5px;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
+      margin-left: 10px;
     }
-    .edit-btn {
-      background-color: #ffc107;
-      color: white;
-      border: none;
+    ul {
+      padding-left: 0;
+      list-style: none;
     }
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-      border: none;
+    h2 {
+      background: #ffc107;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="vip-container">
-    <h2>✨ VIP किराना ऑर्डर फॉर्म ✨</h2>
 
-    <label>👤 ग्राहक का नाम:</label>
-    <input type="text" id="custName" placeholder="नाम दर्ज करें">
+  <h2>🛒 VIP किराना ऑर्डर</h2>
 
-    <label>📱 मोबाइल नंबर:</label>
-    <input type="tel" id="custMobile" placeholder="मोबाइल नंबर">
-
-    <label>🏠 पूरा पता:</label>
-    <textarea id="custAddress" rows="2" placeholder="गली / मकान / लैंडमार्क"></textarea>
-
-    <label>📍 एरिया (सिर्फ स्वराज कॉलोनी):</label>
-    <input type="text" id="custArea" value="स्वराज कॉलोनी" readonly>
-
-    <hr style="margin: 20px 0;">
-
-    <label>🧾 नया आइटम डालें:</label>
-    <div class="item-row">
-      <input type="text" id="itemName" placeholder="आइटम का नाम">
-      <input type="number" id="itemQty" placeholder="Qty" min="1">
-      <select id="itemUnit">
-        <option value="Kg">Kg</option>
-        <option value="Gram">Gram</option>
-        <option value="Pcs">Pcs</option>
-        <option value="Litre">Litre</option>
-      </select>
-    </div>
-    <button class="add-btn" onclick="addItem()">➕ आइटम जोड़ें</button>
-
-    <ul id="orderList"></ul>
-
-    <button class="whatsapp-btn" onclick="sendWhatsApp()">📤 WhatsApp पर भेजें</button>
+  <div class="form-group">
+    <input id="custName" placeholder="ग्राहक नाम" required>
+    <input id="custMobile" placeholder="मोबाइल नंबर" required>
+    <input id="custAddress" placeholder="पूरा पता" required>
+    <input id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
   </div>
 
+  <div class="form-group">
+    <input id="itemName" placeholder="आइटम का नाम">
+    <input id="itemQty" placeholder="कितना चाहिए (संख्या)">
+    <select id="itemUnit">
+      <option value="Kg">Kg</option>
+      <option value="g">g</option>
+      <option value="pcs">pcs</option>
+      <option value="L">L</option>
+    </select>
+    <button onclick="addItem()">➕ जोड़ें</button>
+  </div>
+
+  <ul id="orderList"></ul>
+
+  <button onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
+
   <script>
-    
-  function sendWhatsApp() {
-    const name = document.getElementById("custName").value.trim();
-    const mobile = document.getElementById("custMobile").value.trim();
-    const address = document.getElementById("custAddress").value.trim();
-    const area = document.getElementById("custArea").value.trim();
-
-    if (!name || !mobile || !address || orderItems.length === 0) {
-      alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
-      return;
-    }
-
-    const itemsText = orderItems.map((item, i) => `${i + 1}. ${item}`).join("\n");
-    const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ Minimum ₹100`;
-
-    // Send to WhatsApp
-    const whatsappNumber = "916351598832";
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-
-    // ✅ Also Send to Google Sheet via SheetBest API
-    const sheetData = {
-      "Name": name,
-      "Mobile": mobile,
-      "Address": address,
-      "Area": area,
-      "Order Items": itemsText,
-      "Time": new Date().toLocaleString()
-    };
-
-    fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(sheetData)
-    }).then(res => {
-      console.log("Saved to Google Sheet");
-    }).catch(err => {
-      console.error("Sheet Save Error:", err);
-    });
-  }
-</script>
     let orderItems = [];
     let editIndex = -1;
 
@@ -329,12 +82,11 @@
       const unit = document.getElementById("itemUnit").value;
 
       if (!name || !qty) {
-        alert("कृपया आइटम और मात्रा भरें।");
+        alert("कृपया आइटम और मात्रा भरें");
         return;
       }
 
       const fullItem = `${name} - ${qty} ${unit}`;
-
       if (editIndex === -1) {
         orderItems.push(fullItem);
       } else {
@@ -344,7 +96,6 @@
 
       document.getElementById("itemName").value = "";
       document.getElementById("itemQty").value = "";
-
       renderList();
     }
 
@@ -354,6 +105,7 @@
 
       orderItems.forEach((item, i) => {
         const li = document.createElement("li");
+        li.className = "item-row";
 
         const span = document.createElement("span");
         span.className = "item-text";
@@ -363,41 +115,33 @@
         actions.className = "item-actions";
 
         const editBtn = document.createElement("button");
-        editBtn.textContent = "Edit";
-        editBtn.className = "edit-btn";
+        editBtn.textContent = "✏️ Edit";
         editBtn.onclick = () => editItem(i);
 
         const delBtn = document.createElement("button");
-        delBtn.textContent = "Delete";
-        delBtn.className = "delete-btn";
+        delBtn.textContent = "❌ Delete";
         delBtn.onclick = () => deleteItem(i);
 
         actions.appendChild(editBtn);
         actions.appendChild(delBtn);
-
         li.appendChild(span);
         li.appendChild(actions);
         ul.appendChild(li);
       });
     }
 
-    function editItem(i) {
-      const itemParts = orderItems[i].split(" - ");
-      const name = itemParts[0];
-      const [qty, unit] = itemParts[1].split(" ");
-
+    function editItem(index) {
+      const [name, qtyunit] = orderItems[index].split(" - ");
+      const [qty, unit] = qtyunit.split(" ");
       document.getElementById("itemName").value = name;
       document.getElementById("itemQty").value = qty;
       document.getElementById("itemUnit").value = unit;
-
-      editIndex = i;
+      editIndex = index;
     }
 
-    function deleteItem(i) {
-      if (confirm("क्या आप इस आइटम को हटाना चाहते हैं?")) {
-        orderItems.splice(i, 1);
-        renderList();
-      }
+    function deleteItem(index) {
+      orderItems.splice(index, 1);
+      renderList();
     }
 
     function sendWhatsApp() {
@@ -417,6 +161,26 @@
       const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
+
+      // Save to Google Sheet
+      const sheetData = {
+        "Name": name,
+        "Mobile": mobile,
+        "Address": address,
+        "Area": area,
+        "Order Items": itemsText,
+        "Time": new Date().toLocaleString()
+      };
+
+      fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sheetData)
+      }).then(res => {
+        console.log("✅ Sheet updated");
+      }).catch(err => {
+        console.error("❌ Error saving to sheet:", err);
+      });
     }
   </script>
 </body>
