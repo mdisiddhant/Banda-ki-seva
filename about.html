@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f1f4f9;
+      background-color: #f0f2f5;
       margin: 0;
       padding: 20px;
       color: #222;
@@ -19,7 +19,7 @@
       background: #ffffff;
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       animation: fadeIn 0.6s ease-in-out;
     }
 
@@ -30,22 +30,35 @@
       margin-bottom: 25px;
     }
 
+    h2 {
+      color: #222;
+      font-size: 22px;
+      margin-top: 25px;
+    }
+
     ul {
-      padding-left: 20px;
-      font-size: 18px;
-      line-height: 1.8;
+      list-style: none;
+      padding-left: 0;
+      margin: 10px 0 20px;
     }
 
     ul li {
+      font-size: 18px;
       margin-bottom: 10px;
+      line-height: 1.6;
     }
 
-    .highlight {
+    ul li::before {
+      content: "✅ ";
+      color: green;
+      margin-right: 5px;
+    }
+
+    .section-title {
       font-weight: bold;
-      color: #2c3e50;
-      margin-top: 20px;
       font-size: 20px;
-      display: block;
+      margin-top: 25px;
+      color: #2c3e50;
     }
 
     a.whatsapp-button {
@@ -67,16 +80,17 @@
       background-color: #1ebe5b;
     }
 
-    p.centered-note {
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-      color: #444;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .note {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 30px;
+      font-size: 18px;
+      color: #555;
     }
   </style>
 </head>
@@ -85,38 +99,30 @@
   <div class="container">
     <h1>हमारे बारे में</h1>
 
-    <span class="highlight">🎯 हमारी सेवाएं:</span>
+    <div class="section-title">🎯 हमारी सेवाएं:</div>
     <ul>
-      <li>🛒 किराना सामान ✅</li>
-      <li>💊 मेडिकल प्रोडक्ट्स ✅</li>
-      <li>🥦 सब्ज़ी और फल ✅</li>
-      <li>🍽️ रेस्तरां फूड ✅</li>
-      <li>📄 दस्तावेज़ / पैकेट डिलीवरी ✅</li>
-      <li>🛍️ लोकल मार्केट से शॉपिंग ✅</li>
+      <li>🛒 किराना सामान</li>
+      <li>💊 मेडिकल प्रोडक्ट्स</li>
+      <li>🥦 सब्ज़ी और फल</li>
+      <li>🍽️ रेस्टोरां फूड</li>
+      <li>📄 दस्तावेज़ / पैकेट डिलीवरी</li>
+      <li>🛍️ लोकल मार्केट से शॉपिंग</li>
     </ul>
 
-    <span class="highlight">👨‍💼 हमारे साथ काम करें:</span>
-    <p>📌 Delivery Boy, Pickup Agent, और Office Staff की ज़रूरत है।</p>
-    <p>📩 आवेदन करने के लिए WhatsApp करें या कॉल करें।</p>
+    <div class="section-title">👨‍💼 हमारे साथ काम करें:</div>
+    <ul>
+      <li>📌 Delivery Boy, Pickup Agent, और Office Staff की ज़रूरत है।</li>
+      <li>📩 आवेदन के लिए WhatsApp करें या कॉल करें।</li>
+    </ul>
 
-    <span class="highlight">📍 सेवा क्षेत्र:</span>
-    <p>सिर्फ बांदा शहर और आस-पास के इलाके</p>
-
-    <span class="highlight">⌛ समय:</span>
-    <p>सुबह 9 बजे से रात 9 बजे तक</p>
-
-    <span class="highlight">💸 डिलीवरी शुल्क:</span>
-    <p>सिर्फ ₹20 से शुरू!</p>
-
-    <span class="highlight">📞 संपर्क करें:</span>
-    <p>+91 6351598832</p>
-    <p>🌐 वेबसाइट: कमिंग सून...</p>
+    <div class="section-title">📍 सेवा क्षेत्र:</div>
+    <p>सिर्फ बांदा शहर और आस-पास के इलाके<br>⌛ सुबह 9 बजे से रात 9 बजे तक<br>💸 डिलीवरी शुल्क ₹20 से शुरू</p>
 
     <a class="whatsapp-button" href="https://wa.me/916351598832" target="_blank">
       📥 WhatsApp पर ऑर्डर करें – यहाँ क्लिक करें
     </a>
 
-    <p class="centered-note">🚀 जल्दी करो! अब हर ज़रूरत का सामान घर बैठे पाओ।</p>
+    <div class="note">🚀 जल्दी करो! अब हर ज़रूरत का सामान घर बैठे पाओ।</div>
   </div>
 
 </body>
