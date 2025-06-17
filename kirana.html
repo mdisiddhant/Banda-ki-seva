@@ -277,6 +277,49 @@
   </div>
 
   <script>
+    
+  function sendWhatsApp() {
+    const name = document.getElementById("custName").value.trim();
+    const mobile = document.getElementById("custMobile").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+    const area = document.getElementById("custArea").value.trim();
+
+    if (!name || !mobile || !address || orderItems.length === 0) {
+      alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
+      return;
+    }
+
+    const itemsText = orderItems.map((item, i) => `${i + 1}. ${item}`).join("\n");
+    const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ Minimum ₹100`;
+
+    // Send to WhatsApp
+    const whatsappNumber = "916351598832";
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+
+    // ✅ Also Send to Google Sheet via SheetBest API
+    const sheetData = {
+      "Name": name,
+      "Mobile": mobile,
+      "Address": address,
+      "Area": area,
+      "Order Items": itemsText,
+      "Time": new Date().toLocaleString()
+    };
+
+    fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(sheetData)
+    }).then(res => {
+      console.log("Saved to Google Sheet");
+    }).catch(err => {
+      console.error("Sheet Save Error:", err);
+    });
+  }
+</script>
     let orderItems = [];
     let editIndex = -1;
 
