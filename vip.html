@@ -1,37 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VIP Member - Banda Ki Seva</title>
+  <title>VIP सदस्यता - Banda Ki Seva</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background: #f8f8f8;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
       color: #333;
     }
     h1 {
       color: #d00000;
+      text-align: center;
     }
     ul {
       background: #fff;
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
     li {
       margin-bottom: 10px;
     }
+    input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
+      margin-top: 10px;
+      padding: 12px 20px;
       background-color: #008000;
       color: white;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
+      width: 100%;
     }
     button:hover {
       background-color: #005d00;
@@ -41,27 +52,60 @@
       margin-top: 20px;
       color: #0077cc;
       text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>VIP Membership Benefits</h1>
-  <p>Become a VIP member and enjoy exclusive benefits:</p>
+
+  <h1>🎖 VIP सदस्यता लाभ</h1>
+  <p>VIP सदस्य बनें और पाएं एक्सक्लूसिव फायदे:</p>
   <ul>
-    <li>🚀 Priority Courier Delivery</li>
-    <li>📄 Free Digital Seva Access</li>
-    <li>💰 Special Discounts on Local Deliveries</li>
-    <li>🎁 Early Access to Offers & Rewards</li>
+    <li>🚀 प्राथमिकता कोरियर डिलीवरी</li>
+    <li>📄 फ्री डिजिटल सेवा एक्सेस</li>
+    <li>💰 लोकल डिलीवरी पर विशेष छूट</li>
+    <li>🎁 ऑफर्स और रिवॉर्ड्स की पहले जानकारी</li>
   </ul>
 
-  <button onclick="joinVip()">Join VIP Now</button>
+  <input type="text" id="vipName" placeholder="अपना नाम दर्ज करें">
+  <input type="tel" id="vipMobile" placeholder="मोबाइल नंबर (10 अंकों का)">
+  <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
+
+  <p id="successMsg" class="success"></p>
+
+  <a href="index.html">⬅️ वापस होम पेज पर</a>
 
   <script>
     function joinVip() {
-      alert("🎉 Thank you for becoming a VIP member of Banda Ki Seva!");
+      const name = document.getElementById("vipName").value.trim();
+      const mobile = document.getElementById("vipMobile").value.trim();
+      const msg = document.getElementById("successMsg");
+
+      if (name === "" || mobile.length !== 10) {
+        alert("कृपया सही नाम और 10 अंकों का मोबाइल नंबर दर्ज करें।");
+        return;
+      }
+
+      // ✅ Save to localStorage
+      localStorage.setItem("vip_name", name);
+      localStorage.setItem("vip_mobile", mobile);
+
+      // ✅ WhatsApp Confirmation Message
+      const message = `🎉 Banda Ki Seva VIP सदस्यता:\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\nधन्यवाद, आप VIP सदस्य बन गए हैं।`;
+
+      const whatsappLink = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, "_blank");
+
+      msg.textContent = `धन्यवाद ${name}, आप VIP सदस्य बन चुके हैं! ✅`;
     }
   </script>
 
-  <a href="index.html">⬅️ Back to Home</a>
 </body>
 </html>
