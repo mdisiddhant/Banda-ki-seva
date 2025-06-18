@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e8f0fe;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .service-history {
+      margin-top: 20px;
+    }
+
+    .service-history h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+
+    .service-item {
+      background: #f4f6fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid #007bff;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>👋 स्वागत है!</h1>
+    <h2 id="userGreeting"></h2>
+
+    <div class="service-history">
+      <h3>📜 आपकी सर्विस हिस्ट्री:</h3>
+      <div id="historyContainer"></div>
+    </div>
+
+    <button class="logout-btn" onclick="logoutUser()">🔓 Logout</button>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    const phone = localStorage.getItem("loggedInUser");
+    if (!phone) {
+      alert("कृपया पहले लॉग इन करें!");
+      window.location.href = "login.html";
+    }
+
+    const userData = JSON.parse(localStorage.getItem("user_" + phone));
+    document.getElementById("userGreeting").innerText = `${userData.fullname || phone}`;
+
+    // Load service history
+    const history = JSON.parse(localStorage.getItem("history_" + phone)) || [];
+    const container = document.getElementById("historyContainer");
+
+    if (history.length === 0) {
+      container.innerHTML = "<p>अभी तक कोई सेवा नहीं ली गई है।</p>";
+    } else {
+      history.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "service-item";
+        div.innerHTML = `<strong>#${index + 1}</strong><br>${item}`;
+        container.appendChild(div);
+      });
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>
