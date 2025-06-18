@@ -55,8 +55,8 @@
       text-align: center;
       display: block;
     }
-    .success {
-      color: green;
+    .error {
+      color: red;
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
@@ -78,7 +78,7 @@
   <input type="tel" id="vipMobile" placeholder="मोबाइल नंबर (10 अंकों का)">
   <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
 
-  <p id="successMsg" class="success"></p>
+  <p id="successMsg" class="error"></p>
 
   <a href="index.html">⬅️ वापस होम पेज पर</a>
 
@@ -103,7 +103,8 @@
       const whatsappLink = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
       window.open(whatsappLink, "_blank");
 
-      msg.textContent = `धन्यवाद ${name}, आप VIP सदस्य बन चुके हैं! ✅`;
+      // ❌ Change success message to contact info
+      msg.textContent = "❌ VIP सदस्य बनने के लिए हमसे संपर्क करें।";
     }
   </script>
 
