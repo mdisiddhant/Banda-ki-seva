@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>बुक्स और स्टेशनरी ऑर्डर</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #d9a7c7, #fffcdc);
+      margin: 0;
+      padding: 0;
+    }
+    h2 {
+      background: #6a1b9a;
+      color: white;
+      margin: 0;
+      padding: 15px;
+      text-align: center;
+      border-radius: 0 0 15px 15px;
+      font-size: 26px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    input, select, button {
+      padding: 12px;
+      margin: 6px 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      background: #6a1b9a;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #4a148c;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f5f5f5;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .item-text {
+      flex: 1;
+      font-size: 16px;
+    }
+    .item-actions button {
+      margin-left: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    ul {
+      padding-left: 0;
+      list-style: none;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .whatsapp-button {
+      background: #25D366;
+      color: white;
+      font-size: 18px;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .whatsapp-button:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📚 बुक्स और स्टेशनरी ऑर्डर</h2>
+
+  <div class="container">
+    <div class="form-group">
+      <input id="custName" placeholder="ग्राहक नाम" required>
+      <input id="custMobile" placeholder="मोबाइल नंबर" required>
+      <input id="custAddress" placeholder="पूरा पता" required>
+      <input id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
+    </div>
+
+    <div class="form-group">
+      <input id="itemName" placeholder="बुक / स्टेशनरी का नाम">
+      <input id="itemQty" placeholder="कितना चाहिए (संख्या)">
+      <select id="itemUnit">
+        <option value="pcs">pcs</option>
+        <option value="L">L</option>
+        <option value="Box">Box</option>
+      </select>
+      <button onclick="addItem()">➕ जोड़ें</button>
+    </div>
+
+    <ul id="orderList"></ul>
+
+    <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
+  </div>
+
+  <script>
+    let orderItems = [];
+    let editIndex = -1;
+
+    window.onload = function() {
+      document.getElementById("custName").value = localStorage.getItem("custName") || "";
+      document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
+      document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
+      document.getElementById("custArea").value = localStorage.getItem("custArea") || "";
+    }
+
+    function addItem() {
+      const name = document.getElementById("itemName").value.trim();
+      const qty = document.getElementById("itemQty").value.trim();
+      const unit = document.getElementById("itemUnit").value;
+
+      if (!name || !qty) {
+        alert("कृपया बुक / स्टेशनरी और मात्रा भरें");
+        return;
+      }
+
+      const fullItem = { name, qty, unit };
+
+      if (editIndex === -1) {
+        orderItems.push(fullItem);
+      } else {
+        orderItems[editIndex] = fullItem;
+        editIndex = -1;
+      }
+
+      document.getElementById("itemName").value = "";
+      document.getElementById("itemQty").value = "";
+
+      renderList();
+    }
+
+    function renderList() {
+      const ul = document.getElementById("orderList");
+      ul.innerHTML = "";
+
+      orderItems.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.className = "item-row";
+
+        const span = document.createElement("span");
+        span.className = "item-text";
+        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`;
+
+        const actions = document.createElement("div");
+        actions.className = "item-actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "✏️ Edit";
+        editBtn.onclick = () => editItem(i);
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "❌ Delete";
+        delBtn.onclick = () => deleteItem(i);
+
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+        li.appendChild(span);
+        li.appendChild(actions);
+        ul.appendChild(li);
+      });
+    }
+
+    function editItem(index) {
+      const item = orderItems[index];
+      document.getElementById("itemName").value = item.name;
+      document.getElementById("itemQty").value = item.qty;
+      document.getElementById("itemUnit").value = item.unit;
+      editIndex = index;
+    }
+
+    function deleteItem(index) {
+      orderItems.splice(index, 1);
+      renderList();
+    }
+
+    function sendWhatsApp() {
+      const name = document.getElementById("custName").value.trim();
+      const mobile = document.getElementById("custMobile").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const area = document.getElementById("custArea").value.trim();
+
+      if (!name || !mobile || !address || orderItems.length === 0) {
+        alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
+        return;
+      }
+
+      localStorage.setItem("custName", name);
+      localStorage.setItem("custMobile", mobile);
+      localStorage.setItem("custAddress", address);
+      localStorage.setItem("custArea", area);
+
+      const itemsText = orderItems.map((item, i) =>
+        `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
+      ).join("\n");
+
+      const message = `📚 *बुक्स और स्टेशनरी ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
+
+      const whatsappNumber = "916351598832";
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+
+      const sheetData = {
+        "Name": name,
+        "Mobile": mobile,
+        "Address": address,
+        "Area": area,
+        "Order Items": itemsText,
+        "Time": new Date().toLocaleString()
+      };
+
+      fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sheetData)
+      }).then(res => {
+        console.log("✅ Sheet updated");
+      }).catch(err => {
+        console.error("❌ Error saving to sheet:", err);
+      });
+    }
+  </script>
+</body>
+</html>
