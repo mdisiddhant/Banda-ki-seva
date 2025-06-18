@@ -139,7 +139,6 @@
     let orderItems = [];
     let editIndex = -1;
 
-    // 🔁 Load saved customer info on page load
     window.onload = function() {
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
       document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
@@ -226,7 +225,6 @@
         return;
       }
 
-      // 💾 Save customer details to localStorage
       localStorage.setItem("custName", name);
       localStorage.setItem("custMobile", mobile);
       localStorage.setItem("custAddress", address);
