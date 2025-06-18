@@ -85,12 +85,6 @@
     .whatsapp-button:hover {
       background: #1ebe5d;
     }
-    #totalAmount {
-      font-weight: bold;
-      font-size: 18px;
-      margin-top: 20px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
@@ -114,13 +108,10 @@
         <option value="pcs">pcs</option>
         <option value="L">L</option>
       </select>
-      <input id="itemPrice" placeholder="₹ प्रति यूनिट (optional)">
       <button onclick="addItem()">➕ जोड़ें</button>
     </div>
 
     <ul id="orderList"></ul>
-
-    <p id="totalAmount">🔢 कुल रकम: ₹0.00</p>
 
     <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
   </div>
@@ -129,7 +120,6 @@
     let orderItems = [];
     let editIndex = -1;
 
-    // ✅ Load customer info on page load
     window.onload = function() {
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
       document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
@@ -139,17 +129,15 @@
 
     function addItem() {
       const name = document.getElementById("itemName").value.trim();
-      const qty = parseFloat(document.getElementById("itemQty").value.trim());
+      const qty = document.getElementById("itemQty").value.trim();
       const unit = document.getElementById("itemUnit").value;
-      const price = parseFloat(document.getElementById("itemPrice").value.trim()) || 0;
 
-      if (!name || isNaN(qty)) {
+      if (!name || !qty) {
         alert("कृपया आइटम और मात्रा भरें");
         return;
       }
 
-      const total = qty * price;
-      const fullItem = { name, qty, unit, price, total };
+      const fullItem = { name, qty, unit };
 
       if (editIndex === -1) {
         orderItems.push(fullItem);
@@ -160,10 +148,8 @@
 
       document.getElementById("itemName").value = "";
       document.getElementById("itemQty").value = "";
-      document.getElementById("itemPrice").value = "";
 
       renderList();
-      updateTotal();
     }
 
     function renderList() {
@@ -176,7 +162,7 @@
 
         const span = document.createElement("span");
         span.className = "item-text";
-        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit} @ ₹${item.price} = ₹${item.total.toFixed(2)}`;
+        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`;
 
         const actions = document.createElement("div");
         actions.className = "item-actions";
@@ -197,23 +183,17 @@
       });
     }
 
-    function updateTotal() {
-      const total = orderItems.reduce((sum, item) => sum + item.total, 0);
-      document.getElementById("totalAmount").innerText = `🔢 कुल रकम: ₹${total.toFixed(2)}`;
-    }
-
     function editItem(index) {
       const item = orderItems[index];
       document.getElementById("itemName").value = item.name;
       document.getElementById("itemQty").value = item.qty;
-
+      document.getElementById("itemUnit").value = item.unit;
       editIndex = index;
     }
 
     function deleteItem(index) {
       orderItems.splice(index, 1);
       renderList();
-      updateTotal();
     }
 
     function sendWhatsApp() {
@@ -227,18 +207,16 @@
         return;
       }
 
-      // ✅ Save customer info to localStorage
       localStorage.setItem("custName", name);
       localStorage.setItem("custMobile", mobile);
       localStorage.setItem("custAddress", address);
       localStorage.setItem("custArea", area);
 
       const itemsText = orderItems.map((item, i) =>
-        `${i + 1}. ${item.name} - ${item.qty} ${item.unit} @ ₹${item.price} = ₹${item.total.toFixed(2)}`
+        `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
       ).join("\n");
 
-      const total = orderItems.reduce((sum, item) => sum + item.total, 0);
-      const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n\n➡️ कुल रकम: ₹${total.toFixed(2)} (Minimum ₹100)`;
+      const message = `🛍️ *VIP किराना ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
 
       const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -250,7 +228,6 @@
         "Address": address,
         "Area": area,
         "Order Items": itemsText,
-        "Total": total.toFixed(2),
         "Time": new Date().toLocaleString()
       };
 
