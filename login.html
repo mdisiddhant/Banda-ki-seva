@@ -1,64 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | Banda ki Seva</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .top-links {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .top-links a {
+      margin: 0 10px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <nav>
-    <h2>Banda ki Seva</h2>
-    <a href="index.html">Home</a>
-    <a href="register.html">Register</a>
-  </nav>
 
-  <main>
-    <h1>User Login</h1>
-    <form id="loginForm">
-      <label for="emailOrPhone">Email or Phone</label><br/>
-      <input type="text" id="emailOrPhone" required><br/><br/>
+  <div class="container">
+    <h1>📦 Banda Ki Seva</h1>
+    <div class="top-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="register.html">📝 Register</a>
+    </div>
 
-      <label for="password">Password</label><br/>
-      <input type="password" id="password" required><br/><br/>
+    <h2>🔐 User Login</h2>
+    <form onsubmit="loginUser(event)">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" placeholder="Enter phone number" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required>
 
       <button type="submit">Login</button>
     </form>
-    <p id="msg"></p>
-    <p><a href="forgetpassword.html">Forgot Password?</a></p>
-  </main>
+  </div>
 
   <script>
-    const form = document.getElementById('loginForm');
-    const msg = document.getElementById('msg');
+    function loginUser(event) {
+      event.preventDefault();
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
 
-      const emailOrPhone = document.getElementById('emailOrPhone').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      let users = JSON.parse(localStorage.getItem('users')) || [];
-      const user = users.find(u =>
-        (u.phone === emailOrPhone || u.email === emailOrPhone) && u.password === password
-      );
-
-      if (user) {
-        msg.textContent = 'Login successful!';
-        msg.style.color = 'green';
-
-        // Store login status (optional)
-        localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-        // Redirect to home or dashboard after 1s
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 1000);
-      } else {
-        msg.textContent = 'Invalid credentials!';
-        msg.style.color = 'red';
+      const userData = localStorage.getItem("user_" + phone);
+      if (!userData) {
+        alert("User नहीं मिला! पहले Register करें।");
+        return;
       }
-    });
+
+      const user = JSON.parse(userData);
+      if (user.password === password) {
+        localStorage.setItem("loggedInUser", phone); // Store session
+        alert("Login सफल! आपका डैशबोर्ड खुल रहा है...");
+        window.location.href = "dashboard.html"; // आगे का पेज
+      } else {
+        alert("गलत पासवर्ड!");
+      }
+    }
   </script>
+
 </body>
 </html>
