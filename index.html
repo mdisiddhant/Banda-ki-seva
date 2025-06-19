@@ -6,12 +6,10 @@
   <title>Banda Ki Seva - Home</title>
   <link rel="manifest" href="manifest-v2.json">
   <style>
-  
     body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background: #ffd700;
-      
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #ffd700;
     }
 
     header {
@@ -84,6 +82,91 @@
       padding: 10px;
       background: #eee;
     }
+
+    /* ✅ Admin login & panel (added) */
+    #adminModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .admin-box {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 25px rgba(0, 255, 150, 0.4);
+      position: relative;
+    }
+
+    .admin-box h2 {
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #00ffcc;
+    }
+
+    .admin-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 30px;
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: white;
+    }
+
+    .admin-box button {
+      width: 100%;
+      padding: 12px;
+      background: #00ffcc;
+      border: none;
+      color: black;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #error-msg {
+      color: red;
+      text-align: center;
+      display: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #adminPanel {
+      display: none;
+      padding: 20px;
+    }
+
+    #adminPanel h3 {
+      color: #00ffcc;
+    }
+
+    .card {
+      background: #222;
+      color: white;
+      margin: 10px 0;
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,255,200,0.2);
+    }
   </style>
 </head>
 <body>
@@ -106,21 +189,19 @@
     gap: 10px;
     margin: 10px;">
     
-    <a href="index.html" style="color: orange; font-weight: bold; text-decoration: none;">🏠 होम</a>
-    <a href="kirana.html" style="color: orange; font-weight: bold; text-decoration: none;">🛒 किराना सेवा</a>
-    <a href="books.html" style="color: orange; font-weight: bold; text-decoration: none;">🛒 books stationery सेवा</a>
-    <a href="courier.html" style="color: orange; font-weight: bold; text-decoration: none;">🚚 Local courier Delivery</a>
-    <a href="track.html" style="color: orange; font-weight: bold; text-decoration: none;">🔍 Track</a>
-    <a href="vip.html" style="color: orange; font-weight: bold; text-decoration: none;">👑 VIP</a>
-    <a href="refer.html" style="color: orange; font-weight: bold; text-decoration: none;">🎁 Refer</a>
-    <a href="contact.html" style="color: orange; font-weight: bold; text-decoration: none;">📞 Contact</a>
-    <a href="admin.html" style="color: orange; font-weight: bold; text-decoration: none;">🛡️ Admin Login</a>
-    <a href="employee.html" style="color: orange; font-weight: bold; text-decoration: none;">🧑‍💼 Employee Login</a>
-    <a href="about.html" style="color: orange; font-weight: bold; text-decoration: none;">ℹ️ About</a>
-    <a href="register.html" style="color: orange; font-weight: bold; text-decoration: none;">📝 रजिस्टर करें</a>
+    <a href="index.html" style="color: orange;">🏠 होम</a>
+    <a href="kirana.html" style="color: orange;">🛒 किराना सेवा</a>
+    <a href="books.html" style="color: orange;">📚 Books सेवा</a>
+    <a href="courier.html" style="color: orange;">🚚 Courier</a>
+    <a href="track.html" style="color: orange;">🔍 Track</a>
+    <a href="vip.html" style="color: orange;">👑 VIP</a>
+    <a href="refer.html" style="color: orange;">🎁 Refer</a>
+    <a href="contact.html" style="color: orange;">📞 Contact</a>
+    <a href="#" onclick="openAdmin()" style="color: orange;">🛡️ Admin Login</a>
+    <a href="employee.html" style="color: orange;">🧑‍💼 Employee Login</a>
+    <a href="about.html" style="color: orange;">ℹ️ About</a>
+    <a href="register.html" style="color: orange;">📝 रजिस्टर करें</a>
   </nav>
-
-
 
   <div class="content">
     <h2>🙏 आपका स्वागत है!</h2>
@@ -140,25 +221,81 @@
     &copy; 2025 Banda Ki Seva | Powered by Siddhant Dhuriya 
   </footer>
 
-  <script>
-  function downloadApp() {
-    const apkUrl = "https://drive.google.com/uc?export=download&id=1MCEei-R87CfIFKkZpr5oI7MUDk4-QQbS"; // ✅ Final APK link
-    document.getElementById("msg").textContent = "⏳ Download शुरू हो रहा है...";
-    window.location.href = apkUrl;
+  <!-- ✅ Admin Modal -->
+  <div id="adminModal">
+    <div class="admin-box">
+      <span class="close-btn" onclick="closeAdmin()">×</span>
+      <h2>🛠️ Admin Login</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <p id="error-msg">Invalid credentials</p>
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
 
-    setTimeout(() => {
-      document.getElementById("msg").textContent = "✅ Download शुरू हो गया! अगर नहीं हुआ तो कृपया दोबारा क्लिक करें।";
-    }, 2000);
-  }
-</script>
+  <!-- ✅ Admin Panel Content -->
+  <div id="adminPanel">
+    <h2>📋 Banda Ki Seva - Admin Panel</h2>
+    <div class="card">
+      <h3>👤 कुल यूज़र</h3>
+      <p>125 Registered Users</p>
+    </div>
+    <div class="card">
+      <h3>📦 आज की डिलीवरी</h3>
+      <p>17 Pending Orders</p>
+    </div>
+    <div class="card">
+      <h3>📝 सेवाएं</h3>
+      <ul>
+        <li>Digital Seva Record</li>
+        <li>Courier Orders</li>
+        <li>Local Delivery Track</li>
+        <li>VIP Membership</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function downloadApp() {
+      const apkUrl = "https://drive.google.com/uc?export=download&id=1MCEei-R87CfIFKkZpr5oI7MUDk4-QQbS";
+      document.getElementById("msg").textContent = "⏳ Download शुरू हो रहा है...";
+      window.location.href = apkUrl;
+
+      setTimeout(() => {
+        document.getElementById("msg").textContent = "✅ Download शुरू हो गया! अगर नहीं हुआ तो कृपया दोबारा क्लिक करें।";
+      }, 2000);
+    }
+
+    function openAdmin() {
+      document.getElementById("adminModal").style.display = "flex";
+    }
+
+    function closeAdmin() {
+      document.getElementById("adminModal").style.display = "none";
+    }
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error-msg");
+
+      if (username === "admin" && password === "banda@123") {
+        document.getElementById("adminModal").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(function () {
+          console.log("✅ Service Worker registered successfully!");
+        });
+    }
+  </script>
+
 </body>
 </html>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(function () {
-        console.log("✅ Service Worker registered successfully!");
-      });
-  }
-</script>
-
