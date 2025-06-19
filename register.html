@@ -5,64 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Register - Banda Ki Seva</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f9;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #0f0f0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       padding: 20px;
     }
 
     .container {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      border-radius: 12px;
+      position: relative;
+      width: 360px;
+      background: #1f1f1f;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 255, 150, 0.2);
+      z-index: 1;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00ffcc, #ff00aa);
+      filter: blur(20px);
+      z-index: -1;
+      border-radius: 20px;
+      animation: glow 6s linear infinite;
+    }
+
+    @keyframes glow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     h1, h2 {
       text-align: center;
-      color: #2c3e50;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    label {
-      font-weight: 600;
-      margin-top: 10px;
-      display: block;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    button {
-      width: 100%;
-      background-color: #28a745;
-      color: white;
-      padding: 12px;
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #218838;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #00ffcc;
     }
 
     .top-links {
@@ -73,6 +65,55 @@
     .top-links a {
       margin: 0 10px;
       font-weight: bold;
+      color: #ff00aa;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .top-links a:hover {
+      text-shadow: 0 0 5px #ff00aa;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+      color: #fff;
+      text-shadow: 0 0 4px #00ffcc;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      background: transparent;
+      border: 2px solid #555;
+      border-radius: 30px;
+      color: #fff;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      width: 100%;
+      background-color: #00ffcc;
+      color: #000;
+      padding: 12px;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #00d4aa;
     }
   </style>
 </head>
@@ -117,14 +158,11 @@
         phone: phone,
         email: email,
         password: password,
-        orders: []  // future use for order history
+        orders: []
       };
 
-      // Save user in localStorage
       localStorage.setItem("user_" + phone, JSON.stringify(user));
       alert("रजिस्ट्रेशन सफल! अब आप लॉगिन कर सकते हैं।");
-
-      // Redirect to login
       window.location.href = "login.html";
     }
   </script>
