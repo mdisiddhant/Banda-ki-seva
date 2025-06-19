@@ -5,35 +5,53 @@
   <title>हमारे बारे में - Banda Ki Seva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
+      background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+      color: #ffffff;
+      min-height: 100vh;
       padding: 20px;
-      color: #222;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 750px;
+      max-width: 800px;
       margin: auto;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-      animation: fadeIn 0.6s ease-in-out;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.2), 0 0 60px rgba(0,255,255,0.05);
+      animation: fadeIn 0.8s ease-in-out;
     }
 
     h1 {
-      color: #007bff;
+      color: #00ffff;
       text-align: center;
       font-size: 32px;
+      text-shadow: 0 0 8px #00ffff;
       margin-bottom: 25px;
     }
 
     h2 {
-      color: #222;
+      color: #ffffff;
       font-size: 22px;
       margin-top: 25px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 25px;
+      color: #00ffcc;
+      text-shadow: 0 0 5px #00ffcc;
     }
 
     ul {
@@ -46,22 +64,16 @@
       font-size: 18px;
       margin-bottom: 10px;
       line-height: 1.6;
+      color: #ffffff;
     }
 
     ul li::before {
       content: "✅ ";
-      color: green;
+      color: #00ffcc;
       margin-right: 5px;
     }
 
-    .section-title {
-      font-weight: bold;
-      font-size: 20px;
-      margin-top: 25px;
-      color: #2c3e50;
-    }
-
-    a.whatsapp-button {
+    .whatsapp-button {
       display: block;
       text-align: center;
       background-color: #25D366;
@@ -72,17 +84,13 @@
       width: fit-content;
       border-radius: 40px;
       font-size: 20px;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 0 12px #25D366;
     }
 
-    a.whatsapp-button:hover {
+    .whatsapp-button:hover {
       background-color: #1ebe5b;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      transform: scale(1.05);
     }
 
     .note {
@@ -90,14 +98,26 @@
       font-weight: bold;
       margin-top: 30px;
       font-size: 18px;
-      color: #555;
+      color: #cccccc;
     }
 
     .datetime {
       text-align: center;
       margin-top: 20px;
-      color: #007bff;
+      color: #00ffff;
       font-weight: bold;
+      text-shadow: 0 0 5px #00ffff;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -125,7 +145,7 @@
     </ul>
 
     <div class="section-title">📍 सेवा क्षेत्र:</div>
-    <p>सिर्फ बांदा शहर और आस-पास के इलाके<br>⌛ सुबह 9 बजे से रात 9 बजे तक<br>💸 डिलीवरी शुल्क ₹20 से शुरू</p>
+    <p style="color:#ddd;">सिर्फ बांदा शहर और आस-पास के इलाके<br>⌛ सुबह 9 बजे से रात 9 बजे तक<br>💸 डिलीवरी शुल्क ₹20 से शुरू</p>
 
     <a class="whatsapp-button" href="https://wa.me/916351598832" target="_blank" id="whatsappBtn">
       📥 WhatsApp पर ऑर्डर करें – यहाँ क्लिक करें
@@ -135,36 +155,27 @@
   </div>
 
   <script>
-    // पेज लोड पर स्वागत Alert
     window.onload = function () {
       alert("🙏 आपका स्वागत है Banda Ki Seva में!");
       updateDateTime();
       autoScrollDown();
     };
 
-    // व्हाट्सएप बटन क्लिक पर confirm message
     document.getElementById("whatsappBtn").addEventListener("click", function (event) {
       let confirmMsg = confirm("क्या आप वाकई WhatsApp पर ऑर्डर करना चाहते हैं?");
-      if (!confirmMsg) {
-        event.preventDefault(); // रोक देता है क्लिक को
-      }
+      if (!confirmMsg) event.preventDefault();
     });
 
-    // रीयल टाइम दिन/समय दिखाएं
     function updateDateTime() {
       let now = new Date();
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
       document.getElementById("datetime").innerText = "📅 दिन और समय: " + now.toLocaleDateString('hi-IN', options);
     }
 
-    // ऑटो स्क्रॉल डाउन
     function autoScrollDown() {
       setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-      }, 4000); // 4 सेकंड बाद स्क्रॉल
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }, 4000);
     }
   </script>
 
