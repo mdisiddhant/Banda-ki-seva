@@ -18,7 +18,7 @@
       margin: 0;
       padding: 15px;
       text-align: center;
-      font-size: 28px;
+      font-size: 26px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
@@ -31,37 +31,107 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
-    input, select, button {
-      padding: 12px;
-      margin: 6px 0;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 20px;
     }
 
-    input[type="number"] {
-      -moz-appearance: textfield;
+    .animated-input {
+      width: 100%;
+      padding: 14px 12px;
+      font-size: 16px;
+      border: 1.8px solid #bbb;
+      border-radius: 8px;
+      outline: none;
+      background: none;
+    }
+
+    .animated-input:focus {
+      border-color: #6a1b9a;
+      box-shadow: 0 0 5px rgba(106, 27, 154, 0.4);
+    }
+
+    .placeholder-label {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 15px;
+      pointer-events: none;
+      transition: 0.3s ease;
+      background: white;
+      padding: 0 5px;
+    }
+
+    .animated-input:focus + .placeholder-label,
+    .animated-input:not(:placeholder-shown) + .placeholder-label {
+      top: -8px;
+      font-size: 12px;
+      color: #6a1b9a;
+    }
+
+    select.animated-input {
+      appearance: none;
+      background-color: white;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .output-preview {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .char-span {
+      display: inline-block;
+      animation: bounceIn 0.4s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: translateY(-8px);
+        opacity: 0;
+      }
+      50% {
+        transform: translateY(4px);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     button {
-      background: linear-gradient(45deg, #6a1b9a, #8e24aa);
-      color: white;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
       font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s ease;
+      background: #6a1b9a;
+      color: white;
       border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
     }
 
     button:hover {
-      background: linear-gradient(45deg, #5e35b1, #7b1fa2);
-      transform: scale(1.02);
+      background: #4a148c;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
     }
 
     .item-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       background: #f3e5f5;
       padding: 10px;
       margin: 8px 0;
@@ -69,44 +139,17 @@
     }
 
     .item-text {
-      flex: 1;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .item-actions button {
-      margin-left: 8px;
-      padding: 6px 10px;
       font-size: 14px;
-      background-color: #e1bee7;
+      background: #e1bee7;
       color: #4a148c;
-    }
-
-    ul {
-      padding-left: 0;
-      list-style: none;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .whatsapp-button {
-      background: #25D366;
-      color: white;
-      font-size: 18px;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
-    .whatsapp-button:hover {
-      background: #1ebe5d;
-    }
-
-    @media (max-width: 600px) {
-      h2 {
-        font-size: 22px;
-      }
+      border: none;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin-left: 5px;
     }
   </style>
 </head>
@@ -115,27 +158,52 @@
   <h2>📚 बुक्स और स्टेशनरी ऑर्डर</h2>
 
   <div class="container">
-    <div class="form-group">
-      <input type="text" id="custName" placeholder="ग्राहक नाम" required>
-      <input type="tel" id="custMobile" placeholder="मोबाइल नंबर" required>
-      <input type="text" id="custAddress" placeholder="पूरा पता" required>
-      <input type="text" id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
+    <div class="input-wrapper">
+      <input type="text" id="custName" class="animated-input" placeholder=" " oninput="animateText(this)">
+      <label class="placeholder-label">ग्राहक नाम</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="tel" id="custMobile" class="animated-input" placeholder=" " oninput="animateText(this)">
+      <label class="placeholder-label">मोबाइल नंबर</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="text" id="custAddress" class="animated-input" placeholder=" " oninput="animateText(this)">
+      <label class="placeholder-label">पूरा पता</label>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="text" id="custArea" class="animated-input" placeholder=" " oninput="animateText(this)">
+      <label class="placeholder-label">एरिया (जैसे: स्वराज कॉलोनी)</label>
     </div>
 
     <div class="form-group">
-      <input type="text" id="itemName" placeholder="बुक / स्टेशनरी का नाम">
-      <input type="number" id="itemQty" placeholder="कितना चाहिए (संख्या)" min="1">
-      <select id="itemUnit">
-        <option value="pcs">pcs</option>
-        <option value="Box">Box</option>
-        <option value="Set">Set</option>
-      </select>
-      <button onclick="addItem()">➕ जोड़ें</button>
+      <div class="input-wrapper" style="flex: 2;">
+        <input type="text" id="itemName" class="animated-input" placeholder=" " oninput="animateText(this)">
+        <label class="placeholder-label">बुक / स्टेशनरी का नाम</label>
+      </div>
+
+      <div class="input-wrapper" style="flex: 1;">
+        <input type="number" id="itemQty" class="animated-input" placeholder=" " oninput="animateText(this)">
+        <label class="placeholder-label">संख्या</label>
+      </div>
+
+      <div class="input-wrapper" style="flex: 1;">
+        <select id="itemUnit" class="animated-input">
+          <option value="pcs">pcs</option>
+          <option value="Box">Box</option>
+          <option value="Set">Set</option>
+        </select>
+        <label class="placeholder-label">इकाई</label>
+      </div>
     </div>
+
+    <button onclick="addItem()">➕ आइटम जोड़ें</button>
 
     <ul id="orderList"></ul>
 
-    <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
+    <button onclick="sendWhatsApp()">🟢 ऑर्डर भेजें WhatsApp + Sheet</button>
   </div>
 
   <script>
@@ -143,10 +211,13 @@
     let editIndex = -1;
 
     window.onload = () => {
-      document.getElementById("custName").value = localStorage.getItem("custName") || "";
-      document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
-      document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
-      document.getElementById("custArea").value = localStorage.getItem("custArea") || "";
+      ['custName','custMobile','custAddress','custArea'].forEach(id => {
+        document.getElementById(id).value = localStorage.getItem(id) || "";
+      });
+    }
+
+    function animateText(input) {
+      // Future: character-based animation preview (optional)
     }
 
     function addItem() {
@@ -155,7 +226,7 @@
       const unit = document.getElementById("itemUnit").value;
 
       if (!name || !qty) {
-        alert("कृपया बुक / स्टेशनरी और मात्रा भरें");
+        alert("कृपया नाम और मात्रा भरें");
         return;
       }
 
@@ -238,29 +309,24 @@
         `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
       ).join("\n");
 
-      const message = `📚 *बुक्स और स्टेशनरी ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
-      const whatsappNumber = "916351598832";
-      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
+      const message = `📚 *बुक्स और स्टेशनरी ऑर्डर*\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
 
-      const sheetData = {
-        "Name": name,
-        "Mobile": mobile,
-        "Address": address,
-        "Area": area,
-        "Order Items": itemsText,
-        "Time": new Date().toLocaleString()
-      };
+      const whatsappNumber = "916351598832";
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
 
       fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(sheetData)
-      }).then(res => {
-        console.log("✅ Sheet updated");
-      }).catch(err => {
-        console.error("❌ Error saving to sheet:", err);
-      });
+        body: JSON.stringify({
+          "Name": name,
+          "Mobile": mobile,
+          "Address": address,
+          "Area": area,
+          "Order Items": itemsText,
+          "Time": new Date().toLocaleString()
+        })
+      }).then(() => console.log("✅ Sheet updated"))
+        .catch(err => console.error("❌ Sheet error", err));
     }
   </script>
 </body>
