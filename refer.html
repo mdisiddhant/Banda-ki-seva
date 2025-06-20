@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>🎁 Refer & Earn - Banda Ki Seva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     * {
@@ -15,23 +14,34 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #c3ecf5, #f5f7fa);
+      background: transparent;
+      min-height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      min-height: 100vh;
+      color: #fff;
+    }
+
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(0, 0, 0, 0.25);
       backdrop-filter: blur(8px);
       padding: 30px;
       border-radius: 20px;
-      width: 100%;
       max-width: 500px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
       animation: fadeIn 1s ease-in-out;
+      z-index: 1;
     }
 
     @keyframes fadeIn {
@@ -39,11 +49,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h2 {
+    h2, p, .socials a {
       text-align: center;
-      color: #00695c;
+      text-shadow: 0 0 10px cyan, 0 0 20px #00ffff;
+    }
+
+    h2 {
       margin-bottom: 20px;
       font-size: 28px;
+      color: #00ffff;
     }
 
     .input-group {
@@ -56,21 +70,22 @@
       left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      color: #00897b;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff;
     }
 
     .input-group input {
       width: 100%;
       padding: 12px 12px 12px 38px;
-      border: 2px solid #b2dfdb;
+      border: 2px solid #b2ffff;
       border-radius: 10px;
       font-size: 16px;
-      background: #f5f5f5;
-      transition: 0.3s;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
     }
 
     .input-group input:focus {
-      border-color: #26a69a;
+      border-color: #00e6e6;
       background: #ffffff;
       outline: none;
     }
@@ -86,12 +101,13 @@
       margin-top: 20px;
       cursor: pointer;
       transition: 0.4s;
-      box-shadow: 0 4px 12px rgba(0, 200, 83, 0.4);
+      box-shadow: 0 0 15px #00ff99;
+      text-shadow: 0 0 4px #fff;
     }
 
     button:hover {
-      background: linear-gradient(to right, #00b248, #00e676);
       transform: scale(1.02);
+      background: linear-gradient(to right, #00b248, #00e676);
     }
 
     .socials {
@@ -103,7 +119,7 @@
       margin-bottom: 10px;
       font-weight: bold;
       font-size: 16px;
-      color: #00796b;
+      color: #00ffff;
     }
 
     .socials a {
@@ -121,74 +137,107 @@
     .whatsapp { color: #25D366; }
 
     @media (max-width: 500px) {
-      h2 {
-        font-size: 24px;
-      }
+      h2 { font-size: 24px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>🎁 रेफर करें और कमाएं</h2>
-    <form id="referForm">
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" name="Name" placeholder="👤 आपका नाम" required>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-phone-alt"></i>
-        <input type="tel" name="Mobile" placeholder="📱 आपका मोबाइल नंबर" pattern="[0-9]{10}" required>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-user-friends"></i>
-        <input type="text" name="Referred Person Name" placeholder="👥 जिसे रेफर किया उसका नाम" required>
-      </div>
-      <div class="input-group">
-        <i class="fas fa-phone-square-alt"></i>
-        <input type="tel" name="Referred Mobile" placeholder="📞 उसका मोबाइल नंबर" pattern="[0-9]{10}" required>
-      </div>
-      <button type="submit">🚀 सबमिट करें</button>
-    </form>
 
-    <div class="socials">
-      <p>📢 हमें फ़ॉलो करें:</p>
-      <a class="instagram" href="https://instagram.com/yourpage" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a class="facebook" href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a class="whatsapp" href="https://wa.me/916351598832" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<canvas id="bgCanvas"></canvas>
+
+<div class="container">
+  <h2>🎁 रेफर करें और कमाएं</h2>
+  <form id="referForm">
+    <div class="input-group">
+      <i class="fas fa-user"></i>
+      <input type="text" name="Name" placeholder="👤 आपका नाम" required>
     </div>
+    <div class="input-group">
+      <i class="fas fa-phone-alt"></i>
+      <input type="tel" name="Mobile" placeholder="📱 आपका मोबाइल नंबर" pattern="[0-9]{10}" required>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-user-friends"></i>
+      <input type="text" name="Referred Person Name" placeholder="👥 जिसे रेफर किया उसका नाम" required>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-phone-square-alt"></i>
+      <input type="tel" name="Referred Mobile" placeholder="📞 उसका मोबाइल नंबर" pattern="[0-9]{10}" required>
+    </div>
+    <button type="submit">🚀 सबमिट करें</button>
+  </form>
+
+  <div class="socials">
+    <p>📢 हमें फ़ॉलो करें:</p>
+    <a class="instagram" href="https://instagram.com/yourpage" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a class="facebook" href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a class="whatsapp" href="https://wa.me/916351598832" target="_blank"><i class="fab fa-whatsapp"></i></a>
   </div>
+</div>
 
-  <script>
-    document.getElementById("referForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+<script>
+  document.getElementById("referForm").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      const formData = new FormData(this);
-      const data = {};
-      formData.forEach((value, key) => { data[key] = value.trim(); });
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => { data[key] = value.trim(); });
 
-      const mobilePattern = /^[0-9]{10}$/;
-      if (!mobilePattern.test(data["Mobile"]) || !mobilePattern.test(data["Referred Mobile"])) {
-        alert("📵 कृपया मोबाइल नंबर सही भरें (10 अंकों में)।");
-        return;
+    const mobilePattern = /^[0-9]{10}$/;
+    if (!mobilePattern.test(data["Mobile"]) || !mobilePattern.test(data["Referred Mobile"])) {
+      alert("📵 कृपया मोबाइल नंबर सही भरें (10 अंकों में)।");
+      return;
+    }
+
+    fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("✅ रेफर सफलतापूर्वक भेजा गया! धन्यवाद 🙏");
+        document.getElementById("referForm").reset();
+      } else {
+        alert("⚠️ कुछ गलत हुआ, कृपया फिर से प्रयास करें।");
       }
-
-      fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("✅ रेफर सफलतापूर्वक भेजा गया! धन्यवाद 🙏");
-          document.getElementById("referForm").reset();
-        } else {
-          alert("⚠️ कुछ गलत हुआ, कृपया फिर से प्रयास करें।");
-        }
-      })
-      .catch(error => {
-        alert("🚫 नेटवर्क त्रुटि: " + error.message);
-      });
+    })
+    .catch(error => {
+      alert("🚫 नेटवर्क त्रुटि: " + error.message);
     });
-  </script>
+  });
+</script>
+
+<script>
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let w, h, t = 0;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  for (let i = 0; i < 200; i++) {
+    const angle = i * 0.3 + t;
+    const radius = 150 + 50 * Math.sin(t / 25 + i / 12);
+    const x = w/2 + radius * Math.cos(angle);
+    const y = h/2 + radius * Math.sin(angle);
+    const hue = (i * 4 + t * 30) % 360;
+    ctx.beginPath();
+    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+    ctx.fill();
+  }
+  t += 0.02;
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
 </body>
 </html>
