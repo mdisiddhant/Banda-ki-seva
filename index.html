@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html><html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,221 +11,217 @@
       background: #000;
       position: relative;
       overflow-x: hidden;
-    }
+    }/* ✅ Stylish Animated Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(-45deg, #ffeb3b, #ffc107, #ff9800, #ff5722);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: bgMove 15s ease infinite;
+  opacity: 0.5;
+}
 
-    /* ✅ Stylish Animated Background */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(-45deg, #ffeb3b, #ffc107, #ff9800, #ff5722);
-      background-size: 400% 400%;
-      z-index: -1;
-      animation: bgMove 15s ease infinite;
-      opacity: 0.5;
-    }
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes bgMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+header {
+  background: #007bff;
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
 
-    header {
-      background: #007bff;
-      color: white;
-      padding: 16px;
-      text-align: center;
-    }
+.glow-heading {
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
+  animation: glowText 2s ease-in-out infinite;
+  text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffc107, 0 0 30px #ff9800, 0 0 40px #ff5722;
+}
 
-    .glow-heading {
-      color: #fff;
-      font-weight: bold;
-      font-size: 30px;
-      animation: glowText 2s ease-in-out infinite;
-      text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffc107, 0 0 30px #ff9800, 0 0 40px #ff5722;
-    }
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
+  }
+  50% {
+    text-shadow: 0 0 15px #fff176, 0 0 25px #ffe082, 0 0 35px #ffb74d, 0 0 45px #ff7043;
+  }
+  100% {
+    text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
+  }
+}
 
-    @keyframes glowText {
-      0% {
-        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
-      }
-      50% {
-        text-shadow: 0 0 15px #fff176, 0 0 25px #ffe082, 0 0 35px #ffb74d, 0 0 45px #ff7043;
-      }
-      100% {
-        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
-      }
-    }
+nav {
+  background: #000000;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+}
 
-    nav {
-      background: #000000;
-      padding: 15px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 10px;
-    }
+nav a {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0 0 4px #00ffff, 0 0 8px #00ccff, 0 0 12px #0099ff;
+}
 
-    nav a {
-      color: #00ffff;
-      text-decoration: none;
-      font-weight: bold;
-      text-shadow: 0 0 4px #00ffff, 0 0 8px #00ccff, 0 0 12px #0099ff;
-    }
+nav a:hover {
+  text-decoration: underline;
+}
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+.content {
+  padding: 20px;
+  text-align: center;
+}
 
-    .content {
-      padding: 20px;
-      text-align: center;
-    }
+.download-section {
+  margin-top: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    .download-section {
-      margin-top: 40px;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.download-btn {
+  margin-top: 20px;
+  padding: 14px 28px;
+  font-size: 18px;
+  color: white;
+  background-color: #28a745;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 0 10px #28a745, 0 0 18px #1ec85e;
+  text-shadow: 0 0 6px #ffffff;
+}
 
-    .download-btn {
-      margin-top: 20px;
-      padding: 14px 28px;
-      font-size: 18px;
-      color: white;
-      background-color: #28a745;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 0 10px #28a745, 0 0 18px #1ec85e;
-      text-shadow: 0 0 6px #ffffff;
-    }
+.download-btn:hover {
+  background-color: #218838;
+}
 
-    .download-btn:hover {
-      background-color: #218838;
-    }
+.msg {
+  margin-top: 20px;
+  color: green;
+  font-weight: bold;
+}
 
-    .msg {
-      margin-top: 20px;
-      color: green;
-      font-weight: bold;
-    }
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  background: #eee;
+}
 
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 14px;
-      padding: 10px;
-      background: #eee;
-    }
+#adminModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 
-    #adminModal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
+.admin-box {
+  background: #1f1f1f;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 25px rgba(0, 255, 150, 0.4);
+  position: relative;
+}
 
-    .admin-box {
-      background: #1f1f1f;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 25px rgba(0, 255, 150, 0.4);
-      position: relative;
-    }
+.admin-box h2 {
+  color: #00ffcc;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 6px #00ffcc;
+}
 
-    .admin-box h2 {
-      color: #00ffcc;
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #00ffcc;
-    }
+.admin-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 30px;
+  background: transparent;
+  border: 2px solid #00ffcc;
+  color: white;
+}
 
-    .admin-box input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 30px;
-      background: transparent;
-      border: 2px solid #00ffcc;
-      color: white;
-    }
+.admin-box button {
+  width: 100%;
+  padding: 12px;
+  background: #00ffcc;
+  border: none;
+  color: black;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .admin-box button {
-      width: 100%;
-      padding: 12px;
-      background: #00ffcc;
-      border: none;
-      color: black;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+#error-msg {
+  color: red;
+  text-align: center;
+  display: none;
+}
 
-    #error-msg {
-      color: red;
-      text-align: center;
-      display: none;
-    }
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
 
-    .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 14px;
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
-    }
+#adminPanel {
+  display: none;
+  padding: 20px;
+}
 
-    #adminPanel {
-      display: none;
-      padding: 20px;
-    }
+#adminPanel h3 {
+  color: #00ffcc;
+}
 
-    #adminPanel h3 {
-      color: #00ffcc;
-    }
+.card {
+  background: #222;
+  color: white;
+  margin: 10px 0;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,255,200,0.2);
+}
 
-    .card {
-      background: #222;
-      color: white;
-      margin: 10px 0;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,200,0.2);
-    }
   </style>
 </head>
 <body>
-
   <header>
     <h1 class="glow-heading">📦 Banda Ki Seva</h1>
     <p>1 Day Courier | Digital Seva | Local Delivery</p>
-  </header>
-
-  <nav>
+  </header>  <nav>
     <a href="index.html">🏠 होम</a>
     <a href="kirana.html">🛒 किराना सेवा</a>
     <a href="books.html">📚 Books सेवा</a>
@@ -239,25 +234,18 @@
     <a href="employee.html">🧑‍💼 Employee Login</a>
     <a href="about.html">ℹ️ About</a>
     <a href="register.html">📝 रजिस्टर करें</a>
-  </nav>
-
-  <div class="content">
+  </nav>  <div class="content">
     <h2>🙏 आपका स्वागत है!</h2>
-    <p>हमारी सेवाओं का लाभ उठाने के लिए ऐप डाउनलोड करें।</p>
+    <p>हमारी सेवाओं का लाभ उठाने के लिए ऐप डाउनलोड करें।</p><div class="download-section">
+  <h3>📲 हमारा मोबाइल ऐप डाउनलोड करें</h3>
+  <p>Banda Ki Seva App में सारी सेवाएं एक जगह!</p>
+  <button class="download-btn" onclick="downloadApp()">⬇️ Download APK</button>
+  <div class="msg" id="msg"></div>
+</div>
 
-    <div class="download-section">
-      <h3>📲 हमारा मोबाइल ऐप डाउनलोड करें</h3>
-      <p>Banda Ki Seva App में सारी सेवाएं एक जगह!</p>
-      <button class="download-btn" onclick="downloadApp()">⬇️ Download APK</button>
-      <div class="msg" id="msg"></div>
-    </div>
-  </div>
-
-  <footer>
+  </div>  <footer>
     &copy; 2025 Banda Ki Seva | Powered by Siddhant Dhuriya 
-  </footer>
-
-  <div id="adminModal">
+  </footer>  <div id="adminModal">
     <div class="admin-box">
       <span class="close-btn" onclick="closeAdmin()">×</span>
       <h2>🛠️ Admin Login</h2>
@@ -266,9 +254,7 @@
       <p id="error-msg">Invalid credentials</p>
       <button onclick="login()">Login</button>
     </div>
-  </div>
-
-  <div id="adminPanel">
+  </div>  <div id="adminPanel">
     <h2>📋 Banda Ki Seva - Admin Panel</h2>
     <div class="card">
       <h3>👤 कुल यूज़र</h3>
@@ -287,9 +273,7 @@
         <li>VIP Membership</li>
       </ul>
     </div>
-  </div>
-
-  <script>
+  </div>  <script>
     function downloadApp() {
       const apkUrl = "https://drive.google.com/uc?export=download&id=1MCEei-R87CfIFKkZpr5oI7MUDk4-QQbS";
       document.getElementById("msg").textContent = "⏳ Download शुरू हो रहा है...";
@@ -325,6 +309,5 @@
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log("✅ Service Worker registered!"));
     }
-  </script>
-</body>
+  </script></body>
 </html>
