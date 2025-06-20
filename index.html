@@ -14,6 +14,30 @@
       overflow-x: hidden;
     }
 
+    /* ✅ Glowing Logo Style */
+    .logo-wrapper {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .home-logo {
+      height: 110px;
+      border-radius: 20px;
+      animation: logoGlow 2.5s ease-in-out infinite alternate;
+      box-shadow: 0 0 30px #00ffffaa;
+    }
+
+    @keyframes logoGlow {
+      from {
+        transform: scale(1);
+        box-shadow: 0 0 20px #00ffff, 0 0 40px #00ccff;
+      }
+      to {
+        transform: scale(1.05);
+        box-shadow: 0 0 35px #00ffff, 0 0 70px #00ccff;
+      }
+    }
+
     /* ✅ Only this Glow Background Remains */
     .live-glow-bg {
       position: fixed;
@@ -241,6 +265,11 @@
 <body>
   <!-- ✅ Stylish Glow Background -->
   <div class="live-glow-bg"></div>
+
+  <!-- 🔷 LOGO SECTION -->
+  <div class="logo-wrapper">
+    <img src="logo.png" alt="Banda Ki Seva Logo" class="home-logo">
+  </div>
 
   <header>
     <h1 class="glow-heading">📦 Banda Ki Seva</h1>
