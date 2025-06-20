@@ -14,25 +14,24 @@
       overflow-x: hidden;
     }
 
-    /* ✅ Stylish Animated Background */
-    body::before {
-      content: "";
+    /* ✅ Only this Glow Background Remains */
+    .live-glow-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(-45deg, #ffeb3b, #ffc107, #ff9800, #ff5722);
-      background-size: 400% 400%;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, #ffeb3b33, transparent 60%),
+                  radial-gradient(circle at 70% 70%, #ff408133, transparent 60%),
+                  radial-gradient(circle at 50% 50%, #00ffff33, transparent 60%);
+      animation: rotateGlow 30s linear infinite;
+      filter: blur(100px);
       z-index: -1;
-      animation: bgMove 15s ease infinite;
-      opacity: 0.5;
     }
 
-    @keyframes bgMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     header {
@@ -240,6 +239,9 @@
   </style>
 </head>
 <body>
+  <!-- ✅ Stylish Glow Background -->
+  <div class="live-glow-bg"></div>
+
   <header>
     <h1 class="glow-heading">📦 Banda Ki Seva</h1>
     <p>1 Day Courier | Digital Seva | Local Delivery</p>
