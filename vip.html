@@ -10,22 +10,23 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       color: #fff;
-      padding: 20px;
       min-height: 100vh;
       background: transparent;
-      position: relative;
       overflow: hidden;
+      position: relative;
     }
 
     canvas#bgCanvas {
       position: fixed;
       top: 0; left: 0;
-      z-index: -2;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     .container {
       max-width: 450px;
-      margin: auto;
+      margin: 40px auto;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       border-radius: 20px;
@@ -154,6 +155,7 @@ function joinVip() {
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let w, h, t = 0;
+
 function resize() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = window.innerHeight;
@@ -163,12 +165,12 @@ resize();
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
-  for (let i = 0; i < 150; i++) {
-    const angle = i * 0.2 + t;
-    const radius = 120 + 60 * Math.sin(t / 40 + i / 10);
+  for (let i = 0; i < 180; i++) {
+    const angle = i * 0.25 + t;
+    const radius = 120 + 40 * Math.sin(t / 30 + i / 10);
     const x = w/2 + radius * Math.cos(angle);
     const y = h/2 + radius * Math.sin(angle);
-    const hue = i * 3;
+    const hue = i * 2;
     ctx.beginPath();
     ctx.arc(x, y, 2, 0, Math.PI * 2);
     ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
