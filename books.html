@@ -2,7 +2,8 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>बुक्स और स्टेशनरी ऑर्डर</title>
+  <title>📚 बुक्स और स्टेशनरी ऑर्डर</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -10,80 +11,102 @@
       margin: 0;
       padding: 0;
     }
+
     h2 {
-      background: #6a1b9a;
+      background: linear-gradient(45deg, #6a1b9a, #8e24aa);
       color: white;
       margin: 0;
       padding: 15px;
       text-align: center;
-      border-radius: 0 0 15px 15px;
-      font-size: 26px;
+      font-size: 28px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
+
     .container {
-      max-width: 600px;
+      max-width: 650px;
       margin: 20px auto;
       background: white;
       border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      padding: 25px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
+
     input, select, button {
       padding: 12px;
       margin: 6px 0;
       width: 100%;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
+      border-radius: 10px;
       font-size: 16px;
     }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
     button {
-      background: #6a1b9a;
+      background: linear-gradient(45deg, #6a1b9a, #8e24aa);
       color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: 0.3s ease;
+      border: none;
     }
+
     button:hover {
-      background: #4a148c;
+      background: linear-gradient(45deg, #5e35b1, #7b1fa2);
+      transform: scale(1.02);
     }
+
     .item-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #f5f5f5;
+      background: #f3e5f5;
       padding: 10px;
       margin: 8px 0;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
     .item-text {
       flex: 1;
       font-size: 16px;
     }
+
     .item-actions button {
       margin-left: 8px;
-      padding: 8px 12px;
+      padding: 6px 10px;
       font-size: 14px;
+      background-color: #e1bee7;
+      color: #4a148c;
     }
+
     ul {
       padding-left: 0;
       list-style: none;
     }
+
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
+
     .whatsapp-button {
       background: #25D366;
       color: white;
       font-size: 18px;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      margin-top: 20px;
+      padding: 14px;
       border-radius: 10px;
+      margin-top: 20px;
     }
+
     .whatsapp-button:hover {
       background: #1ebe5d;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
@@ -93,19 +116,19 @@
 
   <div class="container">
     <div class="form-group">
-      <input id="custName" placeholder="ग्राहक नाम" required>
-      <input id="custMobile" placeholder="मोबाइल नंबर" required>
-      <input id="custAddress" placeholder="पूरा पता" required>
-      <input id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
+      <input type="text" id="custName" placeholder="ग्राहक नाम" required>
+      <input type="tel" id="custMobile" placeholder="मोबाइल नंबर" required>
+      <input type="text" id="custAddress" placeholder="पूरा पता" required>
+      <input type="text" id="custArea" placeholder="एरिया (जैसे: स्वराज कॉलोनी)" required>
     </div>
 
     <div class="form-group">
-      <input id="itemName" placeholder="बुक / स्टेशनरी का नाम">
-      <input id="itemQty" placeholder="कितना चाहिए (संख्या)">
+      <input type="text" id="itemName" placeholder="बुक / स्टेशनरी का नाम">
+      <input type="number" id="itemQty" placeholder="कितना चाहिए (संख्या)" min="1">
       <select id="itemUnit">
         <option value="pcs">pcs</option>
-        <option value="L">L</option>
         <option value="Box">Box</option>
+        <option value="Set">Set</option>
       </select>
       <button onclick="addItem()">➕ जोड़ें</button>
     </div>
@@ -119,7 +142,7 @@
     let orderItems = [];
     let editIndex = -1;
 
-    window.onload = function() {
+    window.onload = () => {
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
       document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
       document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
@@ -216,7 +239,6 @@
       ).join("\n");
 
       const message = `📚 *बुक्स और स्टेशनरी ऑर्डर*\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
-
       const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
