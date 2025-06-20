@@ -19,6 +19,12 @@
       text-align: center;
     }
 
+    /* 🟡 Glow Heading Style */
+    .glow-heading {
+      color: gold;
+      text-shadow: 0 0 6px #fff700, 0 0 10px #ffcc00, 0 0 15px orange;
+    }
+
     nav {
       background: #9370DB;
       padding: 10px;
@@ -26,10 +32,11 @@
     }
 
     nav a {
-      color: white;
+      color: #00ffff;
       text-decoration: none;
       margin: 0 12px;
       font-weight: bold;
+      text-shadow: 0 0 4px #00ffff, 0 0 8px #00ccff, 0 0 12px #0099ff;
     }
 
     nav a:hover {
@@ -63,6 +70,8 @@
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
+      box-shadow: 0 0 10px #28a745, 0 0 18px #1ec85e;
+      text-shadow: 0 0 6px #ffffff;
     }
 
     .download-btn:hover {
@@ -83,7 +92,6 @@
       background: #eee;
     }
 
-    /* ✅ Admin login & panel (added) */
     #adminModal {
       position: fixed;
       top: 0;
@@ -172,35 +180,23 @@
 <body>
 
   <header>
-    <h1>📦 Banda Ki Seva</h1>
+    <h1 class="glow-heading">📦 Banda Ki Seva</h1>
     <p>1 Day Courier | Digital Seva | Local Delivery</p>
   </header>
 
-  <!-- Navigation Box -->
-  <nav style="
-    background-color: #000000;
-    padding: 15px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px;">
-    
-    <a href="index.html" style="color: orange;">🏠 होम</a>
-    <a href="kirana.html" style="color: orange;">🛒 किराना सेवा</a>
-    <a href="books.html" style="color: orange;">📚 Books सेवा</a>
-    <a href="courier.html" style="color: orange;">🚚 Courier</a>
-    <a href="track.html" style="color: orange;">🔍 Track</a>
-    <a href="vip.html" style="color: orange;">👑 VIP</a>
-    <a href="refer.html" style="color: orange;">🎁 Refer</a>
-    <a href="contact.html" style="color: orange;">📞 Contact</a>
-    <a href="#" onclick="openAdmin()" style="color: orange;">🛡️ Admin Login</a>
-    <a href="employee.html" style="color: orange;">🧑‍💼 Employee Login</a>
-    <a href="about.html" style="color: orange;">ℹ️ About</a>
-    <a href="register.html" style="color: orange;">📝 रजिस्टर करें</a>
+  <nav style="background-color: #000000; padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 10px;">
+    <a href="index.html">🏠 होम</a>
+    <a href="kirana.html">🛒 किराना सेवा</a>
+    <a href="books.html">📚 Books सेवा</a>
+    <a href="courier.html">🚚 Courier</a>
+    <a href="track.html">🔍 Track</a>
+    <a href="vip.html">👑 VIP</a>
+    <a href="refer.html">🎁 Refer</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="#" onclick="openAdmin()">🛡️ Admin Login</a>
+    <a href="employee.html">🧑‍💼 Employee Login</a>
+    <a href="about.html">ℹ️ About</a>
+    <a href="register.html">📝 रजिस्टर करें</a>
   </nav>
 
   <div class="content">
@@ -221,7 +217,6 @@
     &copy; 2025 Banda Ki Seva | Powered by Siddhant Dhuriya 
   </footer>
 
-  <!-- ✅ Admin Modal -->
   <div id="adminModal">
     <div class="admin-box">
       <span class="close-btn" onclick="closeAdmin()">×</span>
@@ -233,7 +228,6 @@
     </div>
   </div>
 
-  <!-- ✅ Admin Panel Content -->
   <div id="adminPanel">
     <h2>📋 Banda Ki Seva - Admin Panel</h2>
     <div class="card">
