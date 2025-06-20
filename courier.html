@@ -5,30 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VIP कोरियर बुकिंग | Banda Ki Seva</title>
   <style>
+    :root {
+      --gold: #b8860b;
+      --light-gold: #ffd700;
+      --dark-gold: #daa520;
+      --bg-gradient: linear-gradient(to right, #fff8dc, #fef6e4);
+      --card-bg: rgba(255, 255, 255, 0.95);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-gradient: linear-gradient(to right, #1a1a1a, #2a2a2a);
+        --card-bg: rgba(40, 40, 40, 0.95);
+      }
+      body {
+        color: #eee;
+      }
+      input, textarea, select {
+        background: #333;
+        color: #fff;
+        border-color: #555;
+      }
+      .features ul li {
+        background: #444;
+        color: #eee;
+      }
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff8dc, #fef6e4);
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: var(--bg-gradient);
       margin: 0;
       padding: 20px;
+      min-height: 100vh;
+      transition: all 0.3s ease;
     }
 
     h2 {
       text-align: center;
-      color: #b8860b;
+      color: var(--gold);
       font-size: 28px;
       margin-bottom: 20px;
       text-shadow: 1px 1px 2px #fff;
+      animation: fadeIn 1s ease;
     }
 
     form {
       max-width: 650px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.95);
+      margin: 20px auto;
+      background: var(--card-bg);
       padding: 30px;
-      border: 2px solid gold;
+      border: 2px solid var(--gold);
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
       backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+      animation: slideUp 0.5s ease;
+    }
+
+    form:hover {
+      transform: translateY(-5px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     label {
@@ -36,6 +88,11 @@
       margin-top: 15px;
       font-weight: bold;
       color: #444;
+      transition: all 0.2s;
+    }
+
+    input:focus + label, textarea:focus + label {
+      color: var(--gold);
     }
 
     input, textarea, select {
@@ -46,13 +103,31 @@
       border-radius: 10px;
       background: #fffaf0;
       font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 5px rgba(218, 165, 32, 0.5);
+    }
+
+    input.invalid, textarea.invalid {
+      border-color: #ff4444;
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
     }
 
     button {
       margin-top: 25px;
       width: 100%;
       padding: 14px;
-      background: linear-gradient(to right, #ffd700, #ffcc00);
+      background: linear-gradient(to right, var(--light-gold), var(--dark-gold));
       border: none;
       color: #333;
       font-size: 18px;
@@ -60,15 +135,41 @@
       border-radius: 10px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
     button:hover {
-      background: linear-gradient(to right, #ffcc00, #ffc107);
+      background: linear-gradient(to right, var(--dark-gold), var(--gold));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.1);
+      transform: rotate(45deg);
+      transition: all 0.5s;
+    }
+
+    button:hover::after {
+      left: 100%;
     }
 
     .whatsapp {
       margin-top: 20px;
       text-align: center;
+      animation: fadeIn 1s ease 0.2s both;
     }
 
     .whatsapp a {
@@ -81,21 +182,56 @@
       font-size: 16px;
       display: inline-block;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .whatsapp a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .whatsapp a:hover::before {
+      left: 100%;
     }
 
     /* 🎖 VIP Styled Features Section */
     .features {
       max-width: 650px;
-      margin: 40px auto 20px;
+      margin: 40px auto;
       background: linear-gradient(to right, #fff8dc, #fffacd);
       padding: 25px;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-      border: 2px solid gold;
+      border: 2px solid var(--gold);
+      animation: fadeIn 1s ease 0.4s both;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .features {
+        background: linear-gradient(to right, #2a2a2a, #333);
+      }
     }
 
     .features h3 {
-      color: #b8860b;
+      color: var(--gold);
       font-size: 22px;
       text-align: center;
       margin-bottom: 15px;
@@ -116,11 +252,72 @@
       border-radius: 12px;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
       font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .features ul li:hover {
+      transform: translateX(5px);
     }
 
     .features ul li::before {
       content: "🌟 ";
-      color: gold;
+      color: var(--gold);
+    }
+
+    /* Confirmation Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-modal:hover {
+      color: #333;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      form, .features {
+        padding: 20px;
+        margin: 15px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      input, textarea, select {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -129,28 +326,29 @@
 <h2>🎁 VIP कोरियर बुकिंग फॉर्म</h2>
 
 <form id="courierForm">
-  <label>👤 नाम:</label>
-  <input type="text" id="name" required>
+  <label for="name">👤 नाम:</label>
+  <input type="text" id="name" required placeholder="अपना पूरा नाम लिखें">
 
-  <label>📞 मोबाइल नंबर:</label>
-  <input type="tel" id="mobile" required>
+  <label for="mobile">📞 मोबाइल नंबर:</label>
+  <input type="tel" id="mobile" required placeholder="10 अंकों का मोबाइल नंबर" pattern="[0-9]{10}">
 
-  <label>🏠 पिकअप एड्रेस:</label>
-  <textarea id="pickup" required></textarea>
+  <label for="pickup">🏠 पिकअप एड्रेस:</label>
+  <textarea id="pickup" required placeholder="पूरा पता, लैंडमार्क, शहर, पिन कोड"></textarea>
 
-  <label>📦 डिलीवरी एड्रेस:</label>
-  <textarea id="delivery" required></textarea>
+  <label for="delivery">📦 डिलीवरी एड्रेस:</label>
+  <textarea id="delivery" required placeholder="पूरा पता, लैंडमार्क, शहर, पिन कोड"></textarea>
 
-  <label>🧾 सामान का विवरण:</label>
-  <input type="text" id="parcelDetails" required>
+  <label for="parcelDetails">🧾 सामान का विवरण:</label>
+  <input type="text" id="parcelDetails" required placeholder="सामान के बारे में विवरण">
 
-  <label>⚖ वजन (kg):</label>
-  <input type="number" id="weight" required>
+  <label for="weight">⚖ वजन (kg):</label>
+  <input type="number" id="weight" required placeholder="किलोग्राम में वजन">
 
-  <label>🚚 डिलीवरी का प्रकार:</label>
+  <label for="deliveryType">🚚 डिलीवरी का प्रकार:</label>
   <select id="deliveryType">
     <option value="Normal">नॉर्मल (2-3 घंटे)</option>
     <option value="Urgent">जरूरी (1-2 घंटे)</option>
+    <option value="SuperUrgent">सुपर जरूरी (30-60 मिनट)</option>
   </select>
 
   <button type="submit">✅ कोरियर बुक करें</button>
@@ -171,26 +369,112 @@
     <li>📍 लाइव ट्रैकिंग सुविधा</li>
     <li>💬 व्हाट्सएप से डायरेक्ट बुकिंग</li>
     <li>🏠 घर बैठे कलेक्शन और डिलीवरी</li>
+    <li>🔄 24x7 कस्टमर सपोर्ट</li>
   </ul>
 </div>
 
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2 style="color: var(--gold);">🎉 बुकिंग कन्फर्म हुई!</h2>
+    <p>आपकी कोरियर बुकिंग सफलतापूर्वक प्राप्त हो गई है।</p>
+    <p>हमारा टीम सदस्य आपसे जल्द ही संपर्क करेगा।</p>
+    <div style="margin-top: 20px;">
+      <button onclick="closeModal()" style="width: auto; padding: 10px 20px; background: var(--gold);">ठीक है</button>
+    </div>
+  </div>
+</div>
+
 <script>
+  // Form Validation
   document.getElementById('courierForm').addEventListener('submit', function(e) {
     e.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const mobile = document.getElementById('mobile').value;
-    const pickup = document.getElementById('pickup').value;
-    const delivery = document.getElementById('delivery').value;
-    const parcelDetails = document.getElementById('parcelDetails').value;
-    const weight = document.getElementById('weight').value;
+    
+    // Validate inputs
+    const name = document.getElementById('name');
+    const mobile = document.getElementById('mobile');
+    const pickup = document.getElementById('pickup');
+    const delivery = document.getElementById('delivery');
+    const parcelDetails = document.getElementById('parcelDetails');
+    const weight = document.getElementById('weight');
+    
+    let isValid = true;
+    
+    if(name.value.trim() === '') {
+      name.classList.add('invalid');
+      isValid = false;
+    } else {
+      name.classList.remove('invalid');
+    }
+    
+    if(!/^\d{10}$/.test(mobile.value)) {
+      mobile.classList.add('invalid');
+      isValid = false;
+    } else {
+      mobile.classList.remove('invalid');
+    }
+    
+    if(pickup.value.trim() === '') {
+      pickup.classList.add('invalid');
+      isValid = false;
+    } else {
+      pickup.classList.remove('invalid');
+    }
+    
+    if(delivery.value.trim() === '') {
+      delivery.classList.add('invalid');
+      isValid = false;
+    } else {
+      delivery.classList.remove('invalid');
+    }
+    
+    if(parcelDetails.value.trim() === '') {
+      parcelDetails.classList.add('invalid');
+      isValid = false;
+    } else {
+      parcelDetails.classList.remove('invalid');
+    }
+    
+    if(weight.value <= 0 || isNaN(weight.value)) {
+      weight.classList.add('invalid');
+      isValid = false;
+    } else {
+      weight.classList.remove('invalid');
+    }
+    
+    if(!isValid) {
+      return;
+    }
+    
+    // Show confirmation modal
+    document.getElementById('confirmationModal').style.display = 'flex';
+    
+    // Prepare WhatsApp message
     const deliveryType = document.getElementById('deliveryType').value;
-
-    const message = `🚚 *कोरियर बुकिंग डिटेल्स*\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n🏠 पिकअप एड्रेस: ${pickup}\n📦 डिलीवरी एड्रेस: ${delivery}\n📋 सामान: ${parcelDetails}\n⚖ वजन: ${weight} KG\n🚀 डिलीवरी: ${deliveryType}`;
-
-    window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, '_blank');
+    
+    const message = `🚚 *कोरियर बुकिंग डिटेल्स*\n\n👤 नाम: ${name.value}\n📞 मोबाइल: ${mobile.value}\n🏠 पिकअप एड्रेस: ${pickup.value}\n📦 डिलीवरी एड्रेस: ${delivery.value}\n📋 सामान: ${parcelDetails.value}\n⚖ वजन: ${weight.value} KG\n🚀 डिलीवरी: ${deliveryType}`;
+    
+    // Open WhatsApp after 3 seconds
+    setTimeout(() => {
+      window.open(`https://wa.me/916351598832?text=${encodeURIComponent(message)}`, '_blank');
+    }, 3000);
   });
-</script>
-
-</body>
-</html>
+  
+  // Close modal function
+  function closeModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    document.getElementById('courierForm').reset();
+  }
+  
+  // Close modal when clicking X
+  document.querySelector('.close-modal').addEventListener('click', closeModal);
+  
+  // Close modal when clicking outside
+  window.addEventListener('click', function(e) {
+    if(e.target === document.getElementById('confirmationModal')) {
+      closeModal();
+    }
+  });
+  
+  // Real-time validation
