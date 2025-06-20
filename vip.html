@@ -5,43 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VIP सदस्यता - Banda Ki Seva</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
       color: #fff;
       padding: 20px;
       min-height: 100vh;
+      background: #000;
       position: relative;
       overflow: hidden;
-      background: #000;
     }
 
-    /* Live glowing background */
-    body::before {
-      content: "";
+    canvas#bgCanvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, #00ffff66, transparent),
-                  radial-gradient(circle at 70% 60%, #ff00cc66, transparent),
-                  radial-gradient(circle at 50% 80%, #ffcc0066, transparent);
-      animation: animateGlow 20s ease-in-out infinite;
-      z-index: -1;
-      filter: blur(80px);
-      transform: translate(-25%, -25%);
-    }
-
-    @keyframes animateGlow {
-      0% { transform: translate(-25%, -25%) scale(1); }
-      50% { transform: translate(-10%, -10%) scale(1.2); }
-      100% { transform: translate(-25%, -25%) scale(1); }
+      top: 0; left: 0;
+      z-index: -2;
     }
 
     .container {
@@ -52,6 +31,8 @@
       border-radius: 20px;
       padding: 25px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -120,46 +101,78 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>🎖 VIP सदस्यता लाभ</h1>
-    <p style="text-align:center;">VIP सदस्य बनें और पाएं एक्सक्लूसिव फायदे:</p>
-    <ul>
-      <li>🚀 प्राथमिकता कोरियर डिलीवरी</li>
-      <li>📄 फ्री डिजिटल सेवा एक्सेस</li>
-      <li>💰 लोकल डिलीवरी पर विशेष छूट</li>
-      <li>🎁 ऑफर्स और रिवॉर्ड्स की पहले जानकारी</li>
-    </ul>
+<canvas id="bgCanvas"></canvas>
 
-    <input type="text" id="vipName" placeholder="👤 अपना नाम दर्ज करें">
-    <input type="tel" id="vipMobile" placeholder="📱 मोबाइल नंबर (10 अंकों का)">
-    <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
+<div class="container">
+  <h1>🎖 VIP सदस्यता लाभ</h1>
+  <p style="text-align:center;">VIP सदस्य बनें और पाएं एक्सक्लूसिव फायदे:</p>
+  <ul>
+    <li>🚀 प्राथमिकता कोरियर डिलीवरी</li>
+    <li>📄 फ्री डिजिटल सेवा एक्सेस</li>
+    <li>💰 लोकल डिलीवरी पर विशेष छूट</li>
+    <li>🎁 ऑफर्स और रिवॉर्ड्स की पहले जानकारी</li>
+  </ul>
 
-    <p id="successMsg" class="error"></p>
+  <input type="text" id="vipName" placeholder="👤 अपना नाम दर्ज करें">
+  <input type="tel" id="vipMobile" placeholder="📱 मोबाइल नंबर (10 अंकों का)">
+  <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
 
-    <a href="index.html">⬅️ वापस होम पेज पर</a>
-  </div>
+  <p id="successMsg" class="error"></p>
 
-  <script>
-    function joinVip() {
-      const name = document.getElementById("vipName").value.trim();
-      const mobile = document.getElementById("vipMobile").value.trim();
-      const msg = document.getElementById("successMsg");
+  <a href="index.html">⬅️ वापस होम पेज पर</a>
+</div>
 
-      if (name === "" || mobile.length !== 10 || isNaN(mobile)) {
-        alert("कृपया सही नाम और 10 अंकों का मोबाइल नंबर दर्ज करें।");
-        return;
-      }
+<script>
+function joinVip() {
+  const name = document.getElementById("vipName").value.trim();
+  const mobile = document.getElementById("vipMobile").value.trim();
+  const msg = document.getElementById("successMsg");
 
-      localStorage.setItem("vip_name", name);
-      localStorage.setItem("vip_mobile", mobile);
+  if (name === "" || mobile.length !== 10 || isNaN(mobile)) {
+    alert("कृपया सही नाम और 10 अंकों का मोबाइल नंबर दर्ज करें।");
+    return;
+  }
 
-      const message = `🎉 Banda Ki Seva VIP सदस्यता:\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\nधन्यवाद, आप VIP सदस्य बन गए हैं।`;
-      const whatsappLink = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
-      window.open(whatsappLink, "_blank");
+  localStorage.setItem("vip_name", name);
+  localStorage.setItem("vip_mobile", mobile);
 
-      msg.textContent = "❌ VIP सदस्य बनने के लिए हमसे संपर्क करें।";
-    }
-  </script>
+  const message = `🎉 Banda Ki Seva VIP सदस्यता:\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\nधन्यवाद, आप VIP सदस्य बन गए हैं।`;
+  const whatsappLink = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
+  window.open(whatsappLink, "_blank");
+
+  msg.textContent = "❌ VIP सदस्य बनने के लिए हमसे संपर्क करें।";
+}
+</script>
+
+<script>
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let w, h, t = 0;
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  for (let i = 0; i < 150; i++) {
+    const angle = i * 0.2 + t;
+    const radius = 120 + 60 * Math.sin(t / 40 + i / 10);
+    const x = w/2 + radius * Math.cos(angle);
+    const y = h/2 + radius * Math.sin(angle);
+    const hue = i * 3;
+    ctx.beginPath();
+    ctx.arc(x, y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+    ctx.fill();
+  }
+  t += 0.02;
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
 
 </body>
 </html>
