@@ -5,58 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VIP सदस्यता - Banda Ki Seva</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       padding: 20px;
-      background: linear-gradient(to right, #ffecd2, #fcb69f);
-      color: #333;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background: #000;
     }
+
+    /* Live glowing background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, #00ffff66, transparent),
+                  radial-gradient(circle at 70% 60%, #ff00cc66, transparent),
+                  radial-gradient(circle at 50% 80%, #ffcc0066, transparent);
+      animation: animateGlow 20s ease-in-out infinite;
+      z-index: -1;
+      filter: blur(80px);
+      transform: translate(-25%, -25%);
+    }
+
+    @keyframes animateGlow {
+      0% { transform: translate(-25%, -25%) scale(1); }
+      50% { transform: translate(-10%, -10%) scale(1.2); }
+      100% { transform: translate(-25%, -25%) scale(1); }
+    }
+
+    .container {
+      max-width: 450px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+    }
+
     h1 {
-      color: #d00000;
+      color: #00ffff;
       text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffff;
     }
+
     ul {
-      background: #fff;
+      background: rgba(255,255,255,0.1);
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      list-style: none;
     }
+
     li {
       margin-bottom: 10px;
+      line-height: 1.5;
     }
+
     input {
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       width: 100%;
-      box-sizing: border-box;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid #ccc;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
     }
+
     button {
       margin-top: 10px;
-      padding: 12px 20px;
-      background-color: #008000;
+      padding: 14px;
+      background-color: #00cc66;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
       width: 100%;
+      box-shadow: 0 0 10px #00cc66;
+      cursor: pointer;
     }
+
     button:hover {
-      background-color: #005d00;
+      background-color: #009944;
     }
+
     a {
-      display: inline-block;
-      margin-top: 20px;
-      color: #0077cc;
-      text-decoration: none;
-      text-align: center;
       display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #00ffff;
+      text-decoration: none;
     }
+
     .error {
-      color: red;
+      color: #ff5555;
       font-weight: bold;
       margin-top: 15px;
       text-align: center;
@@ -65,22 +120,24 @@
 </head>
 <body>
 
-  <h1>🎖 VIP सदस्यता लाभ</h1>
-  <p>VIP सदस्य बनें और पाएं एक्सक्लूसिव फायदे:</p>
-  <ul>
-    <li>🚀 प्राथमिकता कोरियर डिलीवरी</li>
-    <li>📄 फ्री डिजिटल सेवा एक्सेस</li>
-    <li>💰 लोकल डिलीवरी पर विशेष छूट</li>
-    <li>🎁 ऑफर्स और रिवॉर्ड्स की पहले जानकारी</li>
-  </ul>
+  <div class="container">
+    <h1>🎖 VIP सदस्यता लाभ</h1>
+    <p style="text-align:center;">VIP सदस्य बनें और पाएं एक्सक्लूसिव फायदे:</p>
+    <ul>
+      <li>🚀 प्राथमिकता कोरियर डिलीवरी</li>
+      <li>📄 फ्री डिजिटल सेवा एक्सेस</li>
+      <li>💰 लोकल डिलीवरी पर विशेष छूट</li>
+      <li>🎁 ऑफर्स और रिवॉर्ड्स की पहले जानकारी</li>
+    </ul>
 
-  <input type="text" id="vipName" placeholder="अपना नाम दर्ज करें">
-  <input type="tel" id="vipMobile" placeholder="मोबाइल नंबर (10 अंकों का)">
-  <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
+    <input type="text" id="vipName" placeholder="👤 अपना नाम दर्ज करें">
+    <input type="tel" id="vipMobile" placeholder="📱 मोबाइल नंबर (10 अंकों का)">
+    <button onclick="joinVip()">🎉 VIP सदस्य बनें</button>
 
-  <p id="successMsg" class="error"></p>
+    <p id="successMsg" class="error"></p>
 
-  <a href="index.html">⬅️ वापस होम पेज पर</a>
+    <a href="index.html">⬅️ वापस होम पेज पर</a>
+  </div>
 
   <script>
     function joinVip() {
@@ -88,22 +145,18 @@
       const mobile = document.getElementById("vipMobile").value.trim();
       const msg = document.getElementById("successMsg");
 
-      if (name === "" || mobile.length !== 10) {
+      if (name === "" || mobile.length !== 10 || isNaN(mobile)) {
         alert("कृपया सही नाम और 10 अंकों का मोबाइल नंबर दर्ज करें।");
         return;
       }
 
-      // ✅ Save to localStorage
       localStorage.setItem("vip_name", name);
       localStorage.setItem("vip_mobile", mobile);
 
-      // ✅ WhatsApp Confirmation Message
       const message = `🎉 Banda Ki Seva VIP सदस्यता:\n\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\nधन्यवाद, आप VIP सदस्य बन गए हैं।`;
-
       const whatsappLink = `https://wa.me/916351598832?text=${encodeURIComponent(message)}`;
       window.open(whatsappLink, "_blank");
 
-      // ❌ Change success message to contact info
       msg.textContent = "❌ VIP सदस्य बनने के लिए हमसे संपर्क करें।";
     }
   </script>
