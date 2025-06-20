@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>किराना ऑर्डर</title>
+  <title>VIP किराना ऑर्डर</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -13,38 +13,47 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ffd700, #ffcc00, #fff8dc);
-      background-size: 400% 400%;
-      animation: gradientShift 10s ease infinite;
+      background-color: #000;
+      color: #fff;
       padding: 20px;
-      color: #333;
+      overflow-x: hidden;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(circle at 20% 30%, #ff00cc88, transparent),
+                  radial-gradient(circle at 80% 70%, #00ffff88, transparent);
+      filter: blur(60px);
+      z-index: -1;
+      animation: bgGlow 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgGlow {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
     }
 
     h2 {
       text-align: center;
-      background: linear-gradient(to right, #ff9900, #ffcc00);
-      color: white;
-      padding: 15px;
-      font-size: 28px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
       margin-bottom: 25px;
+      font-size: 28px;
     }
 
     .container {
       max-width: 720px;
       margin: auto;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      padding: 25px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 0 30px #00ffff55;
     }
 
     input, select, button {
@@ -52,30 +61,35 @@
       padding: 14px;
       margin: 10px 0;
       border-radius: 12px;
-      border: none;
       font-size: 16px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      border: none;
     }
 
     input, select {
-      background: #fffde7;
-      border: 1px solid #fbc02d;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid #00ffff80;
+      outline: none;
     }
 
     button {
-      background-color: #ff9800;
-      color: white;
+      background-color: #00ffff;
+      color: black;
       font-weight: bold;
-      transition: 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ffff99;
+      transition: 0.3s;
     }
 
     button:hover {
-      background-color: #f57c00;
+      background-color: #00cccc;
     }
 
     .whatsapp-button {
       background: #25D366;
-      margin-top: 15px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 12px #25D366;
     }
 
     .whatsapp-button:hover {
@@ -85,23 +99,24 @@
     .item-row {
       display: flex;
       justify-content: space-between;
-      background: #fff8e1;
+      background: rgba(255, 255, 255, 0.08);
       padding: 12px;
       border-radius: 10px;
       margin: 10px 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
     }
 
     .item-row:hover {
       transform: scale(1.02);
-      background: #fff3c5;
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .item-actions button {
       padding: 6px 10px;
       margin-left: 5px;
       background: #ffe082;
+      color: black;
       font-size: 14px;
     }
 
@@ -139,7 +154,7 @@
     let orderItems = [];
     let editIndex = -1;
 
-    window.onload = function() {
+    window.onload = function () {
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
       document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
       document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
@@ -167,7 +182,6 @@
 
       document.getElementById("itemName").value = "";
       document.getElementById("itemQty").value = "";
-
       renderList();
     }
 
