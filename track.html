@@ -4,54 +4,119 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Track Order - Banda Ki Seva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background-color: #000;
+      overflow-x: hidden;
       padding: 20px;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, #00ffff55, transparent),
+        radial-gradient(circle at 80% 70%, #ff00cc55, transparent),
+        repeating-linear-gradient(45deg, #ffffff0a, #ffffff0a 1px, transparent 1px, transparent 30px);
+      background-size: cover;
+      z-index: -1;
+      animation: bgMove 15s linear infinite alternate;
+      filter: blur(60px);
+    }
+
+    @keyframes bgMove {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.2) rotate(1deg); }
     }
 
     h2 {
       text-align: center;
-      color: #2c3e50;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffffaa;
+      margin-bottom: 30px;
+      font-size: 28px;
     }
 
     .track-box {
-      max-width: 400px;
+      max-width: 420px;
       margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 0 25px #00ffff55;
+      backdrop-filter: blur(12px);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #ffffffcc;
     }
 
     input[type="text"], button {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 14px;
+      margin-bottom: 15px;
       font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+
+    input[type="text"] {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid #00ffff88;
+    }
+
+    button {
+      background: #00ffff;
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 15px #00ffff99;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00cccc;
     }
 
     #status {
-      margin-top: 15px;
-      color: green;
+      margin-top: 10px;
       text-align: center;
+      font-size: 16px;
     }
 
     .error {
-      color: red;
+      color: #ff4d4d;
     }
   </style>
 </head>
 <body>
 
-  <h2>ऑर्डर ट्रैक करें</h2>
+  <h2>📦 ऑर्डर ट्रैक करें</h2>
 
   <div class="track-box">
-    <label for="trackId">Tracking ID दर्ज करें:</label>
+    <label for="trackId">🧾 Tracking ID दर्ज करें:</label>
     <input type="text" id="trackId" placeholder="उदाहरण: BKS123456" required />
 
-    <button onclick="trackOrder()">स्थिति देखें</button>
+    <button onclick="trackOrder()">🔍 स्थिति देखें</button>
 
     <div id="status"></div>
   </div>
@@ -59,9 +124,9 @@
   <script>
     // Demo data
     const orders = {
-      "BKS123456": "आपका ऑर्डर डिलीवरी के लिए तैयार है।",
-      "BKS654321": "आपका ऑर्डर डिलीवर किया जा चुका है।",
-      "BKS111222": "आपका ऑर्डर प्रोसेस हो रहा है।"
+      "BKS123456": "📦 आपका ऑर्डर डिलीवरी के लिए तैयार है।",
+      "BKS654321": "✅ आपका ऑर्डर डिलीवर किया जा चुका है।",
+      "BKS111222": "⌛ आपका ऑर्डर प्रोसेस हो रहा है।"
     };
 
     function trackOrder() {
@@ -72,7 +137,7 @@
         statusDiv.textContent = orders[id];
         statusDiv.classList.remove("error");
       } else {
-        statusDiv.textContent = "Tracking ID मान्य नहीं है। कृपया पुनः प्रयास करें।";
+        statusDiv.textContent = "❌ Tracking ID मान्य नहीं है। कृपया पुनः प्रयास करें।";
         statusDiv.classList.add("error");
       }
     }
@@ -80,4 +145,3 @@
 
 </body>
 </html>
-
