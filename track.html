@@ -3,39 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Track Order - Banda Ki Seva</title>
+  <title>🔍 लाइव लोकेशन - Banda Ki Seva</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      color: #fff;
       background-color: #000;
-      overflow-x: hidden;
+      color: #0f0;
       padding: 20px;
-      position: relative;
+      overflow-x: hidden;
     }
 
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: 
-        radial-gradient(circle at 20% 30%, #00ffff55, transparent),
-        radial-gradient(circle at 80% 70%, #ff00cc55, transparent),
-        repeating-linear-gradient(45deg, #ffffff0a, #ffffff0a 1px, transparent 1px, transparent 30px);
-      background-size: cover;
+      top: 0; left: 0;
+      height: 100%; width: 100%;
+      background: radial-gradient(circle at 30% 40%, #00ffcc33, transparent),
+                  radial-gradient(circle at 70% 60%, #ff00ff33, transparent),
+                  repeating-linear-gradient(45deg, #ffffff09, #ffffff09 1px, transparent 1px, transparent 30px);
+      filter: blur(70px);
       z-index: -1;
       animation: bgMove 15s linear infinite alternate;
-      filter: blur(60px);
     }
 
     @keyframes bgMove {
@@ -45,103 +37,106 @@
 
     h2 {
       text-align: center;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffffaa;
-      margin-bottom: 30px;
       font-size: 28px;
+      text-shadow: 0 0 10px #00ffcc;
+      margin-bottom: 20px;
     }
 
-    .track-box {
-      max-width: 420px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 0 25px #00ffff55;
-      backdrop-filter: blur(12px);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 16px;
-      color: #ffffffcc;
-    }
-
-    input[type="text"], button {
-      width: 100%;
-      padding: 14px;
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 15px;
-      font-size: 16px;
-      border-radius: 10px;
+    }
+
+    .controls button {
+      background-color: #0f0;
       border: none;
-      outline: none;
-    }
-
-    input[type="text"] {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: 1px solid #00ffff88;
-    }
-
-    button {
-      background: #00ffff;
+      padding: 10px 16px;
       color: #000;
       font-weight: bold;
-      box-shadow: 0 0 15px #00ffff99;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      box-shadow: 0 0 10px #0f0;
     }
 
-    button:hover {
-      background: #00cccc;
+    #map {
+      height: 300px;
+      width: 100%;
+      border: 2px solid #0f0;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0f08;
+      margin-bottom: 20px;
     }
 
-    #status {
-      margin-top: 10px;
+    .info-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .box {
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #0f0;
+      padding: 10px;
+      border-radius: 8px;
+      min-width: 140px;
       text-align: center;
-      font-size: 16px;
-    }
-
-    .error {
-      color: #ff4d4d;
+      box-shadow: 0 0 8px #0f08;
     }
   </style>
 </head>
 <body>
 
-  <h2>📦 ऑर्डर ट्रैक करें</h2>
+  <h2>📍 लाइव लोकेशन ट्रैकर - Banda Ki Seva</h2>
 
-  <div class="track-box">
-    <label for="trackId">🧾 Tracking ID दर्ज करें:</label>
-    <input type="text" id="trackId" placeholder="उदाहरण: BKS123456" required />
-
-    <button onclick="trackOrder()">🔍 स्थिति देखें</button>
-
-    <div id="status"></div>
+  <div class="controls">
+    <button onclick="alert('दिशा फ़ीचर सक्रिय')">🧭 दिशा</button>
+    <button onclick="alert('स्पीकर बदला गया')">🔊 स्पीकर टॉगल</button>
   </div>
 
+  <div id="map"></div>
+
+  <div class="info-boxes">
+    <div class="box" id="ip">IP: लोड हो रहा है...</div>
+    <div class="box" id="device">डिवाइस: ...</div>
+    <div class="box" id="battery">बैटरी: ...</div>
+    <div class="box" id="ping">पिंग: ...</div>
+    <div class="box" id="lang">भाषा: ...</div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Demo data
-    const orders = {
-      "BKS123456": "📦 आपका ऑर्डर डिलीवरी के लिए तैयार है।",
-      "BKS654321": "✅ आपका ऑर्डर डिलीवर किया जा चुका है।",
-      "BKS111222": "⌛ आपका ऑर्डर प्रोसेस हो रहा है।"
-    };
+    // Map
+    const map = L.map('map').setView([20.5937, 78.9629], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-    function trackOrder() {
-      const id = document.getElementById("trackId").value.trim();
-      const statusDiv = document.getElementById("status");
+    // Battery Info
+    navigator.getBattery().then(battery => {
+      document.getElementById('battery').innerText = `बैटरी: ${Math.round(battery.level * 100)}%`;
+    });
 
-      if (orders[id]) {
-        statusDiv.textContent = orders[id];
-        statusDiv.classList.remove("error");
-      } else {
-        statusDiv.textContent = "❌ Tracking ID मान्य नहीं है। कृपया पुनः प्रयास करें।";
-        statusDiv.classList.add("error");
-      }
-    }
+    // Device Info
+    document.getElementById('device').innerText = `डिवाइस: ${navigator.platform}`;
+    document.getElementById('lang').innerText = `भाषा: ${navigator.language}`;
+
+    // Ping (simulated)
+    const start = Date.now();
+    setTimeout(() => {
+      const ping = Date.now() - start;
+      document.getElementById('ping').innerText = `पिंग: ${ping}ms`;
+    }, 20);
+
+    // IP Address
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ip').innerText = `IP: ${data.ip}`;
+      });
   </script>
 
 </body>
-</html>
+  </html>
