@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Service - Banda Ki Seva</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h2 {
+      color: #2e7d32;
+    }
+    .job-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .hidden {
+      display: none;
+    }
+    .button {
+      background-color: #388e3c;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .disabled-button {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+    }
+    footer a {
+      margin-left: 10px;
+      text-decoration: none;
+      background: #25d366;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 उपलब्ध नौकरियाँ</h2>
+  <div id="job-list"></div>  <div id="login-message" class="hidden">
+    <p>⚠️ कृपया पहले लॉगिन करें Job Apply/Post करने के लिए।</p>
+  </div>  <div id="apply-section" class="hidden">
+    <h3>📝 नौकरी के लिए आवेदन करें</h3>
+    <form>
+      <input type="text" placeholder="आपका नाम" required><br><br>
+      <input type="text" placeholder="मोबाइल नंबर" required><br><br>
+      <input type="text" placeholder="आपके स्किल्स" required><br><br>
+      <input type="file" accept="application/pdf" required><br><br>
+      <button class="button">Apply Now</button>
+    </form>
+  </div>  <div id="post-job-section" class="hidden">
+    <h3>📢 नई नौकरी पोस्ट करें</h3>
+    <form id="jobPostForm">
+      <input type="text" placeholder="कंपनी का नाम" id="company" required><br><br>
+      <input type="text" placeholder="पद / नौकरी का नाम" id="title" required><br><br>
+      <textarea placeholder="विवरण" id="description" required></textarea><br><br>
+      <input type="text" placeholder="स्थान" id="location" required><br><br>
+      <input type="text" placeholder="सैलरी (वैकल्पिक)" id="salary"><br><br>
+      <input type="email" placeholder="आपका Email
