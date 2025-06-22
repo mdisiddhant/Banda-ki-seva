@@ -82,11 +82,60 @@
       border-radius: 20px;
       text-decoration: none;
       font-size: 14px;
+      cursor: pointer;
     }
 
     .apply-btn:hover {
       background: #1976d2;
     }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .modal input, .modal textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .close-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin-top: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      background: green;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -94,11 +143,11 @@
   <h1>🧑‍💼 Banda Ki Seva - Job Panel</h1>
 
   <div class="buttons">
-    <button onclick="alert('Only Admin/Employee can post jobs')">📤 Post Job</button>
-    <button onclick="alert('Login to apply for a job')">📥 Apply for Job</button>
+    <button onclick="openPostJob()">📤 Post Job</button>
+    <button onclick="openApplyJob()">📥 Apply for Job</button>
   </div>
 
-  <div class="job-listings">
+  <div class="job-listings" id="jobList">
     <div class="job-card">
       <div class="job-title">डिलीवरी बॉय - Banda City</div>
       <div class="job-details">
@@ -106,21 +155,81 @@
         वेतन: ₹10,000 / महीने<br>
         अनुभव: 0-1 वर्ष
       </div>
-      <a href="#" class="apply-btn">Apply Now</a>
+      <button class="apply-btn" onclick="openApplyJob()">Apply Now</button>
     </div>
-
-    <div class="job-card">
-      <div class="job-title">ऑफिस असिस्टेंट</div>
-      <div class="job-details">
-        समय: Part-Time<br>
-        वेतन: ₹6,000 / महीने<br>
-        अनुभव: कोई भी चलेगा
-      </div>
-      <a href="#" class="apply-btn">Apply Now</a>
-    </div>
-
-    <!-- More cards can be added dynamically -->
   </div>
+
+  <!-- Apply Modal -->
+  <div class="modal" id="applyModal">
+    <div class="modal-content">
+      <h3>Apply for Job</h3>
+      <input type="text" placeholder="Full Name">
+      <input type="tel" placeholder="Mobile Number">
+      <input type="email" placeholder="Email ID">
+      <input type="file" accept=".pdf,.doc" />
+      <button class="submit-btn" onclick="alert('Resume Submitted')">Submit</button>
+      <button class="close-btn" onclick="closeApplyJob()">Close</button>
+    </div>
+  </div>
+
+  <!-- Post Modal -->
+  <div class="modal" id="postModal">
+    <div class="modal-content">
+      <h3>Post a New Job</h3>
+      <input type="text" id="jobTitle" placeholder="Job Title">
+      <textarea id="jobDetails" placeholder="Job Description" rows="4"></textarea>
+      <button class="submit-btn" onclick="addJob()">Post Job</button>
+      <button class="close-btn" onclick="closePostJob()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Dummy Login Status (replace with actual login logic)
+    let userType = localStorage.getItem("userType") || "public"; // "admin", "employee", "customer"
+
+    function openApplyJob() {
+      if (userType === "customer") {
+        document.getElementById("applyModal").style.display = "flex";
+      } else {
+        alert("Login as Customer to apply for a job.");
+      }
+    }
+
+    function closeApplyJob() {
+      document.getElementById("applyModal").style.display = "none";
+    }
+
+    function openPostJob() {
+      if (userType === "admin" || userType === "employee") {
+        document.getElementById("postModal").style.display = "flex";
+      } else {
+        alert("Only Admin/Employee can post jobs.");
+      }
+    }
+
+    function closePostJob() {
+      document.getElementById("postModal").style.display = "none";
+    }
+
+    function addJob() {
+      let title = document.getElementById("jobTitle").value;
+      let detail = document.getElementById("jobDetails").value;
+
+      if (title && detail) {
+        let card = document.createElement("div");
+        card.className = "job-card";
+        card.innerHTML = `
+          <div class="job-title">${title}</div>
+          <div class="job-details">${detail.replace(/\n/g, '<br>')}</div>
+          <button class="apply-btn" onclick="openApplyJob()">Apply Now</button>
+        `;
+        document.getElementById("jobList").appendChild(card);
+        closePostJob();
+      } else {
+        alert("Fill all fields!");
+      }
+    }
+  </script>
 
 </body>
 </html>
