@@ -14,7 +14,6 @@
       overflow-x: hidden;
     }
 
-    /* ✅ Glowing Logo Style */
     .logo-wrapper {
       margin-top: 20px;
       text-align: center;
@@ -38,7 +37,6 @@
       }
     }
 
-    /* ✅ Only this Glow Background Remains */
     .live-glow-bg {
       position: fixed;
       top: -50%;
@@ -74,15 +72,9 @@
     }
 
     @keyframes glowText {
-      0% {
-        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
-      }
-      50% {
-        text-shadow: 0 0 15px #fff176, 0 0 25px #ffe082, 0 0 35px #ffb74d, 0 0 45px #ff7043;
-      }
-      100% {
-        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722;
-      }
+      0% { text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722; }
+      50% { text-shadow: 0 0 15px #fff176, 0 0 25px #ffe082, 0 0 35px #ffb74d, 0 0 45px #ff7043; }
+      100% { text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722; }
     }
 
     nav {
@@ -132,6 +124,28 @@
     .content {
       padding: 20px;
       text-align: center;
+    }
+
+    .glow-timer {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin: 30px auto 20px;
+      padding: 15px 25px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff80;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00ffff88, inset 0 0 10px #00ffff44;
+      width: fit-content;
+      animation: glowPulse 2s infinite;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 20px #00ffff88, inset 0 0 10px #00ffff44; }
+      50% { box-shadow: 0 0 35px #00ffffaa, inset 0 0 15px #00ffff66; }
+      100% { box-shadow: 0 0 20px #00ffff88, inset 0 0 10px #00ffff44; }
     }
 
     .download-section {
@@ -234,22 +248,9 @@
       display: none;
     }
 
-    .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 14px;
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
-    }
-
     #adminPanel {
       display: none;
       padding: 20px;
-    }
-
-    #adminPanel h3 {
-      color: #00ffcc;
     }
 
     .card {
@@ -263,24 +264,19 @@
   </style>
 </head>
 <body>
-  <!-- ✅ Stylish Glow Background -->
   <div class="live-glow-bg"></div>
-
-  <!-- 🔷 LOGO SECTION -->
   <div class="logo-wrapper">
     <img src="logo.png" alt="Banda Ki Seva Logo" class="home-logo">
   </div>
-
   <header>
     <h1 class="glow-heading">📦 Banda Ki Seva</h1>
     <p>1 Day Courier | Digital Seva | Local Delivery</p>
   </header>
-
   <nav>
     <a href="index.html" class="active">🏠 होम</a>
     <a href="kirana.html">🛒 किराना सेवा</a>
     <a href="books.html">📚 Books सेवा</a>
-    <a href="job.html"> 💻 job service<a>
+    <a href="job.html">💻 Job Service</a>
     <a href="courier.html">🚚 Courier</a>
     <a href="track.html">🔍 Track</a>
     <a href="vip.html">👑 VIP</a>
@@ -291,10 +287,14 @@
     <a href="about.html">ℹ️ About</a>
     <a href="register.html">📝 रजिस्टर करें</a>
   </nav>
-
   <div class="content">
     <h2>🙏 आपका स्वागत है!</h2>
     <p>हमारी सेवाओं का लाभ उठाने के लिए ऐप डाउनलोड करें।</p>
+
+    <div class="glow-timer">
+      ⏳ <span id="countdown">लोड हो रहा है...</span>
+    </div>
+
     <div class="download-section">
       <h3>📲 हमारा मोबाइल ऐप डाउनलोड करें</h3>
       <p>Banda Ki Seva App में सारी सेवाएं एक जगह!</p>
@@ -369,6 +369,30 @@
         errorMsg.style.display = "block";
       }
     }
+
+    // ✅ Countdown Logic
+    const countdownElement = document.getElementById("countdown");
+    const targetDate = new Date("2025-07-10T00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownElement.innerHTML = "✅ समय समाप्त हो गया!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElement.innerHTML = `${days} दिन ${hours} घंटे ${minutes} मिनट ${seconds} सेकंड शेष`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
