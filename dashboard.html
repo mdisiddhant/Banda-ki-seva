@@ -59,6 +59,32 @@
     .logout-btn:hover {
       background-color: #c82333;
     }
+
+    /* 👇 Job Apply Button */
+    #applyJobSection {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #f0fff4;
+      border-left: 5px solid #28a745;
+      text-align: center;
+      display: none;
+    }
+
+    #applyJobSection button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #28a745aa;
+    }
+
+    #applyJobSection button:hover {
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
@@ -72,11 +98,18 @@
       <div id="historyContainer"></div>
     </div>
 
+    <!-- ✅ Apply for Job Section -->
+    <div id="applyJobSection">
+      <h3>🚀 जॉब अप्लाई करें</h3>
+      <p>अगर आप बंदा की सेवा में काम करना चाहते हैं तो नीचे बटन दबाएं:</p>
+      <button onclick="applyForJob()">Apply Now</button>
+    </div>
+
     <button class="logout-btn" onclick="logoutUser()">🔓 Logout</button>
   </div>
 
   <script>
-    // Check if user is logged in
+    // ✅ Check if user is logged in
     const phone = localStorage.getItem("loggedInUser");
     if (!phone) {
       alert("कृपया पहले लॉग इन करें!");
@@ -86,7 +119,13 @@
     const userData = JSON.parse(localStorage.getItem("user_" + phone));
     document.getElementById("userGreeting").innerText = `${userData.fullname || phone}`;
 
-    // Load service history
+    // ✅ Show Apply Job Section if userType is "customer"
+    const userType = localStorage.getItem("userType");
+    if (userType === "customer") {
+      document.getElementById("applyJobSection").style.display = "block";
+    }
+
+    // ✅ Load service history
     const history = JSON.parse(localStorage.getItem("history_" + phone)) || [];
     const container = document.getElementById("historyContainer");
 
@@ -103,7 +142,22 @@
 
     function logoutUser() {
       localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("userType");
       window.location.href = "login.html";
+    }
+
+    // ✅ Apply Job Function
+    function applyForJob() {
+      let name = prompt("अपना नाम दर्ज करें:");
+      let mobile = prompt("मोबाइल नंबर दर्ज करें:");
+      let resume = prompt("अपना Resume या Detail दर्ज करें:");
+
+      if (name && mobile && resume) {
+        alert("✅ आपका आवेदन सफलतापूर्वक भेज दिया गया है।\n\nनाम: " + name + "\nमोबाइल: " + mobile);
+        // यहाँ आप backend या email API से data भेज सकते हैं
+      } else {
+        alert("❌ कृपया सभी जानकारी दर्ज करें।");
+      }
     }
   </script>
 
