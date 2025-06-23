@@ -141,12 +141,12 @@
     function loginUser(event) {
       event.preventDefault();
 
-      const phone = document.getElementById("phone").value;
-      const password = document.getElementById("password").value;
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value.trim();
 
       const userData = localStorage.getItem("user_" + phone);
       if (!userData) {
-        alert("User नहीं मिला! पहले Register करें।");
+        alert("❌ User नहीं मिला! पहले Register करें।");
         return;
       }
 
@@ -154,12 +154,14 @@
       if (user.password === password) {
         // ✅ Login successful - set session and userType
         localStorage.setItem("loggedInUser", phone);
-        localStorage.setItem("userType", "customer");  // ✅ यही लाइन जरूरी थी!
 
-        alert("Login सफल! आपका डैशबोर्ड खुल रहा है...");
+        // ✅ Default userType set to customer (You can update this later for admin/employee login)
+        localStorage.setItem("userType", "customer");
+
+        alert("✅ Login सफल! आपका डैशबोर्ड खुल रहा है...");
         window.location.href = "dashboard.html";
       } else {
-        alert("गलत पासवर्ड!");
+        alert("❌ गलत पासवर्ड!");
       }
     }
   </script>
