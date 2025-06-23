@@ -152,7 +152,10 @@
 
       const user = JSON.parse(userData);
       if (user.password === password) {
-        localStorage.setItem("loggedInUser", phone); // Store session
+        // ✅ Login successful - set session and userType
+        localStorage.setItem("loggedInUser", phone);
+        localStorage.setItem("userType", "customer");  // ✅ यही लाइन जरूरी थी!
+
         alert("Login सफल! आपका डैशबोर्ड खुल रहा है...");
         window.location.href = "dashboard.html";
       } else {
