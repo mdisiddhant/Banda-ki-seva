@@ -295,21 +295,31 @@ ${itemsText}
       sendToTelegram(message);
 
       // Send to Google Sheet
-      const sheetData = {
-        Name: name,
-        Mobile: mobile,
-        Address: address,
-        Area: area,
-        Items: itemsText,
-        Time: new Date().toLocaleString()
-      };
+      function sendToSheet(name, mobile, address, area, itemsText) {
+  const sheetData = {
+    Name: name,
+    Mobile: mobile,
+    Address: address,
+    Area: area,
+    Items: itemsText,
+    Time: new Date().toLocaleString()
+  };
 
-      fetch("https://api.sheetbest.com/sheets/c45d0b88-bcf3-42b1-8268-f3a546d0ea86", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(sheetData)
-      }).then(res => console.log("✅ Sheet Updated"));
-    }
+  fetch("https://api.sheetbest.com/sheets/c45d0b88-bcf3-42b1-8268-f3a546d0ea86", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(sheetData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("✅ Google Sheet Updated", data);
+    alert("🎉 ऑर्डर सेव हो गया है Google Sheet में!");
+  })
+  .catch(err => {
+    console.error("❌ Sheet Save Error", err);
+    alert("⚠️ Google Sheet में सेव करने में समस्या आई।");
+  });
+}
   </script>
 </body>
 </html>
