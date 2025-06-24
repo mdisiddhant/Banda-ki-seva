@@ -241,7 +241,7 @@
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: chatId, text: message })
   })
-  .then(res => res.json()) // ✅ Parse JSON response
+  .then(res => res.json()) // ✅ JSON response parse करो
   .then(data => {
     if (data.ok) {
       console.log("✅ Telegram message sent successfully!");
@@ -255,7 +255,6 @@
     alert("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
   });
 }
-
     function sendWhatsApp() {
       const name = document.getElementById("custName").value.trim();
       const mobile = document.getElementById("custMobile").value.trim();
