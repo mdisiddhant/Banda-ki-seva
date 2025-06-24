@@ -292,7 +292,11 @@ ${itemsText}
       window.open(url, "_blank");
 
       // Send to Telegram
-      sendToTelegram(message);
+      // Send to Telegram
+sendToTelegram(message);
+
+// ✅ FIX: Call this to save in Google Sheet also
+sendToSheet(name, mobile, address, area, itemsText);;
 
       // Send to Google Sheet
       function sendToSheet(name, mobile, address, area, itemsText) {
