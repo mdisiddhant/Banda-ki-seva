@@ -1,287 +1,146 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <title>VIP किराना ऑर्डर</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<script>
+  let orderItems = [];
+  let editIndex = -1;
+
+  window.onload = function () {
+    document.getElementById("custName").value = localStorage.getItem("custName") || "";
+    document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
+    document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
+    document.getElementById("custArea").value = localStorage.getItem("custArea") || "";
+  };
+
+  function addItem() {
+    const name = document.getElementById("itemName").value.trim();
+    const qty = document.getElementById("itemQty").value.trim();
+    const unit = document.getElementById("itemUnit").value;
+
+    if (!name || !qty) {
+      alert("कृपया आइटम और मात्रा भरें");
+      return;
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #000;
-      color: #fff;
-      padding: 20px;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
+    const fullItem = { name, qty, unit };
+
+    if (editIndex === -1) {
+      orderItems.push(fullItem);
+    } else {
+      orderItems[editIndex] = fullItem;
+      editIndex = -1;
     }
 
-    /* Placeholder Glow */
-    input::placeholder, select::placeholder {
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-      font-weight: bold;
+    document.getElementById("itemName").value = "";
+    document.getElementById("itemQty").value = "";
+    renderList();
+  }
+
+  function renderList() {
+    const ul = document.getElementById("orderList");
+    ul.innerHTML = "";
+
+    orderItems.forEach((item, i) => {
+      const li = document.createElement("li");
+      li.className = "item-row";
+
+      const span = document.createElement("span");
+      span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`;
+
+      const actions = document.createElement("div");
+      actions.className = "item-actions";
+
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "✏️ Edit";
+      editBtn.onclick = () => editItem(i);
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "❌ Delete";
+      delBtn.onclick = () => deleteItem(i);
+
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      li.appendChild(span);
+      li.appendChild(actions);
+      ul.appendChild(li);
+    });
+  }
+
+  function editItem(index) {
+    const item = orderItems[index];
+    document.getElementById("itemName").value = item.name;
+    document.getElementById("itemQty").value = item.qty;
+    document.getElementById("itemUnit").value = item.unit;
+    editIndex = index;
+  }
+
+  function deleteItem(index) {
+    orderItems.splice(index, 1);
+    renderList();
+  }
+
+  function sendToTelegram(message) {
+    const botToken = "7729928604:AAETN1ikbhwHTMSK1ngV3nR0UfSGEVb-z2r4";
+    const chatId = "6798434092";
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    }).then(res => {
+      console.log("✅ Telegram message sent");
+    }).catch(err => {
+      console.error("❌ Telegram Error:", err);
+    });
+  }
+
+  function sendWhatsApp() {
+    const name = document.getElementById("custName").value.trim();
+    const mobile = document.getElementById("custMobile").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+    const area = document.getElementById("custArea").value.trim();
+
+    if (!name || !mobile || !address || !area || orderItems.length === 0) {
+      alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
+      return;
     }
 
-    /* Live glowing background effect */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, #ff00cc88, transparent),
-                  radial-gradient(circle at 70% 60%, #00ffff88, transparent),
-                  radial-gradient(circle at 50% 80%, #ffcc0066, transparent);
-      filter: blur(80px);
-      z-index: -1;
-      animation: bgGlow 20s ease-in-out infinite;
-      transform: translate(-25%, -25%);
-    }
+    localStorage.setItem("custName", name);
+    localStorage.setItem("custMobile", mobile);
+    localStorage.setItem("custAddress", address);
+    localStorage.setItem("custArea", area);
 
-    @keyframes bgGlow {
-      0% { transform: translate(-25%, -25%) scale(1); }
-      50% { transform: translate(-10%, -10%) scale(1.2); }
-      100% { transform: translate(-25%, -25%) scale(1); }
-    }
+    const itemsText = orderItems.map((item, i) =>
+      `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
+    ).join("\n");
 
-    h2 {
-      text-align: center;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-      margin-bottom: 25px;
-      font-size: 28px;
-    }
+    const message = `🛒 *VIP किराना ऑर्डर*\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n🕒 ${new Date().toLocaleString()}`;
 
-    .container {
-      max-width: 720px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #00ffff55;
-    }
+    // WhatsApp
+    const whatsappNumber = "916351598832";
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
 
-    input, select, button {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 12px;
-      font-size: 16px;
-      border: none;
-    }
+    // Telegram
+    sendToTelegram(message);
 
-    input, select {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid #00ffff80;
-      outline: none;
-    }
-
-    button {
-      background-color: #00ffff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 15px #00ffff99;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #00cccc;
-    }
-
-    .whatsapp-button {
-      background: #25D366;
-      color: white;
-      font-weight: bold;
-      box-shadow: 0 0 12px #25D366;
-    }
-
-    .whatsapp-button:hover {
-      background: #1ebe5d;
-    }
-
-    .item-row {
-      display: flex;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 12px;
-      border-radius: 10px;
-      margin: 10px 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      backdrop-filter: blur(4px);
-    }
-
-    .item-row:hover {
-      transform: scale(1.02);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .item-actions button {
-      padding: 6px 10px;
-      margin-left: 5px;
-      background: #ffe082;
-      color: black;
-      font-size: 14px;
-    }
-
-    .item-actions button:hover {
-      background: #ffca28;
-    }
-  </style>
-</head>
-<body>
-
-  <h2>🌟 VIP किराना ऑर्डर</h2>
-
-  <div class="container">
-    <input id="custName" placeholder="👤 ग्राहक नाम">
-    <input id="custMobile" placeholder="📱 मोबाइल नंबर">
-    <input id="custAddress" placeholder="🏠 पूरा पता">
-    <input id="custArea" placeholder="📍 एरिया (जैसे: कचहरी रोड)">
-
-    <input id="itemName" placeholder="🧂 आइटम का नाम">
-    <input id="itemQty" placeholder="🔢 मात्रा (जैसे: 2)">
-    <select id="itemUnit">
-      <option value="Kg">Kg</option>
-      <option value="g">g</option>
-      <option value="pcs">pcs</option>
-      <option value="L">L</option>
-    </select>
-    <button onclick="addItem()">➕ आइटम जोड़ें</button>
-
-    <ul id="orderList"></ul>
-
-    <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 WhatsApp पर ऑर्डर भेजें</button>
-  </div>
-
-  <script>
-    let orderItems = [];
-    let editIndex = -1;
-
-    window.onload = function () {
-      document.getElementById("custName").value = localStorage.getItem("custName") || "";
-      document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
-      document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
-      document.getElementById("custArea").value = localStorage.getItem("custArea") || "";
+    // Google Sheet
+    const sheetData = {
+      Name: name,
+      Mobile: mobile,
+      Address: address,
+      Area: area,
+      Items: itemsText,
+      Time: new Date().toLocaleString()
     };
 
-    function addItem() {
-      const name = document.getElementById("itemName").value.trim();
-      const qty = document.getElementById("itemQty").value.trim();
-      const unit = document.getElementById("itemUnit").value;
-
-      if (!name || !qty) {
-        alert("कृपया आइटम और मात्रा भरें");
-        return;
-      }
-
-      const fullItem = { name, qty, unit };
-
-      if (editIndex === -1) {
-        orderItems.push(fullItem);
-      } else {
-        orderItems[editIndex] = fullItem;
-        editIndex = -1;
-      }
-
-      document.getElementById("itemName").value = "";
-      document.getElementById("itemQty").value = "";
-      renderList();
-    }
-
-    function renderList() {
-      const ul = document.getElementById("orderList");
-      ul.innerHTML = "";
-
-      orderItems.forEach((item, i) => {
-        const li = document.createElement("li");
-        li.className = "item-row";
-
-        const span = document.createElement("span");
-        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`;
-
-        const actions = document.createElement("div");
-        actions.className = "item-actions";
-
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "✏️ Edit";
-        editBtn.onclick = () => editItem(i);
-
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "❌ Delete";
-        delBtn.onclick = () => deleteItem(i);
-
-        actions.appendChild(editBtn);
-        actions.appendChild(delBtn);
-        li.appendChild(span);
-        li.appendChild(actions);
-        ul.appendChild(li);
-      });
-    }
-
-    function editItem(index) {
-      const item = orderItems[index];
-      document.getElementById("itemName").value = item.name;
-      document.getElementById("itemQty").value = item.qty;
-      document.getElementById("itemUnit").value = item.unit;
-      editIndex = index;
-    }
-
-    function deleteItem(index) {
-      orderItems.splice(index, 1);
-      renderList();
-    }
-
-    function sendWhatsApp() {
-      const name = document.getElementById("custName").value.trim();
-      const mobile = document.getElementById("custMobile").value.trim();
-      const address = document.getElementById("custAddress").value.trim();
-      const area = document.getElementById("custArea").value.trim();
-
-      if (!name || !mobile || !address || !area || orderItems.length === 0) {
-        alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
-        return;
-      }
-
-      localStorage.setItem("custName", name);
-      localStorage.setItem("custMobile", mobile);
-      localStorage.setItem("custAddress", address);
-      localStorage.setItem("custArea", area);
-
-      const itemsText = orderItems.map((item, i) =>
-        `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
-      ).join("\n");
-
-      const message = `🛒 *VIP किराना ऑर्डर*\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}`;
-
-      const whatsappNumber = "916351598832";
-      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
-
-      const sheetData = {
-        Name: name,
-        Mobile: mobile,
-        Address: address,
-        Area: area,
-        Items: itemsText,
-        Time: new Date().toLocaleString()
-      };
-
-      fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(sheetData)
-      }).then(res => console.log("✅ Sheet Updated"));
-    }
-  </script>
-</body>
-</html>
+    fetch("https://api.sheetbest.com/sheets/a4f9e349-0a8f-4c9b-bdc1-ec738c555880", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(sheetData)
+    }).then(res => console.log("✅ Sheet Updated"));
+  }
+</script>
