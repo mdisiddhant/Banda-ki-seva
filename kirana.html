@@ -6,7 +6,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #000;
@@ -16,13 +15,11 @@
       min-height: 100vh;
       position: relative;
     }
-
     input::placeholder, select::placeholder {
       color: #00ffff;
       text-shadow: 0 0 10px #00ffff;
       font-weight: bold;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -36,13 +33,11 @@
       animation: bgGlow 20s ease-in-out infinite;
       transform: translate(-25%, -25%);
     }
-
     @keyframes bgGlow {
       0% { transform: translate(-25%, -25%) scale(1); }
       50% { transform: translate(-10%, -10%) scale(1.2); }
       100% { transform: translate(-25%, -25%) scale(1); }
     }
-
     h2 {
       text-align: center;
       color: #00ffff;
@@ -50,7 +45,6 @@
       margin-bottom: 25px;
       font-size: 28px;
     }
-
     .container {
       max-width: 720px;
       margin: auto;
@@ -60,7 +54,6 @@
       border-radius: 20px;
       box-shadow: 0 0 30px #00ffff55;
     }
-
     input, select, button {
       width: 100%;
       padding: 14px;
@@ -69,14 +62,12 @@
       font-size: 16px;
       border: none;
     }
-
     input, select {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: 1px solid #00ffff80;
       outline: none;
     }
-
     button {
       background-color: #00ffff;
       color: black;
@@ -85,20 +76,16 @@
       box-shadow: 0 0 15px #00ffff99;
       transition: 0.3s;
     }
-
     button:hover { background-color: #00cccc; }
-
     .whatsapp-button {
       background: #25D366;
       color: white;
       font-weight: bold;
       box-shadow: 0 0 12px #25D366;
     }
-
     .whatsapp-button:hover {
       background: #1ebe5d;
     }
-
     .item-row {
       display: flex;
       justify-content: space-between;
@@ -109,12 +96,10 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       backdrop-filter: blur(4px);
     }
-
     .item-row:hover {
       transform: scale(1.02);
       background: rgba(255, 255, 255, 0.15);
     }
-
     .item-actions button {
       padding: 6px 10px;
       margin-left: 5px;
@@ -122,22 +107,18 @@
       color: black;
       font-size: 14px;
     }
-
     .item-actions button:hover {
       background: #ffca28;
     }
   </style>
 </head>
 <body>
-
   <h2>🌟 VIP किराना ऑर्डर</h2>
-
   <div class="container">
     <input id="custName" placeholder="👤 ग्राहक नाम">
     <input id="custMobile" placeholder="📱 मोबाइल नंबर">
     <input id="custAddress" placeholder="🏠 पूरा पता">
     <input id="custArea" placeholder="📍 एरिया (जैसे: कचहरी रोड)">
-
     <input id="itemName" placeholder="🧂 आइटम का नाम">
     <input id="itemQty" placeholder="🔢 मात्रा (जैसे: 2)">
     <select id="itemUnit">
@@ -147,9 +128,7 @@
       <option value="L">L</option>
     </select>
     <button onclick="addItem()">➕ आइटम जोड़ें</button>
-
     <ul id="orderList"></ul>
-
     <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 WhatsApp पर ऑर्डर भेजें</button>
   </div>
 
@@ -232,29 +211,56 @@
     }
 
     function sendToTelegram(message) {
-  const botToken = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
-  const chatId = "6798434092";
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      const botToken = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
+      const chatId = "6798434092";
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-  fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: message })
-  })
-  .then(res => res.json()) // ✅ JSON response parse करो
-  .then(data => {
-    if (data.ok) {
-      console.log("✅ Telegram message sent successfully!");
-    } else {
-      console.error("⚠️ Telegram Error:", data.description);
-      alert("❌ Telegram Error: " + data.description);
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          console.log("✅ Telegram message sent successfully!");
+        } else {
+          console.error("⚠️ Telegram Error:", data.description);
+          alert("❌ Telegram Error: " + data.description);
+        }
+      })
+      .catch(err => {
+        console.error("❌ Network Error:", err);
+        alert("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
+      });
     }
-  })
-  .catch(err => {
-    console.error("❌ Network Error:", err);
-    alert("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
-  });
-}
+
+    function sendToSheet(name, mobile, address, area, itemsText) {
+      const sheetData = {
+        Name: name,
+        Mobile: mobile,
+        Address: address,
+        Area: area,
+        Items: itemsText,
+        Time: new Date().toLocaleString()
+      };
+
+      fetch("https://api.sheetbest.com/sheets/c45d0b88-bcf3-42b1-8268-f3a546d0ea86", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sheetData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ Google Sheet Updated", data);
+        alert("🎉 ऑर्डर सेव हो गया है Google Sheet में!");
+      })
+      .catch(err => {
+        console.error("❌ Sheet Save Error", err);
+        alert("⚠️ Google Sheet में सेव करने में समस्या आई।");
+      });
+    }
+
     function sendWhatsApp() {
       const name = document.getElementById("custName").value.trim();
       const mobile = document.getElementById("custMobile").value.trim();
@@ -275,7 +281,7 @@
         `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
       ).join("\n");
 
-const message = `🛒 *VIP किराना ऑर्डर*
+      const message = `🛒 *VIP किराना ऑर्डर*
 👤 नाम: ${name}
 📱 मोबाइल: ${mobile}
 🏠 पता: ${address}
@@ -286,44 +292,13 @@ ${itemsText}
 
 🕒 ${new Date().toLocaleString()}`;
 
-      // Send to WhatsApp
       const whatsappNumber = "916351598832";
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
 
-      // Send to Telegram
-      // Send to Telegram
-sendToTelegram(message);
-
-// ✅ FIX: Call this to save in Google Sheet also
-sendToSheet(name, mobile, address, area, itemsText);;
-
-      // Send to Google Sheet
-      function sendToSheet(name, mobile, address, area, itemsText) {
-  const sheetData = {
-    Name: name,
-    Mobile: mobile,
-    Address: address,
-    Area: area,
-    Items: itemsText,
-    Time: new Date().toLocaleString()
-  };
-
-  fetch("https://api.sheetbest.com/sheets/c45d0b88-bcf3-42b1-8268-f3a546d0ea86", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(sheetData)
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log("✅ Google Sheet Updated", data);
-    alert("🎉 ऑर्डर सेव हो गया है Google Sheet में!");
-  })
-  .catch(err => {
-    console.error("❌ Sheet Save Error", err);
-    alert("⚠️ Google Sheet में सेव करने में समस्या आई।");
-  });
-}
+      sendToTelegram(message);
+      sendToSheet(name, mobile, address, area, itemsText); // ✅ Final FIX
+    }
   </script>
 </body>
 </html>
