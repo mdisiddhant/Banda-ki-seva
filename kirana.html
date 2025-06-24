@@ -232,17 +232,29 @@
     }
 
     function sendToTelegram(message) {
-      const botToken = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
-      const chatId = "6798434092";
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  const botToken = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
+  const chatId = "6798434092";
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text: message })
-      }).then(res => console.log("✅ Telegram message sent"))
-        .catch(err => console.error("❌ Telegram Error:", err));
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: message })
+  })
+  .then(res => res.json()) // ✅ Parse JSON response
+  .then(data => {
+    if (data.ok) {
+      console.log("✅ Telegram message sent successfully!");
+    } else {
+      console.error("⚠️ Telegram Error:", data.description);
+      alert("❌ Telegram Error: " + data.description);
     }
+  })
+  .catch(err => {
+    console.error("❌ Network Error:", err);
+    alert("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
+  });
+}
 
     function sendWhatsApp() {
       const name = document.getElementById("custName").value.trim();
