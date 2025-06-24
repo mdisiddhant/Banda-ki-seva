@@ -264,7 +264,16 @@
         `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
       ).join("\n");
 
-      const message = `🛒 *VIP किराना ऑर्डर*\n👤 नाम: ${name}\n📱 मोबाइल: ${mobile}\n🏠 पता: ${address}\n📍 एरिया: ${area}\n\n🧾 ऑर्डर:\n${itemsText}\n🕒 ${new Date().toLocaleString()}`;
+const message = `🛒 *VIP किराना ऑर्डर*
+👤 नाम: ${name}
+📱 मोबाइल: ${mobile}
+🏠 पता: ${address}
+📍 एरिया: ${area}
+
+🧾 ऑर्डर:
+${itemsText}
+
+🕒 ${new Date().toLocaleString()}`;
 
       // Send to WhatsApp
       const whatsappNumber = "916351598832";
