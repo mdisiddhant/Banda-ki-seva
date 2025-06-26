@@ -4,181 +4,563 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Job Panel - Banda Ki Seva</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #ffcc70, #ff9a00);
+      background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
       padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
       color: #fff;
-      text-shadow: 2px 2px 4px #000;
-      margin-bottom: 20px;
     }
-
+    
+    /* Animated background elements */
+    .bg-element {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.1;
+      z-index: -1;
+    }
+    
+    .bg-element:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #ff6f00, transparent);
+      top: 10%;
+      left: 5%;
+      animation: float 15s infinite linear;
+    }
+    
+    .bg-element:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #2196f3, transparent);
+      bottom: 15%;
+      right: 10%;
+      animation: float 12s infinite linear reverse;
+    }
+    
+    .bg-element:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, #25D366, transparent);
+      top: 30%;
+      right: 20%;
+      animation: float 18s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(20px, 30px) rotate(90deg); }
+      50% { transform: translate(40px, 0) rotate(180deg); }
+      75% { transform: translate(20px, -30px) rotate(270deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+    
+    .header {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      color: #ffffff;
+      text-shadow: 0 0 10px #ff9a00, 0 0 20px #ff6f00;
+      margin-bottom: 10px;
+      animation: titleGlow 2s infinite alternate;
+      position: relative;
+      display: inline-block;
+    }
+    
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 10px #ff9a00, 0 0 20px #ff6f00; }
+      100% { text-shadow: 0 0 15px #ff9a00, 0 0 30px #ff6f00, 0 0 50px #ff6f00; }
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #ff9a00, transparent);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: #cccccc;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
     }
-
+    
     .buttons button {
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 16px 40px;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 30px;
+      border-radius: 50px;
       cursor: pointer;
-      background-color: #ff6f00;
+      background: linear-gradient(45deg, #ff6f00, #ff9a00);
       color: white;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      transition: 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 111, 0, 0.7);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      font-weight: 600;
+      letter-spacing: 1px;
+      animation: pulse 2s infinite;
     }
-
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 15px rgba(255, 111, 0, 0.7), 0 0 30px rgba(255, 111, 0, 0.4); }
+      50% { box-shadow: 0 0 20px rgba(255, 111, 0, 0.9), 0 0 40px rgba(255, 111, 0, 0.6); }
+      100% { box-shadow: 0 0 15px rgba(255, 111, 0, 0.7), 0 0 30px rgba(255, 111, 0, 0.4); }
+    }
+    
     .buttons button:hover {
-      background-color: #e65100;
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 111, 0, 0.9), 0 0 50px rgba(255, 111, 0, 0.6);
     }
-
+    
+    .buttons button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.5s;
+      z-index: -1;
+    }
+    
+    .buttons button:hover::before {
+      left: 100%;
+    }
+    
+    .buttons button i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
     .job-listings {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-
+    
     .job-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-      transition: 0.3s;
-    }
-
-    .job-card:hover {
-      transform: scale(1.02);
-    }
-
-    .job-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ff6f00;
-      margin-bottom: 10px;
-    }
-
-    .job-details {
-      font-size: 14px;
-      color: #333;
-    }
-
-    .apply-btn {
-      margin-top: 12px;
-      display: inline-block;
-      padding: 8px 16px;
-      background: #2196f3;
-      color: white;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #ff6f00, #ff9a00);
+    }
+    
+    .job-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 111, 0, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .job-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffcc70;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(255, 204, 112, 0.7);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .job-title i {
+      color: #ff9a00;
+      text-shadow: 0 0 10px #ff9a00;
+    }
+    
+    .job-details {
+      font-size: 1rem;
+      color: #e0e0e0;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    
+    .job-details span {
+      display: block;
+      margin-bottom: 8px;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .job-details span::before {
+      content: '•';
+      position: absolute;
+      left: 10px;
+      color: #ff9a00;
+      font-size: 1.2rem;
+    }
+    
+    .apply-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 25px;
+      background: linear-gradient(45deg, #2196f3, #21cbf3);
+      color: white;
+      border-radius: 50px;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 1rem;
       cursor: pointer;
       border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(33, 150, 243, 0.5);
+      margin-top: 10px;
     }
-
+    
     .apply-btn:hover {
-      background: #1976d2;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(33, 150, 243, 0.8), 0 0 30px rgba(33, 150, 243, 0.4);
+      background: linear-gradient(45deg, #1e88e5, #1e88e5);
     }
-
+    
+    .apply-btn i {
+      margin-right: 8px;
+    }
+    
     .modal {
       display: none;
       position: fixed;
-      z-index: 10;
+      z-index: 100;
       left: 0; top: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.7);
       justify-content: center;
       align-items: center;
+      backdrop-filter: blur(5px);
     }
-
+    
     .modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      padding: 40px;
+      border-radius: 25px;
       width: 90%;
       max-width: 500px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 0 40px rgba(255, 111, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
     }
-
+    
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6f00, #ff9a00, #ff6f00);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 27px;
+      animation: borderGlow 4s linear infinite;
+      filter: blur(5px);
+    }
+    
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
     .modal-content h3 {
       text-align: center;
-      color: #ff6f00;
-      margin-bottom: 20px;
+      color: #ffcc70;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      text-shadow: 0 0 10px rgba(255, 204, 112, 0.7);
+      position: relative;
     }
-
-    .modal input, .modal textarea {
+    
+    .modal-content h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff9a00, transparent);
+      border-radius: 50%;
+    }
+    
+    .modal input, .modal textarea, .modal select {
       width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    .close-btn {
-      background: crimson;
+      margin: 15px 0;
+      padding: 14px 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.3);
       color: white;
-      border: none;
-      padding: 8px 16px;
-      margin-top: 10px;
-      border-radius: 20px;
-      cursor: pointer;
-      float: right;
+      font-family: 'Poppins', sans-serif;
     }
-
+    
+    .modal input::placeholder, .modal textarea::placeholder {
+      color: #cccccc;
+    }
+    
+    .modal input:focus, .modal textarea:focus {
+      outline: none;
+      border-color: #ff9a00;
+      box-shadow: 0 0 15px rgba(255, 154, 0, 0.5);
+    }
+    
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
     .submit-btn {
-      background: green;
+      background: linear-gradient(45deg, #00c853, #00e676);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 12px 30px;
+      border-radius: 50px;
       cursor: pointer;
-      margin-right: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 200, 83, 0.5);
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 200, 83, 0.7), 0 0 30px rgba(0, 200, 83, 0.3);
+    }
+    
+    .close-btn {
+      background: linear-gradient(45deg, #ff1744, #f50057);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 23, 68, 0.5);
+    }
+    
+    .close-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(255, 23, 68, 0.7), 0 0 30px rgba(255, 23, 68, 0.3);
+    }
+    
+    .file-input-container {
+      position: relative;
+      margin: 15px 0;
+    }
+    
+    .file-input-container input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      display: block;
+      padding: 14px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      text-align: center;
+      color: #cccccc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .file-input-label:hover {
+      background: rgba(0, 0, 0, 0.4);
+      border-color: #ff9a00;
+    }
+    
+    .file-input-label i {
+      margin-right: 8px;
+      color: #2196f3;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 40, 60, 0.9);
+      color: #00ffff;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      transform: translateX(150%);
+      transition: transform 0.4s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification i {
+      font-size: 24px;
+    }
+    
+    @media (max-width: 768px) {
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .modal-content {
+        padding: 25px;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>🧑‍💼 Banda Ki Seva - Job Panel</h1>
+  <!-- Background elements -->
+  <div class="bg-element"></div>
+  <div class="bg-element"></div>
+  <div class="bg-element"></div>
+  
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationText">Resume Submitted Successfully!</span>
+  </div>
+
+  <div class="header">
+    <h1><i class="fas fa-briefcase"></i> Banda Ki Seva - Job Panel</h1>
+    <p class="subtitle">Find exciting career opportunities and join our team to serve the community of Banda</p>
+  </div>
 
   <div class="buttons">
-    <button onclick="openPostJob()">📤 Post Job</button>
-    <button onclick="openApplyJob()">📥 Apply for Job</button>
+    <button onclick="openPostJob()"><i class="fas fa-paper-plane"></i> 📤 Post Job</button>
+    <button onclick="openApplyJob()"><i class="fas fa-file-alt"></i> 📥 Apply for Job</button>
   </div>
 
   <div class="job-listings" id="jobList">
     <div class="job-card">
-      <div class="job-title">डिलीवरी बॉय - Banda City</div>
+      <div class="job-title"><i class="fas fa-motorcycle"></i> डिलीवरी बॉय - Banda City</div>
       <div class="job-details">
-        समय: Full-Time<br>
-        वेतन: ₹9,000 / महीने<br>
-        अनुभव: 0-1 वर्ष
+        <span><strong>समय:</strong> Full-Time</span>
+        <span><strong>वेतन:</strong> ₹9,000 / महीने</span>
+        <span><strong>अनुभव:</strong> 0-1 वर्ष</span>
+        <span><strong>आवश्यकता:</strong> दोपहिया वाहन चालक लाइसेंस</span>
       </div>
-      <button class="apply-btn" onclick="openApplyJob()">Apply Now</button>
+      <button class="apply-btn" onclick="openApplyJob()"><i class="fas fa-paper-plane"></i> Apply Now</button>
+    </div>
+    
+    <div class="job-card">
+      <div class="job-title"><i class="fas fa-shopping-cart"></i> Pickup Agent</div>
+      <div class="job-details">
+        <span><strong>समय:</strong> Part-Time</span>
+        <span><strong>वेतन:</strong> ₹120 / घंटा</span>
+        <span><strong>अनुभव:</strong> कोई आवश्यकता नहीं</span>
+        <span><strong>आवश्यकता:</strong> स्थानीय बाजारों की जानकारी</span>
+      </div>
+      <button class="apply-btn" onclick="openApplyJob()"><i class="fas fa-paper-plane"></i> Apply Now</button>
+    </div>
+    
+    <div class="job-card">
+      <div class="job-title"><i class="fas fa-user-tie"></i> Office Staff</div>
+      <div class="job-details">
+        <span><strong>समय:</strong> Full-Time</span>
+        <span><strong>वेतन:</strong> ₹12,000 / महीने</span>
+        <span><strong>अनुभव:</strong> 1-2 वर्ष</span>
+        <span><strong>आवश्यकता:</strong> कंप्यूटर की बुनियादी जानकारी</span>
+      </div>
+      <button class="apply-btn" onclick="openApplyJob()"><i class="fas fa-paper-plane"></i> Apply Now</button>
     </div>
   </div>
 
   <!-- Apply Modal -->
   <div class="modal" id="applyModal">
     <div class="modal-content">
-      <h3>Apply for Job</h3>
+      <h3><i class="fas fa-file-alt"></i> Apply for Job</h3>
       <input type="text" placeholder="Full Name">
       <input type="tel" placeholder="Mobile Number">
       <input type="email" placeholder="Email ID">
-      <input type="file" accept=".pdf,.doc" />
-      <div style="text-align: center; margin-top: 10px;">
-        <button class="submit-btn" onclick="alert('Resume Submitted')">Submit</button>
-        <button class="close-btn" onclick="closeApplyJob()">Close</button>
+      
+      <div class="file-input-container">
+        <div class="file-input-label">
+          <i class="fas fa-cloud-upload-alt"></i> Upload Resume (PDF/DOC)
+        </div>
+        <input type="file" accept=".pdf,.doc,.docx" />
+      </div>
+      
+      <div class="btn-group">
+        <button class="submit-btn" onclick="submitApplication()"><i class="fas fa-check"></i> Submit</button>
+        <button class="close-btn" onclick="closeApplyJob()"><i class="fas fa-times"></i> Close</button>
       </div>
     </div>
   </div>
@@ -186,24 +568,59 @@
   <!-- Post Modal -->
   <div class="modal" id="postModal">
     <div class="modal-content">
-      <h3>Post a New Job</h3>
+      <h3><i class="fas fa-plus-circle"></i> Post a New Job</h3>
       <input type="text" id="jobTitle" placeholder="Job Title">
       <textarea id="jobDetails" placeholder="Job Description" rows="4"></textarea>
-      <div style="text-align: center; margin-top: 10px;">
-        <button class="submit-btn" onclick="addJob()">Post Job</button>
-        <button class="close-btn" onclick="closePostJob()">Close</button>
+      
+      <div class="btn-group">
+        <button class="submit-btn" onclick="addJob()"><i class="fas fa-paper-plane"></i> Post Job</button>
+        <button class="close-btn" onclick="closePostJob()"><i class="fas fa-times"></i> Close</button>
       </div>
     </div>
   </div>
 
   <script>
     let userType = localStorage.getItem("userType") || "public"; // "admin", "employee", "customer"
-
+    
+    // Create background elements
+    function createBackgroundElements() {
+      const bgContainer = document.body;
+      for (let i = 0; i < 10; i++) {
+        const element = document.createElement('div');
+        element.classList.add('bg-element');
+        element.style.width = `${Math.random() * 80 + 20}px`;
+        element.style.height = element.style.width;
+        element.style.top = `${Math.random() * 100}%`;
+        element.style.left = `${Math.random() * 100}%`;
+        element.style.animationDuration = `${Math.random() * 15 + 10}s`;
+        element.style.animationDelay = `${Math.random() * 5}s`;
+        element.style.opacity = `${Math.random() * 0.1 + 0.05}`;
+        
+        const colors = ['#ff6f00', '#2196f3', '#25D366', '#ff9a00'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        element.style.background = `radial-gradient(circle, ${color}, transparent)`;
+        
+        bgContainer.appendChild(element);
+      }
+    }
+    
+    // Show notification
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const text = document.getElementById('notificationText');
+      text.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
     function openApplyJob() {
       if (userType === "customer") {
         document.getElementById("applyModal").style.display = "flex";
       } else {
-        alert("Login as Customer to apply for a job.");
+        showNotification("Login as Customer to apply for a job.");
       }
     }
 
@@ -215,12 +632,17 @@
       if (userType === "admin" || userType === "employee") {
         document.getElementById("postModal").style.display = "flex";
       } else {
-        alert("Only Admin/Employee can post jobs.");
+        showNotification("Only Admin/Employee can post jobs.");
       }
     }
 
     function closePostJob() {
       document.getElementById("postModal").style.display = "none";
+    }
+    
+    function submitApplication() {
+      closeApplyJob();
+      showNotification("🎉 Application submitted successfully!");
     }
 
     function addJob() {
@@ -231,17 +653,23 @@
         let card = document.createElement("div");
         card.className = "job-card";
         card.innerHTML = `
-          <div class="job-title">${title}</div>
+          <div class="job-title"><i class="fas fa-briefcase"></i> ${title}</div>
           <div class="job-details">${detail.replace(/\n/g, '<br>')}</div>
-          <button class="apply-btn" onclick="openApplyJob()">Apply Now</button>
+          <button class="apply-btn" onclick="openApplyJob()"><i class="fas fa-paper-plane"></i> Apply Now</button>
         `;
         document.getElementById("jobList").appendChild(card);
         closePostJob();
+        showNotification("✅ New job posted successfully!");
       } else {
-        alert("Fill all fields!");
+        showNotification("⚠️ Please fill all fields!");
       }
     }
+    
+    // Initialize on load
+    window.onload = function() {
+      createBackgroundElements();
+    };
   </script>
 
 </body>
-</html>
+  </html>
