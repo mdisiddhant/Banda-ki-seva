@@ -5,127 +5,196 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Banda Ki Seva - Home</title>
   <link rel="manifest" href="manifest-v2.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    * {
       margin: 0;
-      background: #000;
-      position: relative;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #000428, #004e92);
+      color: #fff;
+      min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
-
-    .logo-wrapper {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .home-logo {
-      height: 110px;
-      border-radius: 20px;
-      animation: logoGlow 2.5s ease-in-out infinite alternate;
-      box-shadow: 0 0 30px #00ffffaa;
-    }
-
-    @keyframes logoGlow {
-      from {
-        transform: scale(1);
-        box-shadow: 0 0 20px #00ffff, 0 0 40px #00ccff;
-      }
-      to {
-        transform: scale(1.05);
-        box-shadow: 0 0 35px #00ffff, 0 0 70px #00ccff;
-      }
-    }
-
+    
+    /* Animated Background */
     .live-glow-bg {
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, #ffeb3b33, transparent 60%),
-                  radial-gradient(circle at 70% 70%, #ff408133, transparent 60%),
-                  radial-gradient(circle at 50% 50%, #00ffff33, transparent 60%);
-      animation: rotateGlow 30s linear infinite;
-      filter: blur(100px);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 0, 0.1) 0%, transparent 40%);
+      animation: glowMove 20s linear infinite;
+      z-index: -2;
+    }
+    
+    @keyframes glowMove {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+    
+    /* Floating Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
       z-index: -1;
     }
-
-    @keyframes rotateGlow {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.5);
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      animation: floatParticle linear infinite;
     }
-
+    
+    @keyframes floatParticle {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+    }
+    
+    /* Logo Styling */
+    .logo-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 30px 0 20px;
+    }
+    
+    .home-logo {
+      height: 140px;
+      width: auto;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+      animation: logoFloat 6s ease-in-out infinite;
+      transition: all 0.5s;
+    }
+    
+    .home-logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(0, 255, 255, 1);
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    /* Header Styling */
     header {
-      background: #007bff;
-      color: white;
-      padding: 16px;
       text-align: center;
+      padding: 0 20px 30px;
     }
-
+    
     .glow-heading {
-      color: #fff;
-      font-weight: bold;
-      font-size: 30px;
-      animation: glowText 2s ease-in-out infinite;
-      text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffc107, 0 0 30px #ff9800, 0 0 40px #ff5722;
+      font-size: 3.2rem;
+      margin-bottom: 10px;
+      color: #00ffff;
+      text-shadow: 0 0 15px #00ffff, 0 0 30px #00ccff, 0 0 45px #0099ff;
+      animation: glowPulse 2s ease-in-out infinite;
+      letter-spacing: 1px;
     }
-
-    @keyframes glowText {
-      0% { text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722; }
-      50% { text-shadow: 0 0 15px #fff176, 0 0 25px #ffe082, 0 0 35px #ffb74d, 0 0 45px #ff7043; }
-      100% { text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff5722; }
+    
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ccff, 0 0 45px #0099ff; }
+      50% { text-shadow: 0 0 25px #00ffff, 0 0 45px #00ccff, 0 0 65px #0099ff; }
     }
-
+    
+    header p {
+      font-size: 1.4rem;
+      color: #e0f7fa;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    /* Navigation Bar */
     nav {
-      background: #191970;
-      padding: 15px;
-      border-radius: 15px;
-      text-align: center;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin: 10px auto;
-      max-width: 1000px;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      margin: 0 auto 50px;
+      border-radius: 25px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+      max-width: 1100px;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      animation: navGlow 4s infinite alternate;
     }
-
+    
+    @keyframes navGlow {
+      0% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+      100% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.8); }
+    }
+    
     nav a {
-      position: relative;
-      color: #DDA0DD;
+      display: inline-block;
+      padding: 14px 25px;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
-      font-size: 16px;
-      padding: 10px 16px;
-      text-shadow: 0 0 6px #00ffff, 0 0 12px #00ccff, 0 0 18px #0099ff;
+      font-size: 17px;
+      box-shadow: 0 0 10px #00ffff80, inset 0 0 5px #00ffff33;
+      text-shadow: 0 0 8px #00ffff;
       transition: all 0.3s ease-in-out;
-      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      min-width: 160px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 255, 0.4);
     }
-
-    nav a::after {
+    
+    nav a::before {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
+      top: 0;
+      left: -100%;
       width: 100%;
-      height: 3px;
-      background: #ff4081;
-      box-shadow: 0 0 8px #ff4081, 0 0 16px #ff4081;
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform 0.3s ease-in-out;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+      transition: 0.5s;
     }
-
-    nav a:hover::after,
-    nav a.active::after {
-      transform: scaleX(1);
+    
+    nav a:hover::before {
+      left: 100%;
     }
-
+    
+    nav a:hover, nav a.active {
+      background: linear-gradient(145deg, #00ffff, #00aaff);
+      color: #000;
+      box-shadow: 0 0 25px #00ffff;
+      transform: translateY(-5px);
+      text-shadow: none;
+    }
+    
+    /* Content Area */
     .content {
       padding: 20px;
       text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-
+    
     .glow-timer {
       font-size: 22px;
       font-weight: bold;
@@ -141,137 +210,439 @@
       width: fit-content;
       animation: glowPulse 2s infinite;
     }
-
+    
     @keyframes glowPulse {
       0% { box-shadow: 0 0 20px #00ffff88, inset 0 0 10px #00ffff44; }
       50% { box-shadow: 0 0 35px #00ffffaa, inset 0 0 15px #00ffff66; }
       100% { box-shadow: 0 0 20px #00ffff88, inset 0 0 10px #00ffff44; }
     }
-
+    
     .download-section {
       margin-top: 40px;
-      background: white;
+      background: rgba(255, 255, 255, 0.1);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.4);
+      backdrop-filter: blur(5px);
     }
-
+    
     .download-btn {
       margin-top: 20px;
       padding: 14px 28px;
       font-size: 18px;
       color: white;
-      background-color: #28a745;
+      background: linear-gradient(45deg, #00ffff, #00aaff);
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 0 10px #28a745, 0 0 18px #1ec85e;
-      text-shadow: 0 0 6px #ffffff;
-    }
-
-    .download-btn:hover {
-      background-color: #218838;
-    }
-
-    .msg {
-      margin-top: 20px;
-      color: green;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      transition: all 0.3s;
       font-weight: bold;
     }
-
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 14px;
-      padding: 10px;
-      background: #eee;
+    
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
     }
-
-    #adminModal {
+    
+    .msg {
+      margin-top: 20px;
+      color: #00ff99;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+    }
+    
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      padding: 25px;
+      color: #aaa;
+      font-size: 16px;
+      border-top: 1px solid #333;
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #00ffff, #ff00cc, transparent);
+      box-shadow: 0 0 20px #00ffff55;
+    }
+    
+    /* Admin Login Modal */
+    .modal {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
       justify-content: center;
-      z-index: 9999;
+      align-items: center;
     }
-
-    .admin-box {
-      background: #1f1f1f;
-      padding: 30px;
-      border-radius: 16px;
+    
+    .modal-content {
+      background: linear-gradient(145deg, #0f0c29, #302b63);
+      border-radius: 25px;
+      padding: 40px;
       width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 25px rgba(0, 255, 150, 0.4);
+      max-width: 450px;
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.7);
+      border: 1px solid #00ffff;
+      position: relative;
+      animation: modalAppear 0.5s ease-out;
+    }
+    
+    @keyframes modalAppear {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: #aaa;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .close:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
+    }
+    
+    .admin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    .admin-form h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    
+    .input-group {
       position: relative;
     }
-
-    .admin-box h2 {
-      color: #00ffcc;
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #00ffcc;
-    }
-
-    .admin-box input {
+    
+    .input-group input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 30px;
-      background: transparent;
-      border: 2px solid #00ffcc;
-      color: white;
+      padding: 14px 20px 14px 50px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #00ffff;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
-
-    .admin-box button {
-      width: 100%;
-      padding: 12px;
-      background: #00ffcc;
+    
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #00ffff;
+      font-size: 20px;
+    }
+    
+    .admin-form button {
+      padding: 15px;
+      border-radius: 12px;
+      background: linear-gradient(to right, #00ffff, #00aaff);
       border: none;
-      color: black;
-      border-radius: 30px;
+      color: #000;
       font-weight: bold;
+      font-size: 18px;
       cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
     }
-
-    #error-msg {
-      color: red;
-      text-align: center;
-      display: none;
+    
+    .admin-form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
     }
-
+    
+    /* Stylish Admin Panel */
     #adminPanel {
       display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 10, 20, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      overflow-y: auto;
       padding: 20px;
     }
-
-    .card {
-      background: #222;
+    
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 20, 40, 0.7);
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      border: 1px solid #00ffff;
+    }
+    
+    .admin-title {
+      font-size: 2.2rem;
+      color: #00ffff;
+      text-shadow: 0 0 15px #00ffff;
+    }
+    
+    .logout-btn {
+      padding: 12px 25px;
+      background: linear-gradient(to right, #ff4081, #ff00cc);
+      border: none;
+      border-radius: 12px;
       color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+    }
+    
+    .logout-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(255, 0, 204, 0.8);
+    }
+    
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    
+    .admin-card {
+      background: rgba(0, 20, 40, 0.6);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.4);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    .admin-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    }
+    
+    .card-icon {
+      font-size: 28px;
+      margin-right: 15px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    
+    .card-title {
+      font-size: 1.6rem;
+      color: #00ffff;
+    }
+    
+    .card-content {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
       margin: 10px 0;
-      padding: 16px;
+    }
+    
+    .stat-label {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    
+    .progress-bar {
+      height: 12px;
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,200,0.2);
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, #00ffff, #00aaff);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .chart-container {
+      height: 200px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+    }
+    
+    .chart-bar {
+      flex: 1;
+      background: linear-gradient(to top, #00ffff, #00aaff);
+      margin: 0 5px;
+      border-radius: 5px 5px 0 0;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+    
+    .chart-label {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+    }
+    
+    .recent-orders {
+      background: rgba(0, 20, 40, 0.6);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.4);
+      margin-bottom: 40px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .orders-list {
+      margin-top: 20px;
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      margin: 10px 0;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+    
+    .order-item:hover {
+      background: rgba(0, 0, 0, 0.5);
+      transform: translateX(5px);
+    }
+    
+    .order-info {
+      flex: 1;
+    }
+    
+    .order-status {
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .status-pending {
+      background: rgba(255, 204, 0, 0.2);
+      color: #ffcc00;
+    }
+    
+    .status-completed {
+      background: rgba(0, 255, 153, 0.2);
+      color: #00ff99;
+    }
+    
+    .status-processing {
+      background: rgba(0, 153, 255, 0.2);
+      color: #00aaff;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      nav {
+        padding: 20px 15px;
+        gap: 12px;
+      }
+      nav a {
+        min-width: 140px;
+        padding: 12px 20px;
+        font-size: 16px;
+      }
+      .glow-heading {
+        font-size: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 650px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+      nav a {
+        width: 90%;
+        min-width: auto;
+      }
+      .glow-heading {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1.1rem;
+      }
+      .home-logo {
+        height: 100px;
+      }
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <div class="live-glow-bg"></div>
+  <div class="particles" id="particles"></div>
+  
   <div class="logo-wrapper">
-    <img src="logo.png" alt="Banda Ki Seva Logo" class="home-logo">
+    <img src="https://via.placeholder.com/140" alt="Banda Ki Seva Logo" class="home-logo">
   </div>
+  
   <header>
     <h1 class="glow-heading">📦 Banda Ki Seva</h1>
     <p>1 Day Courier | Digital Seva | Local Delivery</p>
   </header>
+  
+  <!-- Navigation Bar -->
   <nav>
     <a href="index.html" class="active">🏠 होम</a>
     <a href="kirana.html">🛒 किराना सेवा</a>
@@ -283,10 +654,9 @@
     <a href="refer.html">🎁 Refer</a>
     <a href="contact.html">📞 Contact</a>
     <a href="#" onclick="openAdmin()">🛡️ Admin Login</a>
-    <a href="employee.html">🧑‍💼 Employee Login</a>
-    <a href="about.html">ℹ️ About</a>
-    <a href="register.html">📝 रजिस्टर करें</a>
   </nav>
+
+  <!-- Main Content -->
   <div class="content">
     <h2>🙏 आपका स्वागत है!</h2>
     <p>हमारी सेवाओं का लाभ उठाने के लिए ऐप डाउनलोड करें।</p>
@@ -307,97 +677,98 @@
     &copy; 2025 Banda Ki Seva | Powered by Siddhant Dhuriya
   </footer>
 
-  <div id="adminModal">
-    <div class="admin-box">
-      <span class="close-btn" onclick="closeAdmin()">×</span>
-      <h2>🛠️ Admin Login</h2>
-      <input type="text" id="username" placeholder="Username">
-      <input type="password" id="password" placeholder="Password">
-      <p id="error-msg">Invalid credentials</p>
-      <button onclick="login()">Login</button>
+  <!-- Admin Login Modal -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAdmin()">&times;</span>
+      <h2>Admin Login</h2>
+      <form class="admin-form" onsubmit="adminLogin(event)">
+        <div class="input-group">
+          <i>👤</i>
+          <input type="text" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+          <i>🔒</i>
+          <input type="password" placeholder="Password" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
     </div>
   </div>
 
+  <!-- Stylish Admin Panel -->
   <div id="adminPanel">
-    <h2>📋 Banda Ki Seva - Admin Panel</h2>
-    <div class="card">
-      <h3>👤 कुल यूज़र</h3>
-      <p>125 Registered Users</p>
+    <div class="admin-header">
+      <div class="admin-title">🚀 Banda Ki Seva - Admin Dashboard</div>
+      <button class="logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
-    <div class="card">
-      <h3>📦 आज की डिलीवरी</h3>
-      <p>17 Pending Orders</p>
+    
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="card-header">
+          <div class="card-icon">👤</div>
+          <div class="card-title">कुल यूज़र</div>
+        </div>
+        <div class="card-content">
+          <div class="stat-number">1,248</div>
+          <div class="stat-label">पिछले 30 दिनों में 12% वृद्धि</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%"></div>
+          </div>
+          <div class="stat-label">लक्ष्य: 1,500 यूज़र</div>
+        </div>
+      </div>
+      
+      <div class="admin-card">
+        <div class="card-header">
+          <div class="card-icon">📦</div>
+          <div class="card-title">आज की डिलीवरी</div>
+        </div>
+        <div class="card-content">
+          <div class="stat-number">42</div>
+          <div class="stat-label">17 पेंडिंग ऑर्डर</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 60%"></div>
+          </div>
+          <div class="stat-label">कुल ऑर्डर: 70</div>
+        </div>
+      </div>
+      
+      <div class="admin-card">
+        <div class="card-header">
+          <div class="card-icon">💰</div>
+          <div class="card-title">आज की कमाई</div>
+        </div>
+        <div class="card-content">
+          <div class="stat-number">₹8,560</div>
+          <div class="stat-label">पिछले सप्ताह से 18% वृद्धि</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 45%"></div>
+          </div>
+          <div class="stat-label">मासिक लक्ष्य: ₹250,000</div>
+        </div>
+      </div>
+      
+      <div class="admin-card">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <div class="card-title">सेवा विश्लेषण</div>
+        </div>
+        <div class="card-content">
+          <div class="chart-container">
+            <div class="chart-bar" style="height: 70%"><div class="chart-label">Courier</div></div>
+            <div class="chart-bar" style="height: 40%"><div class="chart-label">Kirana</div></div>
+            <div class="chart-bar" style="height: 85%"><div class="chart-label">Digital</div></div>
+            <div class="chart-bar" style="height: 60%"><div class="chart-label">VIP</div></div>
+            <div class="chart-bar" style="height: 30%"><div class="chart-label">Books</div></div>
+          </div>
+          <div class="stat-label">सर्विस यूज़ (प्रतिशत में)</div>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3>📝 सेवाएं</h3>
-      <ul>
-        <li>Digital Seva Record</li>
-        <li>Courier Orders</li>
-        <li>Local Delivery Track</li>
-        <li>VIP Membership</li>
-      </ul>
-    </div>
-  </div>
-
-  <script>
-    function downloadApp() {
-      const apkUrl = "https://drive.google.com/uc?export=download&id=1MCEei-R87CfIFKkZpr5oI7MUDk4-QQbS";
-      document.getElementById("msg").textContent = "⏳ Download शुरू हो रहा है...";
-      window.location.href = apkUrl;
-      setTimeout(() => {
-        document.getElementById("msg").textContent = "✅ Download शुरू हो गया! अगर नहीं हुआ तो कृपया दोबारा क्लिक करें।";
-      }, 2000);
-    }
-
-    function openAdmin() {
-      document.getElementById("adminModal").style.display = "flex";
-    }
-
-    function closeAdmin() {
-      document.getElementById("adminModal").style.display = "none";
-    }
-
-    function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const errorMsg = document.getElementById("error-msg");
-
-      if (username === "admin" && password === "banda@123") {
-        document.getElementById("adminModal").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
-      } else {
-        errorMsg.style.display = "block";
-      }
-    }
-
-    // ✅ Countdown Logic
-    const countdownElement = document.getElementById("countdown");
-    const targetDate = new Date("2025-07-10T00:00:00").getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance <= 0) {
-        countdownElement.innerHTML = "✅ समय समाप्त हो गया!";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdownElement.innerHTML = `${days} दिन ${hours} घंटे ${minutes} मिनट ${seconds} सेकंड शेष`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log("✅ Service Worker registered!"));
-    }
-  </script>
-</body>
-</html>
+    
+    <div class="recent-orders">
+      <div class="card-header">
+        <div class="card-icon">📝</div>
+        <div class="card-title">हाल के आदेश</div>
+      </d
