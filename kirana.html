@@ -229,6 +229,24 @@
       text-shadow: 0 0 10px #00ffff;
     }
     
+    .location-permission {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 1px solid rgba(255, 255, 0, 0.3);
+      text-align: center;
+    }
+    
+    .location-btn {
+      background: linear-gradient(45deg, #ffcc00, #ffdd44);
+      color: #330;
+      margin-top: 10px;
+      width: auto;
+      display: inline-block;
+      padding: 10px 20px;
+    }
+    
     @media (max-width: 768px) {
       .container {
         padding: 20px;
@@ -324,6 +342,16 @@
       <ul id="orderList"></ul>
     </div>
     
+    <!-- Location Permission Section -->
+    <div class="location-permission">
+      <h3><i class="fas fa-map-marker-alt"></i> लाइव लोकेशन</h3>
+      <p>ऑर्डर भेजने के लिए अपनी लोकेशन शेयर करें:</p>
+      <button class="location-btn" id="locationBtn" onclick="requestLocationPermission()">
+        <i class="fas fa-location-dot"></i> लोकेशन एक्सेस दें
+      </button>
+      <p id="locationStatus" style="margin-top: 10px; font-size: 14px; color: #ffcc00;"></p>
+    </div>
+    
     <button class="whatsapp-button" onclick="sendWhatsApp()">
       <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर भेजें
     </button>
@@ -343,6 +371,7 @@
     
     let orderItems = [];
     let editIndex = -1;
+    let userLocation = null;
 
     window.onload = function () {
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
@@ -350,6 +379,50 @@
       document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
       document.getElementById("custArea").value = localStorage.getItem("custArea") || "";
     };
+
+    // Request location permission
+    function requestLocationPermission() {
+      if (!navigator.geolocation) {
+        document.getElementById('locationStatus').innerText = 'आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता';
+        return;
+      }
+      
+      document.getElementById('locationStatus').innerText = 'लोकेशन रिक्वेस्ट की जा रही है...';
+      
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          userLocation = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          document.getElementById('locationStatus').innerText = 'लोकेशन सफलतापूर्वक प्राप्त हुई!';
+          showNotification('आपकी लोकेशन सफलतापूर्वक प्राप्त हुई');
+        },
+        error => {
+          let errorMessage = 'लोकेशन प्राप्त करने में त्रुटि: ';
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage += 'आपने लोकेशन एक्सेस अस्वीकार किया है';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += 'लोकेशन जानकारी उपलब्ध नहीं है';
+              break;
+            case error.TIMEOUT:
+              errorMessage += 'लोकेशन प्राप्त करने में समय समाप्त हुआ';
+              break;
+            default:
+              errorMessage += 'अज्ञात त्रुटि';
+          }
+          document.getElementById('locationStatus').innerText = errorMessage;
+          showNotification(errorMessage);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
 
     function addItem() {
       const name = document.getElementById("itemName").value.trim();
@@ -512,11 +585,20 @@
         `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`
       ).join("\n");
 
+      // Check if location is available
+      let locationText = "";
+      if (userLocation) {
+        locationText = `\n📍 लाइव लोकेशन: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}`;
+      } else {
+        locationText = "\n⚠️ ग्राहक ने लोकेशन शेयर नहीं की";
+      }
+
       const message = `🛒 *VIP किराना ऑर्डर*
 👤 नाम: ${name}
 📱 मोबाइल: ${mobile}
 🏠 पता: ${address}
 📍 एरिया: ${area}
+${locationText}
 
 🧾 ऑर्डर:
 ${itemsText}
