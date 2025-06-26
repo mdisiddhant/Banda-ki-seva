@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>हमारे बारे में - Banda Ki Seva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -13,113 +14,341 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+      background: radial-gradient(circle, #0c0c1a 0%, #000000 100%);
       color: #ffffff;
       min-height: 100vh;
       padding: 20px;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(0, 255, 255, 0.4);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .container {
       max-width: 800px;
       margin: auto;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,255,255,0.2), 0 0 60px rgba(0,255,255,0.05);
+      background: rgba(10, 15, 30, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.3), 0 0 80px rgba(0,255,255,0.1);
       animation: fadeIn 0.8s ease-in-out;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff00cc, #00ffff, #ffcc00, #ff00cc);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 22px;
+      animation: borderGlow 6s linear infinite;
+      filter: blur(6px);
+      opacity: 0.7;
+    }
+
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
       color: #00ffff;
       text-align: center;
-      font-size: 32px;
-      text-shadow: 0 0 8px #00ffff;
+      font-size: 42px;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
       margin-bottom: 25px;
+      padding: 15px 0;
+      position: relative;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+      100% { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff; }
     }
 
     h2 {
       color: #ffffff;
-      font-size: 22px;
+      font-size: 26px;
       margin-top: 25px;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
     }
 
     .section-title {
       font-weight: bold;
-      font-size: 20px;
-      margin-top: 25px;
+      font-size: 24px;
+      margin-top: 35px;
       color: #00ffcc;
-      text-shadow: 0 0 5px #00ffcc;
+      text-shadow: 0 0 8px #00ffcc, 0 0 15px rgba(0, 255, 204, 0.5);
+      position: relative;
+      padding-left: 20px;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #00ffcc;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ffcc;
     }
 
     ul {
       list-style: none;
       padding-left: 0;
-      margin: 10px 0 20px;
+      margin: 15px 0 25px;
     }
 
     ul li {
-      font-size: 18px;
-      margin-bottom: 10px;
+      font-size: 20px;
+      margin-bottom: 12px;
       line-height: 1.6;
       color: #FFD700;
-      text-shadow: 0 0 5px #FFD700, 0 0 8px rgba(255, 215, 0, 0.3);
+      text-shadow: 0 0 8px #FFD700, 0 0 15px rgba(255, 215, 0, 0.5);
+      padding: 10px 15px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid #FFD700;
+      animation: fadeInItem 0.5s ease-out;
+      animation-fill-mode: backwards;
+    }
+
+    @keyframes fadeInItem {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     ul li:nth-child(even) {
-      color: #C0C0C0;
-      text-shadow: 0 0 5px #C0C0C0, 0 0 8px rgba(192, 192, 192, 0.3);
+      color: #ffffff;
+      text-shadow: 0 0 8px #ffffff, 0 0 15px rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 3px solid #ffffff;
     }
 
     ul li::before {
       content: "✅ ";
       color: #00ffcc;
-      margin-right: 5px;
+      margin-right: 8px;
+      text-shadow: 0 0 5px #00ffcc;
     }
 
     .whatsapp-button {
       display: block;
       text-align: center;
-      background-color: #25D366;
+      background: linear-gradient(45deg, #1ebe5b, #25D366, #1ebe5b);
       color: white;
-      padding: 14px 25px;
-      margin: 30px auto;
+      padding: 18px 35px;
+      margin: 40px auto;
       text-decoration: none;
       width: fit-content;
-      border-radius: 40px;
-      font-size: 20px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 0 12px #25D366;
+      border-radius: 50px;
+      font-size: 24px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px #25D366, 0 0 40px rgba(37, 211, 102, 0.5);
+      position: relative;
+      overflow: hidden;
+      animation: pulse 2s infinite;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      font-weight: bold;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px #25D366, 0 0 40px rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 0 30px #25D366, 0 0 60px rgba(37, 211, 102, 0.8); }
+      100% { box-shadow: 0 0 20px #25D366, 0 0 40px rgba(37, 211, 102, 0.5); }
     }
 
     .whatsapp-button:hover {
-      background-color: #1ebe5b;
       transform: scale(1.05);
+      box-shadow: 0 0 30px #25D366, 0 0 60px rgba(37, 211, 102, 0.8);
+    }
+
+    .whatsapp-button i {
+      margin-right: 10px;
+      font-size: 28px;
+      vertical-align: middle;
     }
 
     .note {
       text-align: center;
       font-weight: bold;
       margin-top: 30px;
-      font-size: 18px;
-      color: #cccccc;
+      font-size: 20px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #ffffff;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: floatUp 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
     }
 
     .datetime {
       text-align: center;
-      margin-top: 20px;
+      margin: 20px 0 30px;
       color: #00ffff;
       font-weight: bold;
-      text-shadow: 0 0 5px #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+      font-size: 20px;
+      padding: 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      display: inline-block;
+      width: 100%;
     }
 
     p {
       color: #FFD700;
-      text-shadow: 0 0 5px #FFD700;
-      font-size: 17px;
+      text-shadow: 0 0 10px #FFD700;
+      font-size: 19px;
       line-height: 1.7;
+      padding: 15px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 10px;
+      border-left: 3px solid #FFD700;
+      margin: 15px 0;
+    }
+
+    .contact-info {
+      margin-top: 40px;
+      padding: 25px;
+      border-top: 1px solid rgba(0,255,255,0.3);
+      text-align: center;
+      font-size: 18px;
+      background: rgba(0, 30, 50, 0.4);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+
+    .contact-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #00ffff, #ff00cc, #ffcc00);
+      animation: borderFlow 3s linear infinite;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .contact-info p {
+      margin: 15px 0;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+      font-size: 20px;
+      padding: 10px;
+      background: rgba(0, 255, 204, 0.1);
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-info p i {
+      margin-right: 12px;
+      font-size: 24px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    .address-highlight {
+      position: relative;
+      padding: 20px;
+      margin: 30px 0;
+      background: rgba(0, 100, 200, 0.2);
+      border-radius: 15px;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+      text-align: center;
+    }
+
+    .address-highlight i {
+      font-size: 40px;
+      color: #ff0000;
+      text-shadow: 0 0 15px #ff0000;
+      margin-bottom: 15px;
+      animation: pulseMarker 2s infinite;
+    }
+
+    @keyframes pulseMarker {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .address-highlight p {
+      color: #ffffff;
+      text-shadow: 0 0 10px #ffffff;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: none;
     }
 
     @keyframes fadeIn {
@@ -132,9 +361,51 @@
         transform: translateY(0);
       }
     }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      .section-title {
+        font-size: 22px;
+      }
+      
+      ul li {
+        font-size: 18px;
+      }
+      
+      .whatsapp-button {
+        font-size: 20px;
+        padding: 15px 25px;
+      }
+      
+      .contact-info p {
+        font-size: 18px;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Animated particles background -->
+  <div class="particles" id="particles"></div>
 
   <div class="container">
     <h1>हमारे बारे में</h1>
@@ -160,18 +431,67 @@
     <div class="section-title">📍 सेवा क्षेत्र:</div>
     <p>सिर्फ बांदा शहर और आस-पास के इलाके<br>⌛ सुबह 9 बजे से रात 9 बजे तक<br>💸 डिलीवरी शुल्क ₹20 से शुरू</p>
 
+    <!-- Highlighted address section -->
+    <div class="address-highlight">
+      <i class="fas fa-map-marker-alt"></i>
+      <p>🏠 पता: Banda, Jail Road, Swaraj Colony, Gali No. 4</p>
+    </div>
+
     <a class="whatsapp-button" href="https://wa.me/916351598832" target="_blank" id="whatsappBtn">
-      📥 WhatsApp पर ऑर्डर करें – यहाँ क्लिक करें
+      <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर करें
     </a>
 
     <div class="note">🚀 जल्दी करो! अब हर ज़रूरत का सामान घर बैठे पाओ।</div>
+
+    <div class="contact-info">
+      <p><i class="fas fa-map-marked-alt"></i> पता: Banda, Jail Road, Swaraj Colony, Gali No. 4</p>
+      <p><i class="fas fa-phone-alt"></i> मोबाइल: 6351598832</p>
+      <p><i class="fas fa-envelope"></i> ईमेल: siddhant057@gmail.com</p>
+    </div>
   </div>
 
   <script>
+    // Create animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 8 + 2;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 15;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random color
+        const colors = ['#00ffff', '#ff00cc', '#ffcc00'];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
     window.onload = function () {
-      alert("🙏 आपका स्वागत है Banda Ki Seva में!");
+      createParticles();
       updateDateTime();
       autoScrollDown();
+      
+      // Add staggered animations to list items
+      const listItems = document.querySelectorAll('li');
+      listItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.15}s`;
+      });
     };
 
     document.getElementById("whatsappBtn").addEventListener("click", function (event) {
@@ -183,12 +503,15 @@
       let now = new Date();
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
       document.getElementById("datetime").innerText = "📅 दिन और समय: " + now.toLocaleDateString('hi-IN', options);
+      
+      // Update every minute
+      setTimeout(updateDateTime, 60000);
     }
 
     function autoScrollDown() {
       setTimeout(() => {
         window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      }, 4000);
+      }, 5000);
     }
   </script>
 
