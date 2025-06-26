@@ -377,13 +377,182 @@
       color: #bbdefb;
       font-size: 0.9rem;
     }
+    
+    /* New Kirana Seva Styles */
+    .order-card {
+      background: rgba(0, 40, 60, 0.5);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 3px solid #ffcc00;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .order-id {
+      font-weight: 600;
+      color: #ffcc00;
+    }
+    
+    .order-status {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .status-pending { background: #ff9800; color: #000; }
+    .status-processing { background: #2196f3; color: #fff; }
+    .status-delivered { background: #4caf50; color: #fff; }
+    
+    .order-items-list {
+      margin: 10px 0;
+      padding-left: 15px;
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+    
+    .order-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .order-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .order-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .btn-accept {
+      background: #4caf50;
+      color: white;
+    }
+    
+    .btn-reject {
+      background: #f44336;
+      color: white;
+    }
+    
+    .btn-delivered {
+      background: #2196f3;
+      color: white;
+    }
+    
+    .delivery-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .stat-card {
+      background: rgba(0, 40, 60, 0.5);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #00ffcc;
+      margin: 10px 0;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #bbdefb;
+    }
+    
+    .delivery-mode {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .mode-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(0, 40, 60, 0.5);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      color: #bbdefb;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .mode-btn.active {
+      background: #00ffcc;
+      color: #000;
+      font-weight: 600;
+      border-color: #00ffcc;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+    
+    .mode-btn:hover:not(.active) {
+      background: rgba(0, 100, 150, 0.5);
+    }
+    
+    .emergency-btn {
+      background: linear-gradient(45deg, #ff5252, #b71c1c);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-top: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .emergency-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 82, 82, 0.7);
+    }
+    
+    /* Animation for new order */
+    @keyframes highlight {
+      0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+    }
+    
+    .new-order {
+      animation: highlight 2s ease;
+    }
   </style>
 </head>
 <body>
-  <!-- Cyber Border Effect -->
   <div class="cyber-border"></div>
-  
-  <!-- Status Indicator -->
+
   <div class="status-indicator">
     <div class="status-dot"></div>
     <div class="status-text">सक्रिय ट्रैकिंग</div>
@@ -392,118 +561,137 @@
       <div class="battery-tip"></div>
     </div>
   </div>
-  
+
   <div class="header">
-    <h1><i class="fas fa-map-marker-alt"></i> लाइव लोकेशन ट्रैकर</h1>
-    <p class="subtitle">Banda Ki Seva के लिए वास्तविक समय स्थान ट्रैकिंग और डिवाइस सूचना</p>
+    <h1><i class="fas fa-map-marker-alt"></i> किराना सेवा लोकेशन ट्रैकर</h1>
+    <p class="subtitle">Banda Ki Seva के लिए वास्तविक समय डिलीवरी ट्रैकिंग और ऑर्डर प्रबंधन</p>
   </div>
   
   <div class="dashboard">
+    <!-- Left Panel -->
     <div class="panel">
-      <div class="panel-title"><i class="fas fa-map"></i> लाइव स्थान मानचित्र</div>
+      <div class="panel-title"><i class="fas fa-map"></i> डिलीवरी मानचित्र</div>
       
       <div id="map"></div>
+      
+      <div class="delivery-mode">
+        <button class="mode-btn active" onclick="setDeliveryMode('bike')">
+          <i class="fas fa-motorcycle"></i> बाइक
+        </button>
+        <button class="mode-btn" onclick="setDeliveryMode('car')">
+          <i class="fas fa-car"></i> कार
+        </button>
+        <button class="mode-btn" onclick="setDeliveryMode('walking')">
+          <i class="fas fa-walking"></i> पैदल
+        </button>
+      </div>
       
       <div class="controls">
         <div class="control-btn" onclick="simulateMovement()">
           <i class="fas fa-walking"></i>
-          <span>सिमुलेट मूवमेंट</span>
+          <span>सिमुलेट डिलीवरी</span>
         </div>
-        <div class="control-btn" onclick="toggleSpeaker()">
-          <i class="fas fa-volume-up"></i>
-          <span>स्पीकर टॉगल</span>
-        </div>
-        <div class="control-btn" onclick="findNearby()">
+        <div class="control-btn" onclick="findNearbyStores()">
           <i class="fas fa-store"></i>
-          <span>नजदीकी स्टोर</span>
+          <span>नजदीकी किराना</span>
         </div>
-        <div class="control-btn" onclick="shareLocation()">
-          <i class="fas fa-share-alt"></i>
-          <span>लोकेशन शेयर</span>
+        <div class="control-btn" onclick="optimizeRoute()">
+          <i class="fas fa-route"></i>
+          <span>रूट ऑप्टिमाइज़</span>
+        </div>
+        <div class="control-btn" onclick="checkInventory()">
+          <i class="fas fa-box-open"></i>
+          <span>इन्वेंटरी चेक</span>
         </div>
       </div>
       
-      <div class="panel-title"><i class="fas fa-history"></i> लोकेशन हिस्ट्री</div>
-      <div class="location-history" id="history">
-        <div class="history-item">
-          <p class="time">2 मिनट पहले</p>
-          <p>बांदा जेल रोड, स्वराज कॉलोनी</p>
-          <p>सटीकता: 15 मीटर</p>
-        </div>
-        <div class="history-item">
-          <p class="time">15 मिनट पहले</p>
-          <p>कचहरी चौराहा, बांदा</p>
-          <p>सटीकता: 25 मीटर</p>
-        </div>
-        <div class="history-item">
-          <p class="time">45 मिनट पहले</p>
-          <p>बांदा बस स्टैंड</p>
-          <p>सटीकता: 50 मीटर</p>
-        </div>
-      </div>
+      <button class="emergency-btn" onclick="triggerEmergency()">
+        <i class="fas fa-exclamation-triangle"></i> इमरजेंसी अलर्ट
+      </button>
     </div>
     
+    <!-- Right Panel -->
     <div class="panel">
-      <div class="panel-title"><i class="fas fa-microchip"></i> डिवाइस सूचना</div>
+      <div class="panel-title"><i class="fas fa-shopping-basket"></i> सक्रिय ऑर्डर</div>
       
-      <div class="info-grid">
-        <div class="info-box">
-          <div class="info-label">IP पता</div>
-          <div class="info-value" id="ip">लोड हो रहा है...</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">डिवाइस</div>
-          <div class="info-value" id="device">...</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">बैटरी स्थिति</div>
-          <div class="info-value" id="battery">...</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">नेटवर्क पिंग</div>
-          <div class="info-value" id="ping">...</div>
-          <div class="signal-strength">
-            <div class="signal-bar"></div>
-            <div class="signal-bar"></div>
-            <div class="signal-bar"></div>
-            <div class="signal-bar"></div>
+      <div id="active-orders">
+        <div class="order-card new-order">
+          <div class="order-card-header">
+            <div class="order-id">ऑर्डर #BKS1024</div>
+            <div class="order-status status-pending">प्रोसेसिंग</div>
+          </div>
+          <p><strong>ग्राहक:</strong> राजेश कुमार</p>
+          <p><strong>स्थान:</strong> जेल रोड, स्वराज कॉलोनी</p>
+          <p><strong>मोबाइल:</strong> 98XXXXXX21</p>
+          <div class="order-items-list">
+            <div class="order-item">
+              <span>आटा (5kg)</span>
+              <span>₹220</span>
+            </div>
+            <div class="order-item">
+              <span>चावल (10kg)</span>
+              <span>₹550</span>
+            </div>
+            <div class="order-item">
+              <span>तेल (5L)</span>
+              <span>₹650</span>
+            </div>
+          </div>
+          <div class="order-actions">
+            <button class="order-btn btn-accept" onclick="acceptOrder('BKS1024')">स्वीकारें</button>
+            <button class="order-btn btn-delivered" onclick="markDelivered('BKS1024')">डिलीवर किया</button>
           </div>
         </div>
-        <div class="info-box">
-          <div class="info-label">भाषा</div>
-          <div class="info-value" id="lang">...</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">इंटरनेट स्पीड</div>
-          <div class="info-value">42 Mbps</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">स्थान सटीकता</div>
-          <div class="info-value">उच्च</div>
-        </div>
-        <div class="info-box">
-          <div class="info-label">कनेक्शन प्रकार</div>
-          <div class="info-value">4G</div>
+        
+        <div class="order-card">
+          <div class="order-card-header">
+            <div class="order-id">ऑर्डर #BKS1023</div>
+            <div class="order-status status-processing">चल रहा है</div>
+          </div>
+          <p><strong>ग्राहक:</strong> सुनीता देवी</p>
+          <p><strong>स्थान:</strong> कचहरी चौराहा</p>
+          <p><strong>मोबाइल:</strong> 87XXXXXX45</p>
+          <div class="order-actions">
+            <button class="order-btn btn-delivered" onclick="markDelivered('BKS1023')">डिलीवर किया</button>
+          </div>
         </div>
       </div>
       
-      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-satellite"></i> GPS स्टेटस</div>
-      <div class="gps-status">
-        <div class="info-box">
-          <div class="info-label">उपग्रह कनेक्शन</div>
-          <div class="info-value">8/12</div>
+      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-chart-line"></i> डिलीवरी आँकड़े</div>
+      
+      <div class="delivery-stats">
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">आज के ऑर्डर</div>
         </div>
-        <div class="info-box">
-          <div class="info-label">अंतिम अपडेट</div>
-          <div class="info-value">10 सेकंड पहले</div>
+        <div class="stat-card">
+          <div class="stat-value">₹2,840</div>
+          <div class="stat-label">कमाई</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-value">6.2 km</div>
+          <div class="stat-label">ट्रैवल किया</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">97%</div>
+          <div class="stat-label">रेटिंग</div>
+        </div>
+      </div>
+      
+      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-microchip"></i> डिवाइस सूचना</div>
+      
+      <div class="info-grid">
+        <div class="info-box"><div class="info-label">IP पता</div><div class="info-value" id="ip">लोड हो रहा है...</div></div>
+        <div class="info-box"><div class="info-label">डिवाइस</div><div class="info-value" id="device">...</div></div>
+        <div class="info-box"><div class="info-label">बैटरी स्थिति</div><div class="info-value" id="battery">...</div></div>
+        <div class="info-box"><div class="info-label">नेटवर्क पिंग</div><div class="info-value" id="ping">...</div></div>
       </div>
     </div>
   </div>
   
   <div class="footer">
-    <p>Banda Ki Seva - आपकी सभी जरूरतों के लिए विश्वसनीय सेवा</p>
-    <p>© 2023 सर्वाधिकार सुरक्षित</p>
+    <p>Banda Ki Seva - घर बैठे मिले ताज़ा किराना, तुरंत डिलीवरी</p>
+    <p>© 2023 सर्वाधिकार सुरक्षित | ग्राहक सहायता: 6351598832</p>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -530,17 +718,18 @@
     let marker = L.marker([25.4750, 80.3350], {icon: customIcon}).addTo(map);
     marker.bindPopup("<b>वर्तमान स्थान</b><br>बांदा जेल रोड, उत्तर प्रदेश").openPopup();
     
-    // Add some points of interest
-    const locations = [
-      {name: "सेवा केंद्र", coords: [25.4765, 80.3360]},
-      {name: "किराना स्टोर", coords: [25.4735, 80.3340]},
-      {name: "मेडिकल स्टोर", coords: [25.4745, 80.3325]},
-      {name: "रेस्टोरेंट", coords: [25.4770, 80.3335]}
+    // Add Kirana stores
+    const kiranaStores = [
+      {name: "शुभम किराना स्टोर", coords: [25.4765, 80.3360]},
+      {name: "सिद्धान्त सुपर मार्केट", coords: [25.4735, 80.3340]},
+      {name: "स्वराज किराना", coords: [25.4745, 80.3325]},
+      {name: "फ़्रेश मार्ट", coords: [25.4770, 80.3335]}
     ];
     
-    locations.forEach(loc => {
-      L.marker(loc.coords).addTo(map)
-        .bindPopup(`<b>${loc.name}</b><br>Banda Ki Seva पार्टनर`);
+    kiranaStores.forEach(store => {
+      L.marker(store.coords).addTo(map)
+        .bindPopup(`<b>${store.name}</b><br>Banda Ki Seva पार्टनर`)
+        .openPopup();
     });
     
     // Battery Info
@@ -557,71 +746,4 @@
     }
     
     // Device Info
-    document.getElementById('device').innerText = navigator.platform || "Unknown Device";
-    document.getElementById('lang').innerText = navigator.language || "hi-IN";
-    
-    // Ping (simulated)
-    function updatePing() {
-      const ping = Math.floor(Math.random() * 51) + 20; // 20-70ms
-      document.getElementById('ping').innerText = `${ping}ms`;
-    }
-    
-    // IP Address
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('ip').innerText = data.ip;
-      })
-      .catch(() => {
-        document.getElementById('ip').innerText = "192.168.1.1";
-      });
-    
-    // Update functions
-    setInterval(updateBattery, 5000);
-    setInterval(updatePing, 3000);
-    
-    // Initial updates
-    updateBattery();
-    updatePing();
-    
-    // Control functions
-    function simulateMovement() {
-      // Move marker to a nearby location
-      const lat = 25.4750 + (Math.random() * 0.005 - 0.0025);
-      const lng = 80.3350 + (Math.random() * 0.005 - 0.0025);
-      
-      marker.setLatLng([lat, lng]);
-      map.panTo([lat, lng]);
-      
-      // Add to history
-      const history = document.getElementById('history');
-      const newItem = document.createElement('div');
-      newItem.className = 'history-item';
-      newItem.innerHTML = `
-        <p class="time">अभी</p>
-        <p>नया स्थान: ${lat.toFixed(5)}, ${lng.toFixed(5)}</p>
-        <p>सटीकता: ${Math.floor(Math.random() * 20) + 5} मीटर</p>
-      `;
-      history.insertBefore(newItem, history.firstChild);
-    }
-    
-    function toggleSpeaker() {
-      alert('स्पीकर स्थिति टॉगल की गई');
-    }
-    
-    function findNearby() {
-      alert('नजदीकी स्टोर खोजे जा रहे हैं...');
-    }
-    
-    function shareLocation() {
-      alert('स्थान साझा सक्रिय - WhatsApp भेजा गया');
-    }
-    
-    // Initial setup
-    window.onload = function() {
-      setTimeout(simulateMovement, 2000);
-      setTimeout(simulateMovement, 5000);
-    };
-  </script>
-</body>
-    </html>
+    document.getElem
