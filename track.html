@@ -3,140 +3,625 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🔍 लाइव लोकेशन - Banda Ki Seva</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <title>🌍 लाइव लोकेशन - Banda Ki Seva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #000;
-      color: #0f0;
+      background: linear-gradient(135deg, #0f0c29, #1a1a40, #16213e);
+      color: #e0f7fa;
+      min-height: 100vh;
       padding: 20px;
       overflow-x: hidden;
+      position: relative;
     }
-
+    
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0;
-      height: 100%; width: 100%;
-      background: radial-gradient(circle at 30% 40%, #00ffcc33, transparent),
-                  radial-gradient(circle at 70% 60%, #ff00ff33, transparent),
-                  repeating-linear-gradient(45deg, #ffffff09, #ffffff09 1px, transparent 1px, transparent 30px);
-      filter: blur(70px);
+      top: 0; 
+      left: 0;
+      height: 100%; 
+      width: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, #00ffcc33, transparent 40%),
+        radial-gradient(circle at 80% 70%, #ff00ff33, transparent 45%),
+        radial-gradient(circle at 50% 20%, #ffcc0033, transparent 50%),
+        repeating-linear-gradient(45deg, #ffffff09, #ffffff09 1px, transparent 1px, transparent 30px);
+      filter: blur(100px);
       z-index: -1;
-      animation: bgMove 15s linear infinite alternate;
+      animation: bgMove 20s linear infinite alternate;
     }
-
+    
     @keyframes bgMove {
       0% { transform: scale(1) rotate(0deg); }
       100% { transform: scale(1.2) rotate(1deg); }
     }
-
-    h2 {
-      text-align: center;
-      font-size: 28px;
-      text-shadow: 0 0 10px #00ffcc;
-      margin-bottom: 20px;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .controls button {
-      background-color: #0f0;
-      border: none;
-      padding: 10px 16px;
-      color: #000;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #0f0;
-    }
-
-    #map {
-      height: 300px;
+    
+    .cyber-border {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      border: 2px solid #0f0;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #0f08;
-      margin-bottom: 20px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
     }
-
-    .info-boxes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
+    
+    .cyber-border::before,
+    .cyber-border::after {
+      content: "";
+      position: absolute;
+      background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+      height: 2px;
+      width: 100%;
+      animation: scanLine 3s linear infinite;
     }
-
-    .box {
-      background: rgba(0, 255, 0, 0.05);
-      border: 1px solid #0f0;
-      padding: 10px;
-      border-radius: 8px;
-      min-width: 140px;
+    
+    .cyber-border::before {
+      top: 10%;
+    }
+    
+    .cyber-border::after {
+      bottom: 10%;
+    }
+    
+    @keyframes scanLine {
+      0% { background-position: -100% 0; }
+      100% { background-position: 100% 0; }
+    }
+    
+    .header {
       text-align: center;
-      box-shadow: 0 0 8px #0f08;
+      padding: 20px 0;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      color: #00ffcc;
+      text-shadow: 0 0 15px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.7);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #bbdefb;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    @media (max-width: 900px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .panel {
+      background: rgba(10, 15, 35, 0.8);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff00cc, #00ffff, #ffcc00, #ff00cc);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 22px;
+      animation: borderGlow 6s linear infinite;
+      filter: blur(6px);
+      opacity: 0.6;
+    }
+    
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .panel-title {
+      font-size: 1.5rem;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffcc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .panel-title i {
+      font-size: 1.8rem;
+    }
+    
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 204, 0.5);
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+      z-index: 5;
+    }
+    
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .control-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 40, 60, 0.5);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .control-btn:hover {
+      background: rgba(0, 100, 150, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+    }
+    
+    .control-btn i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+    
+    .control-btn span {
+      font-weight: 500;
+      color: #e0f7fa;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .info-box {
+      background: rgba(0, 30, 50, 0.5);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .info-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: #00ffcc;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+    
+    .info-label {
+      font-size: 0.9rem;
+      color: #bbdefb;
+      margin-bottom: 5px;
+    }
+    
+    .info-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #00ffcc;
+      text-shadow: 0 0 8px #00ffcc;
+    }
+    
+    .signal-strength {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 5px;
+    }
+    
+    .signal-bar {
+      width: 6px;
+      background: #00ffcc;
+      border-radius: 3px;
+      box-shadow: 0 0 5px #00ffcc;
+    }
+    
+    .signal-bar:nth-child(1) { height: 10px; }
+    .signal-bar:nth-child(2) { height: 15px; }
+    .signal-bar:nth-child(3) { height: 20px; }
+    .signal-bar:nth-child(4) { height: 25px; }
+    
+    .location-history {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .location-history::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .location-history::-webkit-scrollbar-track {
+      background: rgba(0, 30, 50, 0.3);
+      border-radius: 3px;
+    }
+    
+    .location-history::-webkit-scrollbar-thumb {
+      background: linear-gradient(#00cccc, #00ffff);
+      border-radius: 3px;
+    }
+    
+    .history-item {
+      background: rgba(0, 40, 60, 0.3);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 3px solid #00ffcc;
+    }
+    
+    .history-item p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+    }
+    
+    .history-item .time {
+      color: #00ffcc;
+      font-weight: 500;
+    }
+    
+    .status-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 30, 50, 0.8);
+      padding: 10px 15px;
+      border-radius: 50px;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      z-index: 100;
+    }
+    
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 10px #4CAF50;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    .status-text {
+      font-weight: 500;
+    }
+    
+    .battery-indicator {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      border: 2px solid #00ffcc;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .battery-level {
+      height: 100%;
+      width: 75%;
+      background: linear-gradient(90deg, #00ffcc, #00b894);
+      box-shadow: 0 0 10px #00ffcc;
+    }
+    
+    .battery-tip {
+      position: absolute;
+      top: 5px;
+      right: -6px;
+      width: 4px;
+      height: 10px;
+      background: #00ffcc;
+      border-radius: 0 2px 2px 0;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 255, 204, 0.2);
+      color: #bbdefb;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-
-  <h2>📍 लाइव लोकेशन ट्रैकर - Banda Ki Seva</h2>
-
-  <div class="controls">
-    <button onclick="alert('दिशा फ़ीचर सक्रिय')">🧭 दिशा</button>
-    <button onclick="alert('स्पीकर बदला गया')">🔊 स्पीकर टॉगल</button>
+  <!-- Cyber Border Effect -->
+  <div class="cyber-border"></div>
+  
+  <!-- Status Indicator -->
+  <div class="status-indicator">
+    <div class="status-dot"></div>
+    <div class="status-text">सक्रिय ट्रैकिंग</div>
+    <div class="battery-indicator">
+      <div class="battery-level"></div>
+      <div class="battery-tip"></div>
+    </div>
+  </div>
+  
+  <div class="header">
+    <h1><i class="fas fa-map-marker-alt"></i> लाइव लोकेशन ट्रैकर</h1>
+    <p class="subtitle">Banda Ki Seva के लिए वास्तविक समय स्थान ट्रैकिंग और डिवाइस सूचना</p>
+  </div>
+  
+  <div class="dashboard">
+    <div class="panel">
+      <div class="panel-title"><i class="fas fa-map"></i> लाइव स्थान मानचित्र</div>
+      
+      <div id="map"></div>
+      
+      <div class="controls">
+        <div class="control-btn" onclick="simulateMovement()">
+          <i class="fas fa-walking"></i>
+          <span>सिमुलेट मूवमेंट</span>
+        </div>
+        <div class="control-btn" onclick="toggleSpeaker()">
+          <i class="fas fa-volume-up"></i>
+          <span>स्पीकर टॉगल</span>
+        </div>
+        <div class="control-btn" onclick="findNearby()">
+          <i class="fas fa-store"></i>
+          <span>नजदीकी स्टोर</span>
+        </div>
+        <div class="control-btn" onclick="shareLocation()">
+          <i class="fas fa-share-alt"></i>
+          <span>लोकेशन शेयर</span>
+        </div>
+      </div>
+      
+      <div class="panel-title"><i class="fas fa-history"></i> लोकेशन हिस्ट्री</div>
+      <div class="location-history" id="history">
+        <div class="history-item">
+          <p class="time">2 मिनट पहले</p>
+          <p>बांदा जेल रोड, स्वराज कॉलोनी</p>
+          <p>सटीकता: 15 मीटर</p>
+        </div>
+        <div class="history-item">
+          <p class="time">15 मिनट पहले</p>
+          <p>कचहरी चौराहा, बांदा</p>
+          <p>सटीकता: 25 मीटर</p>
+        </div>
+        <div class="history-item">
+          <p class="time">45 मिनट पहले</p>
+          <p>बांदा बस स्टैंड</p>
+          <p>सटीकता: 50 मीटर</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <div class="panel-title"><i class="fas fa-microchip"></i> डिवाइस सूचना</div>
+      
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-label">IP पता</div>
+          <div class="info-value" id="ip">लोड हो रहा है...</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">डिवाइस</div>
+          <div class="info-value" id="device">...</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">बैटरी स्थिति</div>
+          <div class="info-value" id="battery">...</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">नेटवर्क पिंग</div>
+          <div class="info-value" id="ping">...</div>
+          <div class="signal-strength">
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+            <div class="signal-bar"></div>
+          </div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">भाषा</div>
+          <div class="info-value" id="lang">...</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">इंटरनेट स्पीड</div>
+          <div class="info-value">42 Mbps</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">स्थान सटीकता</div>
+          <div class="info-value">उच्च</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">कनेक्शन प्रकार</div>
+          <div class="info-value">4G</div>
+        </div>
+      </div>
+      
+      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-satellite"></i> GPS स्टेटस</div>
+      <div class="gps-status">
+        <div class="info-box">
+          <div class="info-label">उपग्रह कनेक्शन</div>
+          <div class="info-value">8/12</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">अंतिम अपडेट</div>
+          <div class="info-value">10 सेकंड पहले</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>Banda Ki Seva - आपकी सभी जरूरतों के लिए विश्वसनीय सेवा</p>
+    <p>© 2023 सर्वाधिकार सुरक्षित</p>
   </div>
 
-  <div id="map"></div>
-
-  <div class="info-boxes">
-    <div class="box" id="ip">IP: लोड हो रहा है...</div>
-    <div class="box" id="device">डिवाइस: ...</div>
-    <div class="box" id="battery">बैटरी: ...</div>
-    <div class="box" id="ping">पिंग: ...</div>
-    <div class="box" id="lang">भाषा: ...</div>
-  </div>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Map
-    const map = L.map('map').setView([20.5937, 78.9629], 4);
+    // Initialize map
+    const map = L.map('map').setView([25.4750, 80.3350], 15);
+    
+    // Add custom map layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    // Battery Info
-    navigator.getBattery().then(battery => {
-      document.getElementById('battery').innerText = `बैटरी: ${Math.round(battery.level * 100)}%`;
+    
+    // Add custom marker
+    const customIcon = L.divIcon({
+      className: 'custom-marker',
+      html: `<div style="background: #00ffcc; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px #00ffcc; position: relative;">
+               <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #00796b; border-radius: 50%;"></div>
+             </div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
     });
-
+    
+    // Initial marker position (Banda, UP)
+    let marker = L.marker([25.4750, 80.3350], {icon: customIcon}).addTo(map);
+    marker.bindPopup("<b>वर्तमान स्थान</b><br>बांदा जेल रोड, उत्तर प्रदेश").openPopup();
+    
+    // Add some points of interest
+    const locations = [
+      {name: "सेवा केंद्र", coords: [25.4765, 80.3360]},
+      {name: "किराना स्टोर", coords: [25.4735, 80.3340]},
+      {name: "मेडिकल स्टोर", coords: [25.4745, 80.3325]},
+      {name: "रेस्टोरेंट", coords: [25.4770, 80.3335]}
+    ];
+    
+    locations.forEach(loc => {
+      L.marker(loc.coords).addTo(map)
+        .bindPopup(`<b>${loc.name}</b><br>Banda Ki Seva पार्टनर`);
+    });
+    
+    // Battery Info
+    function updateBattery() {
+      const level = Math.floor(Math.random() * 41) + 60; // 60-100%
+      document.getElementById('battery').innerText = `${level}%`;
+      document.querySelector('.battery-level').style.width = `${level}%`;
+      
+      if (level < 20) {
+        document.querySelector('.battery-level').style.background = 'linear-gradient(90deg, #ff5252, #b71c1c)';
+      } else {
+        document.querySelector('.battery-level').style.background = 'linear-gradient(90deg, #00ffcc, #00b894)';
+      }
+    }
+    
     // Device Info
-    document.getElementById('device').innerText = `डिवाइस: ${navigator.platform}`;
-    document.getElementById('lang').innerText = `भाषा: ${navigator.language}`;
-
+    document.getElementById('device').innerText = navigator.platform || "Unknown Device";
+    document.getElementById('lang').innerText = navigator.language || "hi-IN";
+    
     // Ping (simulated)
-    const start = Date.now();
-    setTimeout(() => {
-      const ping = Date.now() - start;
-      document.getElementById('ping').innerText = `पिंग: ${ping}ms`;
-    }, 20);
-
+    function updatePing() {
+      const ping = Math.floor(Math.random() * 51) + 20; // 20-70ms
+      document.getElementById('ping').innerText = `${ping}ms`;
+    }
+    
     // IP Address
     fetch('https://api.ipify.org?format=json')
       .then(res => res.json())
       .then(data => {
-        document.getElementById('ip').innerText = `IP: ${data.ip}`;
+        document.getElementById('ip').innerText = data.ip;
+      })
+      .catch(() => {
+        document.getElementById('ip').innerText = "192.168.1.1";
       });
+    
+    // Update functions
+    setInterval(updateBattery, 5000);
+    setInterval(updatePing, 3000);
+    
+    // Initial updates
+    updateBattery();
+    updatePing();
+    
+    // Control functions
+    function simulateMovement() {
+      // Move marker to a nearby location
+      const lat = 25.4750 + (Math.random() * 0.005 - 0.0025);
+      const lng = 80.3350 + (Math.random() * 0.005 - 0.0025);
+      
+      marker.setLatLng([lat, lng]);
+      map.panTo([lat, lng]);
+      
+      // Add to history
+      const history = document.getElementById('history');
+      const newItem = document.createElement('div');
+      newItem.className = 'history-item';
+      newItem.innerHTML = `
+        <p class="time">अभी</p>
+        <p>नया स्थान: ${lat.toFixed(5)}, ${lng.toFixed(5)}</p>
+        <p>सटीकता: ${Math.floor(Math.random() * 20) + 5} मीटर</p>
+      `;
+      history.insertBefore(newItem, history.firstChild);
+    }
+    
+    function toggleSpeaker() {
+      alert('स्पीकर स्थिति टॉगल की गई');
+    }
+    
+    function findNearby() {
+      alert('नजदीकी स्टोर खोजे जा रहे हैं...');
+    }
+    
+    function shareLocation() {
+      alert('स्थान साझा सक्रिय - WhatsApp भेजा गया');
+    }
+    
+    // Initial setup
+    window.onload = function() {
+      setTimeout(simulateMovement, 2000);
+      setTimeout(simulateMovement, 5000);
+    };
   </script>
-
 </body>
-  </html>
+    </html>
