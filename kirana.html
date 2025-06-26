@@ -3,140 +3,530 @@
 <head>
   <meta charset="UTF-8">
   <title>VIP किराना ऑर्डर</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #000;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
       padding: 20px;
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
     }
-    input::placeholder, select::placeholder {
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-      font-weight: bold;
-    }
+    
+    /* Enhanced background glow */
     body::before {
       content: '';
       position: fixed;
-      top: 0; left: 0;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 30%, #ff00cc88, transparent),
-                  radial-gradient(circle at 70% 60%, #00ffff88, transparent),
-                  radial-gradient(circle at 50% 80%, #ffcc0066, transparent);
-      filter: blur(80px);
+      top: 0; 
+      left: 0;
+      width: 200%; 
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 20%, #ff00cc, transparent 40%),
+        radial-gradient(circle at 70% 60%, #00ffff, transparent 45%),
+        radial-gradient(circle at 50% 80%, #ffcc00, transparent 50%);
+      filter: blur(100px);
       z-index: -1;
-      animation: bgGlow 20s ease-in-out infinite;
+      animation: bgGlow 15s ease-in-out infinite;
       transform: translate(-25%, -25%);
+      opacity: 0.6;
     }
+    
     @keyframes bgGlow {
-      0% { transform: translate(-25%, -25%) scale(1); }
-      50% { transform: translate(-10%, -10%) scale(1.2); }
-      100% { transform: translate(-25%, -25%) scale(1); }
+      0% { 
+        transform: translate(-25%, -25%) scale(1); 
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translate(-10%, -10%) scale(1.2); 
+        opacity: 0.8;
+      }
+      100% { 
+        transform: translate(-25%, -25%) scale(1); 
+        opacity: 0.6;
+      }
     }
+    
+    /* Floating particles effect */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
     h2 {
       text-align: center;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-      margin-bottom: 25px;
-      font-size: 28px;
+      color: #fff;
+      font-size: 36px;
+      margin: 20px 0 30px;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      padding: 10px 0;
     }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+    
     .container {
       max-width: 720px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
+      margin: 20px auto;
+      background: rgba(15, 15, 35, 0.7);
+      backdrop-filter: blur(15px);
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 0 30px #00ffff55;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.3),
+        0 0 40px rgba(0, 255, 255, 0.2),
+        inset 0 0 15px rgba(0, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff00cc, #00ffff, #ffcc00, #ff00cc);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 22px;
+      animation: borderGlow 4s linear infinite;
+      filter: blur(8px);
+      opacity: 0.8;
+    }
+    
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      font-size: 14px;
+    }
+    
     input, select, button {
       width: 100%;
-      padding: 14px;
-      margin: 10px 0;
+      padding: 14px 18px;
+      margin: 8px 0;
       border-radius: 12px;
       font-size: 16px;
       border: none;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
     }
+    
     input, select {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid #00ffff80;
+      background: rgba(0, 20, 30, 0.6);
+      color: #fff;
+      border: 1px solid rgba(0, 255, 255, 0.4);
       outline: none;
+      box-shadow: 
+        0 0 5px rgba(0, 255, 255, 0.2),
+        inset 0 0 5px rgba(0, 255, 255, 0.1);
     }
+    
+    input::placeholder, select::placeholder {
+      color: #80ffff;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    
+    input:focus, select:focus {
+      border-color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      background: rgba(0, 30, 40, 0.7);
+    }
+    
     button {
-      background-color: #00ffff;
-      color: black;
-      font-weight: bold;
+      background: linear-gradient(45deg, #00cccc, #00ffff);
+      color: #002;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 0 15px #00ffff99;
-      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      margin-top: 15px;
     }
-    button:hover { background-color: #00cccc; }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.5s;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
     .whatsapp-button {
-      background: #25D366;
+      background: linear-gradient(45deg, #1ebe5d, #25D366);
       color: white;
-      font-weight: bold;
-      box-shadow: 0 0 12px #25D366;
+      box-shadow: 0 0 15px rgba(37, 211, 102, 0.5);
+      margin-top: 25px;
     }
-    .whatsapp-button:hover {
-      background: #1ebe5d;
-    }
+    
     .item-row {
       display: flex;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 12px;
-      border-radius: 10px;
-      margin: 10px 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      align-items: center;
+      background: rgba(0, 20, 40, 0.5);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 12px 0;
+      box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        inset 0 0 8px rgba(0, 255, 255, 0.1);
       backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease;
     }
+    
     .item-row:hover {
-      transform: scale(1.02);
-      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+      background: rgba(0, 30, 50, 0.6);
+      box-shadow: 
+        0 6px 15px rgba(0, 0, 0, 0.4),
+        inset 0 0 10px rgba(0, 255, 255, 0.2);
+      border-color: rgba(0, 255, 255, 0.4);
     }
+    
+    .item-info {
+      flex: 1;
+      font-size: 16px;
+      color: #ccffff;
+    }
+    
+    .item-info strong {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    
+    .item-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
     .item-actions button {
-      padding: 6px 10px;
-      margin-left: 5px;
-      background: #ffe082;
-      color: black;
+      padding: 8px 14px;
+      margin: 0;
+      width: auto;
       font-size: 14px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     }
-    .item-actions button:hover {
-      background: #ffca28;
+    
+    .edit-btn {
+      background: linear-gradient(45deg, #ffcc00, #ffdd44);
+      color: #330;
+    }
+    
+    .delete-btn {
+      background: linear-gradient(45deg, #ff3366, #ff5588);
+      color: white;
+    }
+    
+    .order-summary {
+      background: rgba(0, 30, 50, 0.4);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 
+        inset 0 0 10px rgba(0, 255, 255, 0.1),
+        0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .order-summary h3 {
+      color: #00ffff;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+    
+    #orderList {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 5px;
+      margin: 15px 0;
+    }
+    
+    #orderList::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    #orderList::-webkit-scrollbar-track {
+      background: rgba(0, 20, 30, 0.3);
+      border-radius: 3px;
+    }
+    
+    #orderList::-webkit-scrollbar-thumb {
+      background: linear-gradient(#00cccc, #00ffff);
+      border-radius: 3px;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 40, 60, 0.9);
+      color: #00ffff;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      transform: translateX(150%);
+      transition: transform 0.4s ease;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .form-header i {
+      font-size: 32px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h2 {
+        font-size: 28px;
+      }
+      
+      input, select, button {
+        padding: 12px 15px;
+      }
+      
+      .item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .item-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>🌟 VIP किराना ऑर्डर</h2>
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i> ऑर्डर सफलतापूर्वक जोड़ा गया!
+  </div>
+  
   <div class="container">
-    <input id="custName" placeholder="👤 ग्राहक नाम">
-    <input id="custMobile" placeholder="📱 मोबाइल नंबर">
-    <input id="custAddress" placeholder="🏠 पूरा पता">
-    <input id="custArea" placeholder="📍 एरिया (जैसे: कचहरी रोड)">
-    <input id="itemName" placeholder="🧂 आइटम का नाम">
-    <input id="itemQty" placeholder="🔢 मात्रा (जैसे: 2)">
-    <select id="itemUnit">
-      <option value="Kg">Kg</option>
-      <option value="g">g</option>
-      <option value="pcs">pcs</option>
-      <option value="L">L</option>
-    </select>
-    <button onclick="addItem()">➕ आइटम जोड़ें</button>
-    <ul id="orderList"></ul>
-    <button class="whatsapp-button" onclick="sendWhatsApp()">🟢 WhatsApp पर ऑर्डर भेजें</button>
+    <div class="form-header">
+      <i class="fas fa-crown"></i>
+      <h2>🌟 VIP किराना ऑर्डर</h2>
+      <i class="fas fa-crown"></i>
+    </div>
+    
+    <div class="form-group">
+      <label for="custName"><i class="fas fa-user"></i> ग्राहक नाम</label>
+      <input id="custName" placeholder="ग्राहक का पूरा नाम">
+    </div>
+    
+    <div class="form-group">
+      <label for="custMobile"><i class="fas fa-mobile-alt"></i> मोबाइल नंबर</label>
+      <input id="custMobile" placeholder="10 अंकों का मोबाइल नंबर">
+    </div>
+    
+    <div class="form-group">
+      <label for="custAddress"><i class="fas fa-home"></i> पूरा पता</label>
+      <input id="custAddress" placeholder="मकान नंबर, सोसाइटी, क्षेत्र">
+    </div>
+    
+    <div class="form-group">
+      <label for="custArea"><i class="fas fa-map-marker-alt"></i> एरिया</label>
+      <input id="custArea" placeholder="जैसे: कचहरी रोड, शहर">
+    </div>
+    
+    <div class="order-summary">
+      <h3><i class="fas fa-shopping-basket"></i> ऑर्डर आइटम</h3>
+      
+      <div class="form-group">
+        <label for="itemName"><i class="fas fa-tag"></i> आइटम का नाम</label>
+        <input id="itemName" placeholder="उत्पाद का नाम">
+      </div>
+      
+      <div class="form-row" style="display: flex; gap: 15px;">
+        <div style="flex: 1;">
+          <label for="itemQty"><i class="fas fa-weight"></i> मात्रा</label>
+          <input id="itemQty" placeholder="जैसे: 2">
+        </div>
+        
+        <div style="flex: 1;">
+          <label for="itemUnit"><i class="fas fa-balance-scale"></i> इकाई</label>
+          <select id="itemUnit">
+            <option value="Kg">किलोग्राम (Kg)</option>
+            <option value="g">ग्राम (g)</option>
+            <option value="pcs">टुकड़े (pcs)</option>
+            <option value="L">लीटर (L)</option>
+            <option value="Pack">पैक</option>
+          </select>
+        </div>
+      </div>
+      
+      <button onclick="addItem()">
+        <i class="fas fa-plus-circle"></i> आइटम जोड़ें
+      </button>
+    </div>
+    
+    <div class="order-items">
+      <h3><i class="fas fa-list"></i> ऑर्डर सूची</h3>
+      <ul id="orderList"></ul>
+    </div>
+    
+    <button class="whatsapp-button" onclick="sendWhatsApp()">
+      <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर भेजें
+    </button>
   </div>
 
   <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 6 + 2;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 15;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random color
+        const colors = ['#00ffff', '#ff00cc', '#ffcc00'];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Show notification
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
     let orderItems = [];
     let editIndex = -1;
 
     window.onload = function () {
+      createParticles();
+      
       document.getElementById("custName").value = localStorage.getItem("custName") || "";
       document.getElementById("custMobile").value = localStorage.getItem("custMobile") || "";
       document.getElementById("custAddress").value = localStorage.getItem("custAddress") || "";
@@ -149,7 +539,7 @@
       const unit = document.getElementById("itemUnit").value;
 
       if (!name || !qty) {
-        alert("कृपया आइटम और मात्रा भरें");
+        showNotification("कृपया आइटम और मात्रा भरें");
         return;
       }
 
@@ -157,9 +547,11 @@
 
       if (editIndex === -1) {
         orderItems.push(fullItem);
+        showNotification("आइटम सूची में जोड़ा गया");
       } else {
         orderItems[editIndex] = fullItem;
         editIndex = -1;
+        showNotification("आइटम अपडेट किया गया");
       }
 
       document.getElementById("itemName").value = "";
@@ -171,27 +563,44 @@
       const ul = document.getElementById("orderList");
       ul.innerHTML = "";
 
+      if (orderItems.length === 0) {
+        const emptyMsg = document.createElement('div');
+        emptyMsg.className = 'item-row';
+        emptyMsg.innerHTML = `
+          <div class="item-info" style="text-align: center; width: 100%;">
+            <i class="fas fa-shopping-basket"></i> कोई आइटम नहीं जोड़ा गया
+          </div>
+        `;
+        ul.appendChild(emptyMsg);
+        return;
+      }
+
       orderItems.forEach((item, i) => {
         const li = document.createElement("li");
         li.className = "item-row";
 
-        const span = document.createElement("span");
-        span.textContent = `${i + 1}. ${item.name} - ${item.qty} ${item.unit}`;
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "item-info";
+        infoDiv.innerHTML = `
+          <strong>${i + 1}. ${item.name}</strong> - ${item.qty} ${item.unit}
+        `;
 
         const actions = document.createElement("div");
         actions.className = "item-actions";
 
         const editBtn = document.createElement("button");
-        editBtn.textContent = "✏️ Edit";
+        editBtn.className = "edit-btn";
+        editBtn.innerHTML = "<i class='fas fa-edit'></i> संपादित";
         editBtn.onclick = () => editItem(i);
 
         const delBtn = document.createElement("button");
-        delBtn.textContent = "❌ Delete";
+        delBtn.className = "delete-btn";
+        delBtn.innerHTML = "<i class='fas fa-trash'></i> हटाएं";
         delBtn.onclick = () => deleteItem(i);
 
         actions.appendChild(editBtn);
         actions.appendChild(delBtn);
-        li.appendChild(span);
+        li.appendChild(infoDiv);
         li.appendChild(actions);
         ul.appendChild(li);
       });
@@ -203,11 +612,16 @@
       document.getElementById("itemQty").value = item.qty;
       document.getElementById("itemUnit").value = item.unit;
       editIndex = index;
+      
+      // Scroll to item form
+      document.getElementById('itemName').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('itemName').focus();
     }
 
     function deleteItem(index) {
       orderItems.splice(index, 1);
       renderList();
+      showNotification("आइटम सूची से हटाया गया");
     }
 
     function sendToTelegram(message) {
@@ -226,12 +640,12 @@
           console.log("✅ Telegram message sent successfully!");
         } else {
           console.error("⚠️ Telegram Error:", data.description);
-          alert("❌ Telegram Error: " + data.description);
+          showNotification("❌ Telegram में समस्या: " + data.description);
         }
       })
       .catch(err => {
         console.error("❌ Network Error:", err);
-        alert("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
+        showNotification("🚫 नेटवर्क समस्या: Telegram मैसेज नहीं भेजा गया");
       });
     }
 
@@ -253,11 +667,11 @@
       .then(res => res.json())
       .then(data => {
         console.log("✅ Google Sheet Updated", data);
-        alert("🎉 ऑर्डर सेव हो गया है Google Sheet में!");
+        showNotification("🎉 ऑर्डर Google Sheet में सेव हो गया!");
       })
       .catch(err => {
         console.error("❌ Sheet Save Error", err);
-        alert("⚠️ Google Sheet में सेव करने में समस्या आई।");
+        showNotification("⚠️ Google Sheet में सेव करने में समस्या");
       });
     }
 
@@ -268,7 +682,7 @@
       const area = document.getElementById("custArea").value.trim();
 
       if (!name || !mobile || !address || !area || orderItems.length === 0) {
-        alert("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें।");
+        showNotification("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें");
         return;
       }
 
@@ -297,7 +711,10 @@ ${itemsText}
       window.open(url, "_blank");
 
       sendToTelegram(message);
-      sendToSheet(name, mobile, address, area, itemsText); // ✅ Final FIX
+      sendToSheet(name, mobile, address, area, itemsText);
+      
+      // Show success notification
+      showNotification("✅ ऑर्डर WhatsApp पर भेजा गया!");
     }
   </script>
 </body>
