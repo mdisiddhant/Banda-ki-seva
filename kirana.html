@@ -41,6 +41,42 @@
         0 0 20px rgba(0, 255, 255, 0.3),
         0 0 40px rgba(0, 255, 255, 0.2),
         inset 0 0 15px rgba(0, 255, 255, 0.1);
+      position: relative;
+    }
+    
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+    
+    .lang-btn {
+      background: rgba(0, 40, 60, 0.6);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      color: #00ffff;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .lang-btn.active {
+      background: linear-gradient(45deg, #00cccc, #00ffff);
+      color: #002;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .lang-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
     
     .form-group {
@@ -98,6 +134,12 @@
       border: none;
       letter-spacing: 0.5px;
       margin-top: 15px;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
     }
     
     .whatsapp-button {
@@ -108,7 +150,7 @@
     }
     
     /* Enhanced Order List Styles */
-    .order-items {
+    .order-items-container {
       background: rgba(0, 30, 50, 0.4);
       padding: 15px;
       border-radius: 12px;
@@ -117,9 +159,12 @@
       box-shadow: 
         inset 0 0 10px rgba(0, 255, 255, 0.1),
         0 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      max-height: 400px; /* कंटेनर की अधिकतम ऊंचाई निर्धारित करें */
     }
     
-    .order-items h3 {
+    .order-items-header {
       color: #00ffff;
       margin-bottom: 15px;
       text-align: center;
@@ -130,6 +175,15 @@
       justify-content: center;
       gap: 10px;
       font-size: 22px;
+      flex-shrink: 0; /* हेडर का आकार न बदलने दे */
+    }
+    
+    .order-list-container {
+      flex: 1; /* उपलब्ध स्थान लेने के लिए */
+      min-height: 0; /* फ्लेक्स आइटम्स को सिकुड़ने की अनुमति देने के लिए */
+      overflow: hidden; /* स्क्रोल कंटेनर को नियंत्रित करने के लिए */
+      display: flex;
+      flex-direction: column;
     }
     
     .order-list-header {
@@ -138,16 +192,18 @@
       padding: 12px 15px;
       background: rgba(0, 40, 60, 0.5);
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 600;
       color: #00ffff;
       text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      flex-shrink: 0; /* हेडर का आकार न बदलने दे */
     }
     
     #orderList {
-      max-height: 300px;
-      overflow-y: auto;
+      overflow-y: auto; /* स्क्रोलिंग सक्षम करें */
+      flex: 1; /* उपलब्ध स्थान लेने के लिए */
       padding-right: 5px;
+      min-height: 100px; /* न्यूनतम ऊंचाई सुनिश्चित करें */
     }
     
     #orderList::-webkit-scrollbar {
@@ -265,6 +321,11 @@
       color: #88d8f0;
       font-size: 16px;
       border: 1px dashed rgba(0, 255, 255, 0.3);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     
     .empty-order i {
@@ -285,6 +346,14 @@
       border: 1px solid rgba(0, 255, 255, 0.3);
       z-index: 1000;
       display: none;
+      animation: fadeInOut 3s ease-in-out;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-20px); }
     }
     
     .notification.show {
@@ -321,6 +390,17 @@
       width: auto;
       display: inline-block;
       padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 10px rgba(255, 165, 2, 0.3);
+      transition: all 0.3s;
+    }
+    
+    .location-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 165, 2, 0.4);
     }
     
     .order-summary {
@@ -354,6 +434,11 @@
       
       h2 {
         font-size: 28px;
+      }
+      
+      .language-switcher {
+        top: 15px;
+        right: 15px;
       }
       
       input, select, button {
@@ -397,6 +482,16 @@
   </div>
   
   <div class="container">
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <button class="lang-btn active" id="hindiBtn" onclick="changeLanguage('hi')">
+        <i class="fas fa-language"></i> हिंदी
+      </button>
+      <button class="lang-btn" id="englishBtn" onclick="changeLanguage('en')">
+        <i class="fas fa-language"></i> English
+      </button>
+    </div>
+    
     <div class="form-header">
       <i class="fas fa-crown"></i>
       <h2>🌟 VIP किराना ऑर्डर</h2>
@@ -454,18 +549,23 @@
       </button>
     </div>
     
-    <div class="order-items">
-      <h3><i class="fas fa-list"></i> ऑर्डर सूची</h3>
-      
-      <div class="order-list-header">
-        <div>क्र.</div>
-        <div>आइटम</div>
-        <div>मात्रा</div>
-        <div>इकाई</div>
-        <div>क्रिया</div>
+    <!-- Updated Order List Section -->
+    <div class="order-items-container">
+      <div class="order-items-header">
+        <i class="fas fa-list"></i> ऑर्डर सूची
       </div>
       
-      <ul id="orderList"></ul>
+      <div class="order-list-container">
+        <div class="order-list-header">
+          <div>क्र.</div>
+          <div>आइटम</div>
+          <div>मात्रा</div>
+          <div>इकाई</div>
+          <div>क्रिया</div>
+        </div>
+        
+        <ul id="orderList"></ul>
+      </div>
     </div>
     
     <!-- Location Permission Section -->
@@ -484,6 +584,147 @@
   </div>
 
   <script>
+    // Language management
+    const translations = {
+      hi: {
+        title: "🌟 VIP किराना ऑर्डर",
+        custName: "ग्राहक नाम",
+        custNamePlaceholder: "ग्राहक का पूरा नाम",
+        custMobile: "मोबाइल नंबर",
+        custMobilePlaceholder: "10 अंकों का मोबाइल नंबर",
+        custAddress: "पूरा पता",
+        custAddressPlaceholder: "मकान नंबर, सोसाइटी, क्षेत्र",
+        custArea: "एरिया",
+        custAreaPlaceholder: "जैसे: कचहरी रोड, शहर",
+        orderItems: "ऑर्डर आइटम",
+        itemName: "आइटम का नाम",
+        itemNamePlaceholder: "उत्पाद का नाम",
+        itemQty: "मात्रा",
+        itemQtyPlaceholder: "जैसे: 2",
+        itemUnit: "इकाई",
+        addItem: "आइटम जोड़ें",
+        orderList: "ऑर्डर सूची",
+        locationTitle: "लाइव लोकेशन",
+        locationDesc: "ऑर्डर भेजने के लिए अपनी लोकेशन शेयर करें:",
+        locationBtn: "लोकेशन एक्सेस दें",
+        whatsappBtn: "WhatsApp पर ऑर्डर भेजें",
+        orderListHeader: ["क्र.", "आइटम", "मात्रा", "इकाई", "क्रिया"],
+        emptyOrder: "कोई आइटम नहीं जोड़ा गया",
+        emptyOrderDesc: "ऊपर फॉर्म में आइटम जोड़ें",
+        editBtn: "संपादित करें",
+        deleteBtn: "हटाएं",
+        locationRequest: "लोकेशन रिक्वेस्ट की जा रही है...",
+        locationSuccess: "लोकेशन सफलतापूर्वक प्राप्त हुई!",
+        locationError: "लोकेशन प्राप्त करने में त्रुटि: ",
+        notificationAddItem: "आइटम सूची में जोड़ा गया",
+        notificationUpdateItem: "आइटम अपडेट किया गया",
+        notificationDeleteItem: "आइटम सूची से हटाया गया",
+        notificationWhatsapp: "ऑर्डर WhatsApp पर भेजा गया!",
+        notificationSheet: "ऑर्डर Google Sheet में सेव हो गया!",
+        notificationError: "कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें",
+        itemDescriptions: [
+          "उच्च गुणवत्ता वाला उत्पाद",
+          "ताज़ा और स्वादिष्ट",
+          "शुद्ध और प्राकृतिक",
+          "सर्वोत्तम ब्रांड",
+          "ताज़गी की गारंटी",
+          "पौष्टिक और स्वास्थ्यवर्धक"
+        ]
+      },
+      en: {
+        title: "🌟 VIP Grocery Order",
+        custName: "Customer Name",
+        custNamePlaceholder: "Full customer name",
+        custMobile: "Mobile Number",
+        custMobilePlaceholder: "10-digit mobile number",
+        custAddress: "Full Address",
+        custAddressPlaceholder: "House no., Society, Area",
+        custArea: "Area",
+        custAreaPlaceholder: "e.g.: Kachahari Road, City",
+        orderItems: "Order Items",
+        itemName: "Item Name",
+        itemNamePlaceholder: "Product name",
+        itemQty: "Quantity",
+        itemQtyPlaceholder: "e.g.: 2",
+        itemUnit: "Unit",
+        addItem: "Add Item",
+        orderList: "Order List",
+        locationTitle: "Live Location",
+        locationDesc: "Share your location to send the order:",
+        locationBtn: "Allow Location Access",
+        whatsappBtn: "Send Order via WhatsApp",
+        orderListHeader: ["Sr.", "Item", "Qty", "Unit", "Action"],
+        emptyOrder: "No items added",
+        emptyOrderDesc: "Add items using the form above",
+        editBtn: "Edit",
+        deleteBtn: "Delete",
+        locationRequest: "Requesting location...",
+        locationSuccess: "Location retrieved successfully!",
+        locationError: "Error getting location: ",
+        notificationAddItem: "Item added to list",
+        notificationUpdateItem: "Item updated",
+        notificationDeleteItem: "Item removed from list",
+        notificationWhatsapp: "Order sent via WhatsApp!",
+        notificationSheet: "Order saved to Google Sheet!",
+        notificationError: "Please fill all information and add at least one item",
+        itemDescriptions: [
+          "High quality product",
+          "Fresh and tasty",
+          "Pure and natural",
+          "Premium brand",
+          "Freshness guaranteed",
+          "Nutritious and healthy"
+        ]
+      }
+    };
+
+     let currentLanguage = 'hi';
+    
+    function changeLanguage(lang) {
+      currentLanguage = lang;
+      document.getElementById('hindiBtn').classList.toggle('active', lang === 'hi');
+      document.getElementById('englishBtn').classList.toggle('active', lang === 'en');
+      
+      // Apply translations
+      const t = translations[lang];
+      
+      // Update titles and labels
+      document.querySelector('h2').textContent = t.title;
+      document.querySelector('label[for="custName"]').innerHTML = `<i class="fas fa-user"></i> ${t.custName}`;
+      document.getElementById('custName').placeholder = t.custNamePlaceholder;
+      document.querySelector('label[for="custMobile"]').innerHTML = `<i class="fas fa-mobile-alt"></i> ${t.custMobile}`;
+      document.getElementById('custMobile').placeholder = t.custMobilePlaceholder;
+      document.querySelector('label[for="custAddress"]').innerHTML = `<i class="fas fa-home"></i> ${t.custAddress}`;
+      document.getElementById('custAddress').placeholder = t.custAddressPlaceholder;
+      document.querySelector('label[for="custArea"]').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${t.custArea}`;
+      document.getElementById('custArea').placeholder = t.custAreaPlaceholder;
+      document.querySelector('.order-summary h3').innerHTML = `<i class="fas fa-shopping-basket"></i> ${t.orderItems}`;
+      document.querySelector('label[for="itemName"]').innerHTML = `<i class="fas fa-tag"></i> ${t.itemName}`;
+      document.getElementById('itemName').placeholder = t.itemNamePlaceholder;
+      document.querySelector('label[for="itemQty"]').innerHTML = `<i class="fas fa-weight"></i> ${t.itemQty}`;
+      document.getElementById('itemQty').placeholder = t.itemQtyPlaceholder;
+      document.querySelector('label[for="itemUnit"]').innerHTML = `<i class="fas fa-balance-scale"></i> ${t.itemUnit}`;
+      document.querySelector('.order-items-header').innerHTML = `<i class="fas fa-list"></i> ${t.orderList}`;
+      document.querySelector('.location-permission h3').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${t.locationTitle}`;
+      document.querySelector('.location-permission p').textContent = t.locationDesc;
+      document.getElementById('locationBtn').innerHTML = `<i class="fas fa-location-dot"></i> ${t.locationBtn}`;
+      document.querySelector('.whatsapp-button').innerHTML = `<i class="fab fa-whatsapp"></i> ${t.whatsappBtn}`;
+      
+      // Update order list header
+      const headerItems = document.querySelectorAll('.order-list-header div');
+      t.orderListHeader.forEach((text, i) => {
+        if (headerItems[i]) {
+          headerItems[i].textContent = text;
+        }
+      });
+      
+      // Update buttons
+      document.querySelector('button[onclick="addItem()"]').innerHTML = `<i class="fas fa-plus-circle"></i> ${t.addItem}`;
+      
+      // Re-render order list
+      renderList();
+    }
+    
     // Show notification
     function showNotification(message) {
       const notification = document.getElementById('notification');
@@ -509,11 +750,11 @@
     // Request location permission
     function requestLocationPermission() {
       if (!navigator.geolocation) {
-        document.getElementById('locationStatus').innerText = 'आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता';
+        document.getElementById('locationStatus').innerText = translations[currentLanguage].locationError + 'आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता';
         return;
       }
       
-      document.getElementById('locationStatus').innerText = 'लोकेशन रिक्वेस्ट की जा रही है...';
+      document.getElementById('locationStatus').innerText = translations[currentLanguage].locationRequest;
       
       navigator.geolocation.getCurrentPosition(
         position => {
@@ -521,23 +762,31 @@
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
           };
-          document.getElementById('locationStatus').innerText = 'लोकेशन सफलतापूर्वक प्राप्त हुई!';
-          showNotification('आपकी लोकेशन सफलतापूर्वक प्राप्त हुई');
+          document.getElementById('locationStatus').innerText = translations[currentLanguage].locationSuccess;
+          showNotification(translations[currentLanguage].locationSuccess);
         },
         error => {
-          let errorMessage = 'लोकेशन प्राप्त करने में त्रुटि: ';
+          let errorMessage = translations[currentLanguage].locationError;
           switch(error.code) {
             case error.PERMISSION_DENIED:
-              errorMessage += 'आपने लोकेशन एक्सेस अस्वीकार किया है';
+              errorMessage += translations[currentLanguage].hi === 'hi' ? 
+                'आपने लोकेशन एक्सेस अस्वीकार किया है' : 
+                'You denied location access';
               break;
             case error.POSITION_UNAVAILABLE:
-              errorMessage += 'लोकेशन जानकारी उपलब्ध नहीं है';
+              errorMessage += translations[currentLanguage].hi === 'hi' ? 
+                'लोकेशन जानकारी उपलब्ध नहीं है' : 
+                'Location information unavailable';
               break;
             case error.TIMEOUT:
-              errorMessage += 'लोकेशन प्राप्त करने में समय समाप्त हुआ';
+              errorMessage += translations[currentLanguage].hi === 'hi' ? 
+                'लोकेशन प्राप्त करने में समय समाप्त हुआ' : 
+                'Location request timed out';
               break;
             default:
-              errorMessage += 'अज्ञात त्रुटि';
+              errorMessage += translations[currentLanguage].hi === 'hi' ? 
+                'अज्ञात त्रुटि' : 
+                'Unknown error';
           }
           document.getElementById('locationStatus').innerText = errorMessage;
           showNotification(errorMessage);
@@ -556,7 +805,7 @@
       const unit = document.getElementById("itemUnit").value;
 
       if (!name || !qty) {
-        showNotification("कृपया आइटम और मात्रा भरें");
+        showNotification(translations[currentLanguage].notificationError);
         return;
       }
 
@@ -564,11 +813,11 @@
 
       if (editIndex === -1) {
         orderItems.push(fullItem);
-        showNotification("आइटम सूची में जोड़ा गया");
+        showNotification(translations[currentLanguage].notificationAddItem);
       } else {
         orderItems[editIndex] = fullItem;
         editIndex = -1;
-        showNotification("आइटम अपडेट किया गया");
+        showNotification(translations[currentLanguage].notificationUpdateItem);
       }
 
       document.getElementById("itemName").value = "";
@@ -579,14 +828,16 @@
     function renderList() {
       const ul = document.getElementById("orderList");
       ul.innerHTML = "";
+      
+      const t = translations[currentLanguage];
 
       if (orderItems.length === 0) {
         const emptyMsg = document.createElement('div');
         emptyMsg.className = 'empty-order';
         emptyMsg.innerHTML = `
           <i class="fas fa-shopping-basket"></i>
-          <div>कोई आइटम नहीं जोड़ा गया</div>
-          <div style="font-size: 14px; margin-top: 10px;">ऊपर फॉर्म में आइटम जोड़ें</div>
+          <div>${t.emptyOrder}</div>
+          <div style="font-size: 14px; margin-top: 10px;">${t.emptyOrderDesc}</div>
         `;
         ul.appendChild(emptyMsg);
         return;
@@ -626,13 +877,13 @@
         const editBtn = document.createElement("button");
         editBtn.className = "edit-btn";
         editBtn.innerHTML = "<i class='fas fa-edit'></i>";
-        editBtn.title = "संपादित करें";
+        editBtn.title = t.editBtn;
         editBtn.onclick = () => editItem(i);
 
         const delBtn = document.createElement("button");
         delBtn.className = "delete-btn";
         delBtn.innerHTML = "<i class='fas fa-trash'></i>";
-        delBtn.title = "हटाएं";
+        delBtn.title = t.deleteBtn;
         delBtn.onclick = () => deleteItem(i);
 
         actions.appendChild(editBtn);
@@ -648,15 +899,8 @@
     }
     
     function getItemDescription(item) {
-      const descriptions = [
-        "उच्च गुणवत्ता वाला उत्पाद",
-        "ताज़ा और स्वादिष्ट",
-        "शुद्ध और प्राकृतिक",
-        "सर्वोत्तम ब्रांड",
-        "ताज़गी की गारंटी",
-        "पौष्टिक और स्वास्थ्यवर्धक"
-      ];
-      return descriptions[Math.floor(Math.random() * descriptions.length)];
+      const t = translations[currentLanguage];
+      return t.itemDescriptions[Math.floor(Math.random() * t.itemDescriptions.length)];
     }
 
     function editItem(index) {
@@ -673,7 +917,7 @@
     function deleteItem(index) {
       orderItems.splice(index, 1);
       renderList();
-      showNotification("आइटम सूची से हटाया गया");
+      showNotification(translations[currentLanguage].notificationDeleteItem);
     }
 
     function sendToTelegram(message) {
@@ -719,7 +963,7 @@
       .then(res => res.json())
       .then(data => {
         console.log("✅ Google Sheet Updated", data);
-        showNotification("🎉 ऑर्डर Google Sheet में सेव हो गया!");
+        showNotification(translations[currentLanguage].notificationSheet);
       })
       .catch(err => {
         console.error("❌ Sheet Save Error", err);
@@ -734,7 +978,7 @@
       const area = document.getElementById("custArea").value.trim();
 
       if (!name || !mobile || !address || !area || orderItems.length === 0) {
-        showNotification("कृपया सभी जानकारी भरें और कम से कम एक आइटम जोड़ें");
+        showNotification(translations[currentLanguage].notificationError);
         return;
       }
 
@@ -750,19 +994,19 @@
       // Check if location is available
       let locationText = "";
       if (userLocation) {
-        locationText = `\n📍 लाइव लोकेशन: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}`;
+        locationText = `\n📍 ${translations[currentLanguage].hi === 'hi' ? 'लाइव लोकेशन' : 'Live Location'}: https://www.google.com/maps?q=${userLocation.latitude},${userLocation.longitude}`;
       } else {
-        locationText = "\n⚠️ ग्राहक ने लोकेशन शेयर नहीं की";
+        locationText = `\n⚠️ ${translations[currentLanguage].hi === 'hi' ? 'ग्राहक ने लोकेशन शेयर नहीं की' : 'Customer did not share location'}`;
       }
 
-      const message = `🛒 *VIP किराना ऑर्डर*
-👤 नाम: ${name}
-📱 मोबाइल: ${mobile}
-🏠 पता: ${address}
-📍 एरिया: ${area}
+      const message = `🛒 *${translations[currentLanguage].hi === 'hi' ? 'VIP किराना ऑर्डर' : 'VIP Grocery Order'}*
+👤 ${translations[currentLanguage].hi === 'hi' ? 'नाम' : 'Name'}: ${name}
+📱 ${translations[currentLanguage].hi === 'hi' ? 'मोबाइल' : 'Mobile'}: ${mobile}
+🏠 ${translations[currentLanguage].hi === 'hi' ? 'पता' : 'Address'}: ${address}
+📍 ${translations[currentLanguage].hi === 'hi' ? 'एरिया' : 'Area'}: ${area}
 ${locationText}
 
-🧾 ऑर्डर:
+🧾 ${translations[currentLanguage].hi === 'hi' ? 'ऑर्डर' : 'Order'}:
 ${itemsText}
 
 🕒 ${new Date().toLocaleString()}`;
@@ -775,7 +1019,7 @@ ${itemsText}
       sendToSheet(name, mobile, address, area, itemsText);
       
       // Show success notification
-      showNotification("✅ ऑर्डर WhatsApp पर भेजा गया!");
+      showNotification(translations[currentLanguage].notificationWhatsapp);
     }
   </script>
 </body>
