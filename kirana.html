@@ -107,57 +107,8 @@
       margin-top: 25px;
     }
     
-    .item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 20, 40, 0.5);
-      padding: 15px;
-      border-radius: 12px;
-      margin: 12px 0;
-      box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.3),
-        inset 0 0 8px rgba(0, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(0, 255, 255, 0.2);
-    }
-    
-    .item-info {
-      flex: 1;
-      font-size: 16px;
-      color: #ccffff;
-    }
-    
-    .item-info strong {
-      color: #00ffff;
-      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    }
-    
-    .item-actions {
-      display: flex;
-      gap: 8px;
-    }
-    
-    .item-actions button {
-      padding: 8px 14px;
-      margin: 0;
-      width: auto;
-      font-size: 14px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .edit-btn {
-      background: linear-gradient(45deg, #ffcc00, #ffdd44);
-      color: #330;
-    }
-    
-    .delete-btn {
-      background: linear-gradient(45deg, #ff3366, #ff5588);
-      color: white;
-    }
-    
-    .order-summary {
+    /* Enhanced Order List Styles */
+    .order-items {
       background: rgba(0, 30, 50, 0.4);
       padding: 15px;
       border-radius: 12px;
@@ -168,19 +119,35 @@
         0 0 10px rgba(0, 0, 0, 0.2);
     }
     
-    .order-summary h3 {
+    .order-items h3 {
       color: #00ffff;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       text-align: center;
       font-weight: 600;
       text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 22px;
+    }
+    
+    .order-list-header {
+      display: grid;
+      grid-template-columns: 50px 3fr 1fr 1fr 80px;
+      padding: 12px 15px;
+      background: rgba(0, 40, 60, 0.5);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
     }
     
     #orderList {
       max-height: 300px;
       overflow-y: auto;
       padding-right: 5px;
-      margin: 15px 0;
     }
     
     #orderList::-webkit-scrollbar {
@@ -195,6 +162,115 @@
     #orderList::-webkit-scrollbar-thumb {
       background: linear-gradient(#00cccc, #00ffff);
       border-radius: 3px;
+    }
+    
+    .item-row {
+      display: grid;
+      grid-template-columns: 50px 3fr 1fr 1fr 80px;
+      align-items: center;
+      background: rgba(0, 20, 40, 0.5);
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.2),
+        inset 0 0 5px rgba(0, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .item-row:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      background: rgba(0, 30, 50, 0.6);
+    }
+    
+    .item-info {
+      font-size: 15px;
+      color: #ccffff;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .item-info strong {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    
+    .item-info .item-description {
+      font-size: 13px;
+      color: #88d8f0;
+      opacity: 0.8;
+    }
+    
+    .item-qty, .item-unit {
+      text-align: center;
+      font-weight: 500;
+      color: #ffcc00;
+    }
+    
+    .item-actions {
+      display: flex;
+      gap: 5px;
+      justify-content: flex-end;
+    }
+    
+    .item-actions button {
+      padding: 6px 10px;
+      margin: 0;
+      width: auto;
+      font-size: 13px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s;
+    }
+    
+    .item-actions button:hover {
+      transform: scale(1.05);
+    }
+    
+    .edit-btn {
+      background: linear-gradient(45deg, #ffcc00, #ffdd44);
+      color: #330;
+    }
+    
+    .delete-btn {
+      background: linear-gradient(45deg, #ff3366, #ff5588);
+      color: white;
+    }
+    
+    .item-number {
+      text-align: center;
+      font-weight: 600;
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      background: rgba(0, 40, 60, 0.4);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    
+    .empty-order {
+      background: rgba(0, 20, 40, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: #88d8f0;
+      font-size: 16px;
+      border: 1px dashed rgba(0, 255, 255, 0.3);
+    }
+    
+    .empty-order i {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: rgba(0, 255, 255, 0.5);
     }
     
     .notification {
@@ -247,6 +323,30 @@
       padding: 10px 20px;
     }
     
+    .order-summary {
+      background: rgba(0, 30, 50, 0.4);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 
+        inset 0 0 10px rgba(0, 255, 255, 0.1),
+        0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .order-summary h3 {
+      color: #00ffff;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 22px;
+    }
+    
     @media (max-width: 768px) {
       .container {
         padding: 20px;
@@ -260,15 +360,32 @@
         padding: 12px 15px;
       }
       
+      .order-list-header {
+        display: none;
+      }
+      
       .item-row {
-        flex-direction: column;
-        align-items: flex-start;
+        grid-template-columns: 1fr;
         gap: 10px;
+        padding: 15px;
+      }
+      
+      .item-number {
+        margin-bottom: 5px;
+      }
+      
+      .item-info {
+        margin-bottom: 8px;
+      }
+      
+      .item-qty, .item-unit {
+        text-align: left;
+        padding-left: 10px;
       }
       
       .item-actions {
-        width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
+        margin-top: 10px;
       }
     }
   </style>
@@ -339,6 +456,15 @@
     
     <div class="order-items">
       <h3><i class="fas fa-list"></i> ऑर्डर सूची</h3>
+      
+      <div class="order-list-header">
+        <div>क्र.</div>
+        <div>आइटम</div>
+        <div>मात्रा</div>
+        <div>इकाई</div>
+        <div>क्रिया</div>
+      </div>
+      
       <ul id="orderList"></ul>
     </div>
     
@@ -456,11 +582,11 @@
 
       if (orderItems.length === 0) {
         const emptyMsg = document.createElement('div');
-        emptyMsg.className = 'item-row';
+        emptyMsg.className = 'empty-order';
         emptyMsg.innerHTML = `
-          <div class="item-info" style="text-align: center; width: 100%;">
-            <i class="fas fa-shopping-basket"></i> कोई आइटम नहीं जोड़ा गया
-          </div>
+          <i class="fas fa-shopping-basket"></i>
+          <div>कोई आइटम नहीं जोड़ा गया</div>
+          <div style="font-size: 14px; margin-top: 10px;">ऊपर फॉर्म में आइटम जोड़ें</div>
         `;
         ul.appendChild(emptyMsg);
         return;
@@ -470,31 +596,67 @@
         const li = document.createElement("li");
         li.className = "item-row";
 
+        // Item number
+        const numberDiv = document.createElement("div");
+        numberDiv.className = "item-number";
+        numberDiv.innerText = i + 1;
+        
+        // Item info
         const infoDiv = document.createElement("div");
         infoDiv.className = "item-info";
         infoDiv.innerHTML = `
-          <strong>${i + 1}. ${item.name}</strong> - ${item.qty} ${item.unit}
+          <strong>${item.name}</strong>
+          <div class="item-description">${getItemDescription(item)}</div>
         `;
-
+        
+        // Quantity
+        const qtyDiv = document.createElement("div");
+        qtyDiv.className = "item-qty";
+        qtyDiv.innerText = item.qty;
+        
+        // Unit
+        const unitDiv = document.createElement("div");
+        unitDiv.className = "item-unit";
+        unitDiv.innerText = item.unit;
+        
+        // Actions
         const actions = document.createElement("div");
         actions.className = "item-actions";
 
         const editBtn = document.createElement("button");
         editBtn.className = "edit-btn";
-        editBtn.innerHTML = "<i class='fas fa-edit'></i> संपादित";
+        editBtn.innerHTML = "<i class='fas fa-edit'></i>";
+        editBtn.title = "संपादित करें";
         editBtn.onclick = () => editItem(i);
 
         const delBtn = document.createElement("button");
         delBtn.className = "delete-btn";
-        delBtn.innerHTML = "<i class='fas fa-trash'></i> हटाएं";
+        delBtn.innerHTML = "<i class='fas fa-trash'></i>";
+        delBtn.title = "हटाएं";
         delBtn.onclick = () => deleteItem(i);
 
         actions.appendChild(editBtn);
         actions.appendChild(delBtn);
+        
+        li.appendChild(numberDiv);
         li.appendChild(infoDiv);
+        li.appendChild(qtyDiv);
+        li.appendChild(unitDiv);
         li.appendChild(actions);
         ul.appendChild(li);
       });
+    }
+    
+    function getItemDescription(item) {
+      const descriptions = [
+        "उच्च गुणवत्ता वाला उत्पाद",
+        "ताज़ा और स्वादिष्ट",
+        "शुद्ध और प्राकृतिक",
+        "सर्वोत्तम ब्रांड",
+        "ताज़गी की गारंटी",
+        "पौष्टिक और स्वास्थ्यवर्धक"
+      ];
+      return descriptions[Math.floor(Math.random() * descriptions.length)];
     }
 
     function editItem(index) {
@@ -505,7 +667,7 @@
       editIndex = index;
       
       // Scroll to item form
-      document.getElementById('itemName').scrollIntoView();
+      document.getElementById('itemName').scrollIntoView({behavior: 'smooth'});
     }
 
     function deleteItem(index) {
