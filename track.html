@@ -3,49 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🌍 लाइव लोकेशन - Banda Ki Seva</title>
+  <title>📍 लाइव लोकेशन - Banda Ki Seva</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-    }
-    
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #1a1a40, #16213e);
+    }
+
+    body {
+      background: linear-gradient(135deg, #0c0e1d, #1a1c3a, #25274d);
       color: #e0f7fa;
       min-height: 100vh;
       padding: 20px;
-      overflow-x: hidden;
       position: relative;
+      overflow-x: hidden;
     }
-    
+
     body::before {
       content: "";
       position: fixed;
-      top: 0; 
+      top: 0;
       left: 0;
-      height: 100%; 
       width: 100%;
+      height: 100%;
       background: 
-        radial-gradient(circle at 20% 30%, #00ffcc33, transparent 40%),
-        radial-gradient(circle at 80% 70%, #ff00ff33, transparent 45%),
-        radial-gradient(circle at 50% 20%, #ffcc0033, transparent 50%),
-        repeating-linear-gradient(45deg, #ffffff09, #ffffff09 1px, transparent 1px, transparent 30px);
-      filter: blur(100px);
+        radial-gradient(circle at 20% 30%, rgba(0, 247, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(255, 0, 255, 0.1) 0%, transparent 45%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 30px);
+      filter: blur(3px);
       z-index: -1;
-      animation: bgMove 20s linear infinite alternate;
     }
-    
-    @keyframes bgMove {
-      0% { transform: scale(1) rotate(0deg); }
-      100% { transform: scale(1.2) rotate(1deg); }
-    }
-    
+
     .cyber-border {
       position: fixed;
       top: 0;
@@ -53,81 +46,117 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10;
+      z-index: 1;
     }
-    
+
     .cyber-border::before,
     .cyber-border::after {
       content: "";
       position: absolute;
-      background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+      background: linear-gradient(90deg, transparent, #00f7ff, transparent);
       height: 2px;
       width: 100%;
-      animation: scanLine 3s linear infinite;
+      animation: scanLine 5s linear infinite;
     }
-    
+
     .cyber-border::before {
       top: 10%;
     }
-    
+
     .cyber-border::after {
       bottom: 10%;
     }
-    
+
     @keyframes scanLine {
       0% { background-position: -100% 0; }
       100% { background-position: 100% 0; }
     }
-    
-    .header {
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
       text-align: center;
-      padding: 20px 0;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      padding: 20px;
       position: relative;
     }
-    
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      color: #00f7ff;
+      text-shadow: 0 0 15px #00f7ff;
+    }
+
     h1 {
       font-size: 2.8rem;
-      color: #00ffcc;
-      text-shadow: 0 0 15px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.7);
+      background: linear-gradient(90deg, #00f7ff, #00ffaa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 10px;
-      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
     }
-    
+
     .subtitle {
       font-size: 1.2rem;
       color: #bbdefb;
-      max-width: 800px;
+      max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
     }
-    
+
     .dashboard {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1fr 350px;
+      gap: 25px;
+      margin-bottom: 30px;
     }
-    
-    @media (max-width: 900px) {
+
+    @media (max-width: 768px) {
       .dashboard {
         grid-template-columns: 1fr;
       }
     }
-    
-    .panel {
-      background: rgba(10, 15, 35, 0.8);
-      backdrop-filter: blur(12px);
+
+    .map-container {
+      height: 500px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
+      border: 2px solid rgba(0, 247, 255, 0.5);
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .info-panel {
+      background: rgba(10, 15, 35, 0.7);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 25px;
-      box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-      border: 1px solid rgba(0, 255, 204, 0.3);
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.2);
+      border: 1px solid rgba(0, 247, 255, 0.3);
       position: relative;
       overflow: hidden;
     }
-    
-    .panel::before {
+
+    .info-panel::before {
       content: '';
       position: absolute;
       top: -2px;
@@ -139,611 +168,424 @@
       z-index: -1;
       border-radius: 22px;
       animation: borderGlow 6s linear infinite;
-      filter: blur(6px);
-      opacity: 0.6;
+      filter: blur(8px);
+      opacity: 0.5;
     }
-    
+
     @keyframes borderGlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    
+
     .panel-title {
       font-size: 1.5rem;
-      color: #00ffcc;
+      color: #00f7ff;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #00ffcc;
       display: flex;
       align-items: center;
       gap: 10px;
+      text-shadow: 0 0 10px #00f7ff;
     }
-    
+
     .panel-title i {
       font-size: 1.8rem;
     }
-    
-    #map {
-      height: 400px;
-      width: 100%;
+
+    .location-info {
+      background: rgba(0, 30, 50, 0.4);
       border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 255, 204, 0.5);
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-      z-index: 5;
-    }
-    
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
+      padding: 20px;
       margin-bottom: 25px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
     }
-    
-    .control-btn {
+
+    .info-item {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 500;
+      color: #bbdefb;
+    }
+
+    .info-value {
+      font-weight: 600;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #00f7ff;
+      text-align: right;
+    }
+
+    .map-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .map-btn {
+      padding: 14px;
+      border-radius: 12px;
       background: rgba(0, 40, 60, 0.5);
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      border-radius: 15px;
-      padding: 15px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      color: #e0f7fa;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-align: center;
-    }
-    
-    .control-btn:hover {
-      background: rgba(0, 100, 150, 0.5);
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-    }
-    
-    .control-btn i {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc;
-    }
-    
-    .control-btn span {
-      font-weight: 500;
-      color: #e0f7fa;
-    }
-    
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    .info-box {
-      background: rgba(0, 30, 50, 0.5);
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      border-radius: 15px;
-      padding: 15px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .info-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: #00ffcc;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-    
-    .info-label {
-      font-size: 0.9rem;
-      color: #bbdefb;
-      margin-bottom: 5px;
-    }
-    
-    .info-value {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #00ffcc;
-      text-shadow: 0 0 8px #00ffcc;
-    }
-    
-    .signal-strength {
       display: flex;
       align-items: center;
-      gap: 5px;
-      margin-top: 5px;
-    }
-    
-    .signal-bar {
-      width: 6px;
-      background: #00ffcc;
-      border-radius: 3px;
-      box-shadow: 0 0 5px #00ffcc;
-    }
-    
-    .signal-bar:nth-child(1) { height: 10px; }
-    .signal-bar:nth-child(2) { height: 15px; }
-    .signal-bar:nth-child(3) { height: 20px; }
-    .signal-bar:nth-child(4) { height: 25px; }
-    
-    .location-history {
-      margin-top: 20px;
-      max-height: 200px;
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-    
-    .location-history::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    .location-history::-webkit-scrollbar-track {
-      background: rgba(0, 30, 50, 0.3);
-      border-radius: 3px;
-    }
-    
-    .location-history::-webkit-scrollbar-thumb {
-      background: linear-gradient(#00cccc, #00ffff);
-      border-radius: 3px;
-    }
-    
-    .history-item {
-      background: rgba(0, 40, 60, 0.3);
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-left: 3px solid #00ffcc;
-    }
-    
-    .history-item p {
-      margin: 5px 0;
-      font-size: 0.9rem;
-    }
-    
-    .history-item .time {
-      color: #00ffcc;
-      font-weight: 500;
-    }
-    
-    .status-indicator {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      align-items: center;
+      justify-content: center;
       gap: 10px;
-      background: rgba(0, 30, 50, 0.8);
-      padding: 10px 15px;
-      border-radius: 50px;
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      z-index: 100;
     }
-    
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #4CAF50;
-      box-shadow: 0 0 10px #4CAF50;
-      animation: pulse 1.5s infinite;
+
+    .map-btn:hover {
+      background: rgba(0, 100, 150, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
     }
-    
+
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 16px;
+      background: linear-gradient(45deg, #25D366, #128C7E);
+      color: white;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.8);
+    }
+
+    .accuracy-indicator {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin-top: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .accuracy-level {
+      height: 100%;
+      background: linear-gradient(90deg, #00f7ff, #00ffaa);
+      border-radius: 5px;
+      width: 85%;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 247, 255, 0.2);
+      color: #bbdefb;
+      font-size: 0.9rem;
+    }
+
+    /* Pulse animation for live indicator */
     @keyframes pulse {
       0% { opacity: 1; }
       50% { opacity: 0.5; }
       100% { opacity: 1; }
     }
-    
-    .status-text {
-      font-weight: 500;
-    }
-    
-    .battery-indicator {
-      position: relative;
-      width: 40px;
-      height: 20px;
-      border: 2px solid #00ffcc;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    
-    .battery-level {
-      height: 100%;
-      width: 75%;
-      background: linear-gradient(90deg, #00ffcc, #00b894);
-      box-shadow: 0 0 10px #00ffcc;
-    }
-    
-    .battery-tip {
-      position: absolute;
-      top: 5px;
-      right: -6px;
-      width: 4px;
-      height: 10px;
-      background: #00ffcc;
-      border-radius: 0 2px 2px 0;
-    }
-    
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(0, 255, 204, 0.2);
-      color: #bbdefb;
-      font-size: 0.9rem;
-    }
-    
-    /* New Kirana Seva Styles */
-    .order-card {
-      background: rgba(0, 40, 60, 0.5);
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-left: 3px solid #ffcc00;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .order-card-header {
-      display: flex;
-      justify-content: space-between;
+
+    .live-indicator {
+      display: inline-flex;
       align-items: center;
-      margin-bottom: 10px;
-    }
-    
-    .order-id {
-      font-weight: 600;
-      color: #ffcc00;
-    }
-    
-    .order-status {
-      padding: 4px 10px;
+      gap: 8px;
+      background: rgba(255, 0, 0, 0.2);
+      padding: 4px 12px;
       border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-    
-    .status-pending { background: #ff9800; color: #000; }
-    .status-processing { background: #2196f3; color: #fff; }
-    .status-delivered { background: #4caf50; color: #fff; }
-    
-    .order-items-list {
-      margin: 10px 0;
-      padding-left: 15px;
-    }
-    
-    .order-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5px;
+      margin-left: 10px;
       font-size: 0.9rem;
+      color: #ff5252;
     }
-    
-    .order-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: #ff5252;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff5252;
+      animation: pulse 1.5s infinite;
     }
-    
-    .order-btn {
-      flex: 1;
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
+
+    .map-marker {
+      background: #00f7ff;
+      width: 30px;
+      height: 30px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      position: relative;
+      box-shadow: 0 0 15px #00f7ff;
     }
-    
-    .order-btn:hover {
-      transform: translateY(-2px);
-    }
-    
-    .btn-accept {
-      background: #4caf50;
-      color: white;
-    }
-    
-    .btn-reject {
-      background: #f44336;
-      color: white;
-    }
-    
-    .btn-delivered {
-      background: #2196f3;
-      color: white;
-    }
-    
-    .delivery-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    .stat-card {
-      background: rgba(0, 40, 60, 0.5);
-      border-radius: 15px;
-      padding: 15px;
-      text-align: center;
-      border: 1px solid rgba(0, 255, 204, 0.3);
-    }
-    
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #00ffcc;
-      margin: 10px 0;
-    }
-    
-    .stat-label {
-      font-size: 0.9rem;
-      color: #bbdefb;
-    }
-    
-    .delivery-mode {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    
-    .mode-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(0, 40, 60, 0.5);
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      color: #bbdefb;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .mode-btn.active {
-      background: #00ffcc;
-      color: #000;
-      font-weight: 600;
-      border-color: #00ffcc;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-    
-    .mode-btn:hover:not(.active) {
-      background: rgba(0, 100, 150, 0.5);
-    }
-    
-    .emergency-btn {
-      background: linear-gradient(45deg, #ff5252, #b71c1c);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 600;
-      margin-top: 15px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      width: 100%;
-    }
-    
-    .emergency-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 82, 82, 0.7);
-    }
-    
-    /* Animation for new order */
-    @keyframes highlight {
-      0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
-    }
-    
-    .new-order {
-      animation: highlight 2s ease;
+
+    .map-marker::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      background: #00796b;
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
   <div class="cyber-border"></div>
-
-  <div class="status-indicator">
-    <div class="status-dot"></div>
-    <div class="status-text">सक्रिय ट्रैकिंग</div>
-    <div class="battery-indicator">
-      <div class="battery-level"></div>
-      <div class="battery-tip"></div>
-    </div>
-  </div>
-
-  <div class="header">
-    <h1><i class="fas fa-map-marker-alt"></i> किराना सेवा लोकेशन ट्रैकर</h1>
-    <p class="subtitle">Banda Ki Seva के लिए वास्तविक समय डिलीवरी ट्रैकिंग और ऑर्डर प्रबंधन</p>
-  </div>
   
-  <div class="dashboard">
-    <!-- Left Panel -->
-    <div class="panel">
-      <div class="panel-title"><i class="fas fa-map"></i> डिलीवरी मानचित्र</div>
-      
-      <div id="map"></div>
-      
-      <div class="delivery-mode">
-        <button class="mode-btn active" onclick="setDeliveryMode('bike')">
-          <i class="fas fa-motorcycle"></i> बाइक
-        </button>
-        <button class="mode-btn" onclick="setDeliveryMode('car')">
-          <i class="fas fa-car"></i> कार
-        </button>
-        <button class="mode-btn" onclick="setDeliveryMode('walking')">
-          <i class="fas fa-walking"></i> पैदल
-        </button>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-location-dot"></i>
+        <i class="fas fa-truck"></i>
+        <i class="fas fa-store"></i>
+      </div>
+      <h1>Banda Ki Seva लाइव लोकेशन ट्रैकर</h1>
+      <p class="subtitle">वास्तविक समय में अपनी स्थिति ट्रैक करें और किराना सेवा के साथ साझा करें</p>
+    </header>
+
+    <div class="dashboard">
+      <div class="map-container">
+        <div id="map"></div>
       </div>
       
-      <div class="controls">
-        <div class="control-btn" onclick="simulateMovement()">
-          <i class="fas fa-walking"></i>
-          <span>सिमुलेट डिलीवरी</span>
+      <div class="info-panel">
+        <div class="panel-title">
+          <i class="fas fa-info-circle"></i> स्थान विवरण
+          <span class="live-indicator"><span class="live-dot"></span> LIVE</span>
         </div>
-        <div class="control-btn" onclick="findNearbyStores()">
-          <i class="fas fa-store"></i>
-          <span>नजदीकी किराना</span>
-        </div>
-        <div class="control-btn" onclick="optimizeRoute()">
-          <i class="fas fa-route"></i>
-          <span>रूट ऑप्टिमाइज़</span>
-        </div>
-        <div class="control-btn" onclick="checkInventory()">
-          <i class="fas fa-box-open"></i>
-          <span>इन्वेंटरी चेक</span>
-        </div>
-      </div>
-      
-      <button class="emergency-btn" onclick="triggerEmergency()">
-        <i class="fas fa-exclamation-triangle"></i> इमरजेंसी अलर्ट
-      </button>
-    </div>
-    
-    <!-- Right Panel -->
-    <div class="panel">
-      <div class="panel-title"><i class="fas fa-shopping-basket"></i> सक्रिय ऑर्डर</div>
-      
-      <div id="active-orders">
-        <div class="order-card new-order">
-          <div class="order-card-header">
-            <div class="order-id">ऑर्डर #BKS1024</div>
-            <div class="order-status status-pending">प्रोसेसिंग</div>
+        
+        <div class="location-info">
+          <div class="info-item">
+            <div class="info-label"><i class="fas fa-map-pin"></i> अक्षांश</div>
+            <div class="info-value" id="latitude">---</div>
           </div>
-          <p><strong>ग्राहक:</strong> any</p>
-          <p><strong>स्थान:</strong> जेल रोड, स्वराज कॉलोनी</p>
-          <p><strong>मोबाइल:</strong> xyz</p>
-          <div class="order-items-list">
-            <div class="order-item">
-              <span>आटा (5kg)</span>
-              <span>₹220</span>
-            </div>
-            <div class="order-item">
-              <span>चावल (10kg)</span>
-              <span>₹550</span>
-            </div>
-            <div class="order-item">
-              <span>तेल (5L)</span>
-              <span>₹650</span>
-            </div>
+          
+          <div class="info-item">
+            <div class="info-label"><i class="fas fa-map-pin"></i> देशान्तर</div>
+            <div class="info-value" id="longitude">---</div>
           </div>
-          <div class="order-actions">
-            <button class="order-btn btn-accept" onclick="acceptOrder('BKS1024')">स्वीकारें</button>
-            <button class="order-btn btn-delivered" onclick="markDelivered('BKS1024')">डिलीवर किया</button>
+          
+          <div class="info-item">
+            <div class="info-label"><i class="fas fa-bullseye"></i> सटीकता</div>
+            <div class="info-value" id="accuracy">---</div>
+          </div>
+          
+          <div class="accuracy-indicator">
+            <div class="accuracy-level" id="accuracy-level"></div>
+          </div>
+          
+          <div class="info-item">
+            <div class="info-label"><i class="fas fa-satellite"></i> स्रोत</div>
+            <div class="info-value" id="source">---</div>
+          </div>
+          
+          <div class="info-item">
+            <div class="info-label"><i class="fas fa-clock"></i> अंतिम अपडेट</div>
+            <div class="info-value" id="timestamp">---</div>
           </div>
         </div>
         
-        <div class="order-card">
-          <div class="order-card-header">
-            <div class="order-id">ऑर्डर #BKS1023</div>
-            <div class="order-status status-processing">चल रहा है</div>
-          </div>
-          <p><strong>ग्राहक:</strong> any</p>
-          <p><strong>स्थान:</strong> swraj colony</p>
-          <p><strong>मोबाइल:</strong> xyz</p>
-          <div class="order-actions">
-            <button class="order-btn btn-delivered" onclick="markDelivered('BKS1023')">डिलीवर किया</button>
-          </div>
+        <div class="panel-title"><i class="fas fa-map-marked-alt"></i> मानचित्र क्रियाएं</div>
+        
+        <div class="map-actions">
+          <button class="map-btn" onclick="shareLocation()">
+            <i class="fas fa-share-alt"></i> साझा करें
+          </button>
+          <button class="map-btn" onclick="refreshLocation()">
+            <i class="fas fa-sync-alt"></i> ताज़ा करें
+          </button>
+          <button class="map-btn" onclick="findNearbyStores()">
+            <i class="fas fa-store"></i> स्टोर खोजें
+          </button>
+          <button class="map-btn" onclick="getDirections()">
+            <i class="fas fa-route"></i> दिशा-निर्देश
+          </button>
         </div>
-      </div>
-      
-      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-chart-line"></i> डिलीवरी आँकड़े</div>
-      
-      <div class="delivery-stats">
-        <div class="stat-card">
-          <div class="stat-value">8</div>
-          <div class="stat-label">आज के ऑर्डर</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">₹0</div>
-          <div class="stat-label">कमाई</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">6.2 km</div>
-          <div class="stat-label">ट्रैवल किया</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">97%</div>
-          <div class="stat-label">रेटिंग</div>
-        </div>
-      </div>
-      
-      <div class="panel-title" style="margin-top: 25px;"><i class="fas fa-microchip"></i> डिवाइस सूचना</div>
-      
-      <div class="info-grid">
-        <div class="info-box"><div class="info-label">IP पता</div><div class="info-value" id="ip">लोड हो रहा है...</div></div>
-        <div class="info-box"><div class="info-label">डिवाइस</div><div class="info-value" id="device">...</div></div>
-        <div class="info-box"><div class="info-label">बैटरी स्थिति</div><div class="info-value" id="battery">...</div></div>
-        <div class="info-box"><div class="info-label">नेटवर्क पिंग</div><div class="info-value" id="ping">...</div></div>
+        
+        <a href="https://wa.me/916351598832?text=मेरी%20वर्तमान%20स्थिति:%20" class="whatsapp-btn" target="_blank" id="whatsappLink">
+          <i class="fab fa-whatsapp"></i> WhatsApp पर स्थान साझा करें
+        </a>
       </div>
     </div>
-  </div>
-  
-  <div class="footer">
-    <p>Banda Ki Seva - घर बैठे मिले ताज़ा किराना, तुरंत डिलीवरी</p>
-    <p>© 2023 सर्वाधिकार सुरक्षित | ग्राहक सहायता: 6351598832</p>
+    
+    <div class="footer">
+      <p>Banda Ki Seva - आपकी सभी किराना जरूरतों के लिए विश्वसनीय सेवा</p>
+      <p>© 2023 सर्वाधिकार सुरक्षित | ग्राहक सहायता: 6351598832</p>
+    </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
+    // Initialize variables
+    let map;
+    let marker;
+    let watchId;
+    
     // Initialize map
-    const map = L.map('map').setView([25.4750, 80.3350], 15);
-    
-    // Add custom map layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    
-    // Add custom marker
-    const customIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="background: #00ffcc; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 15px #00ffcc; position: relative;">
-               <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #00796b; border-radius: 50%;"></div>
-             </div>`,
-      iconSize: [30, 30],
-      iconAnchor: [15, 15]
-    });
-    
-    // Initial marker position (Banda, UP)
-    let marker = L.marker([25.4750, 80.3350], {icon: customIcon}).addTo(map);
-    marker.bindPopup("<b>वर्तमान स्थान</b><br>बांदा जेल रोड, उत्तर प्रदेश").openPopup();
-    
-    // Add Kirana stores
-    const kiranaStores = [
-      {name: "शुभम किराना स्टोर", coords: [25.4765, 80.3360]},
-      {name: "सिद्धान्त सुपर मार्केट", coords: [25.4735, 80.3340]},
-      {name: "स्वराज किराना", coords: [25.4745, 80.3325]},
-      {name: "फ़्रेश मार्ट", coords: [25.4770, 80.3335]}
-    ];
-    
-    kiranaStores.forEach(store => {
-      L.marker(store.coords).addTo(map)
-        .bindPopup(`<b>${store.name}</b><br>Banda Ki Seva पार्टनर`)
-        .openPopup();
-    });
-    
-    // Battery Info
-    function updateBattery() {
-      const level = Math.floor(Math.random() * 41) + 60; // 60-100%
-      document.getElementById('battery').innerText = `${level}%`;
-      document.querySelector('.battery-level').style.width = `${level}%`;
-      
-      if (level < 20) {
-        document.querySelector('.battery-level').style.background = 'linear-gradient(90deg, #ff5252, #b71c1c)';
+    function initMap(lat, lng) {
+      if (!map) {
+        map = L.map('map').setView([lat, lng], 16);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
       } else {
-        document.querySelector('.battery-level').style.background = 'linear-gradient(90deg, #00ffcc, #00b894)';
+        map.setView([lat, lng], 16);
+      }
+      
+      // Remove existing marker if present
+      if (marker) {
+        map.removeLayer(marker);
+      }
+      
+      // Create custom marker
+      const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div class="map-marker"></div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+      });
+      
+      // Add new marker
+      marker = L.marker([lat, lng], {icon: customIcon}).addTo(map);
+      marker.bindPopup("<b>आपकी वर्तमान स्थिति</b>").openPopup();
+    }
+    
+    // Update location information
+    function updateLocationInfo(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const accuracy = Math.round(position.coords.accuracy);
+      const source = position.coords.altitude ? 'GPS + सेल टावर' : 'सेल टावर';
+      const timestamp = new Date(position.timestamp).toLocaleTimeString();
+      
+      // Update DOM elements
+      document.getElementById('latitude').textContent = latitude.toFixed(6);
+      document.getElementById('longitude').textContent = longitude.toFixed(6);
+      document.getElementById('accuracy').textContent = `${accuracy} मीटर`;
+      document.getElementById('source').textContent = source;
+      document.getElementById('timestamp').textContent = timestamp;
+      
+      // Update accuracy indicator
+      const accuracyPercent = Math.max(0, 100 - accuracy);
+      document.getElementById('accuracy-level').style.width = `${accuracyPercent}%`;
+      
+      // Update WhatsApp link
+      const whatsappLink = document.getElementById('whatsappLink');
+      const message = encodeURIComponent(`📍 मेरी वर्तमान स्थिति:\nhttps://www.google.com/maps?q=${latitude},${longitude}`);
+      whatsappLink.href = `https://wa.me/916351598832?text=${message}`;
+      
+      // Initialize or update map
+      initMap(latitude, longitude);
+    }
+    
+    // Show error message
+    function showError(error) {
+      let errorMsg = "स्थान जानकारी प्राप्त करने में त्रुटि: ";
+      
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          errorMsg += "आपने स्थान साझा करने से इनकार कर दिया।";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          errorMsg += "स्थान जानकारी उपलब्ध नहीं है।";
+          break;
+        case error.TIMEOUT:
+          errorMsg += "स्थान प्राप्त करने का समय समाप्त हो गया।";
+          break;
+        default:
+          errorMsg += "अज्ञात त्रुटि।";
+          break;
+      }
+      
+      alert(errorMsg);
+    }
+    
+    // Get current location
+    function getLocation() {
+      if (navigator.geolocation) {
+        // Stop any existing watch
+        if (watchId) {
+          navigator.geolocation.clearWatch(watchId);
+        }
+        
+        // Get current position
+        navigator.geolocation.getCurrentPosition(
+          position => updateLocationInfo(position),
+          showError,
+          {enableHighAccuracy: true, timeout: 10000}
+        );
+        
+        // Watch for position changes
+        watchId = navigator.geolocation.watchPosition(
+          position => updateLocationInfo(position),
+          showError,
+          {enableHighAccuracy: true, timeout: 10000, maximumAge: 0}
+        );
+      } else {
+        alert("आपका ब्राउज़र स्थान सेवा समर्थित नहीं करता है।");
       }
     }
     
-    // Device Info
-    document.getElem
+    // Share location function
+    function shareLocation() {
+      if (navigator.share) {
+        const lat = document.getElementById('latitude').textContent;
+        const lng = document.getElementById('longitude').textContent;
+        
+        navigator.share({
+          title: 'मेरी वर्तमान स्थिति',
+          text: 'Banda Ki Seva के साथ स्थान साझा करें',
+          url: `https://www.google.com/maps?q=${lat},${lng}`
+        })
+        .catch(error => console.log('Sharing failed:', error));
+      } else {
+        alert("आपका ब्राउज़र साझा करने की सुविधा का समर्थन नहीं करता। WhatsApp बटन का उपयोग करें।");
+      }
+    }
+    
+    // Refresh location
+    function refreshLocation() {
+      getLocation();
+      document.getElementById('timestamp').textContent = 'अपडेट किया जा रहा है...';
+    }
+    
+    // Find nearby stores
+    function findNearbyStores() {
+      alert("आसपास के किराना स्टोर खोजे जा रहे हैं...");
+    }
+    
+    // Get directions
+    function getDirections() {
+      alert("दिशा-निर्देश सक्रिय किए जा रहे हैं...");
+    }
+    
+    // Initialize on page load
+    window.onload = function() {
+      getLocation();
+    };
+  </script>
+</body>
+</html>
