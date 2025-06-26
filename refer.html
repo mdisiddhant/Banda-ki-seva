@@ -2,242 +2,601 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>🎁 Refer & Earn - Banda Ki Seva</title>
+  <title>Refer Karein - Banda Ki Seva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #2c5364;
+      --secondary: #203a43;
+      --accent: #00a8ff;
+      --whatsapp: #25D366;
+      --facebook: #1877f2;
+      --instagram: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      --copy: #ffa502;
+      --share: #00a8ff;
+      --success: #1ebe5d;
+    }
+    
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+      color: #fff;
       min-height: 100vh;
-      overflow: hidden;
+      padding: 20px 15px 50px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 20px 0 10px;
+      position: relative;
+      margin-bottom: 30px;
+    }
+    
+    .logo-container {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 15px;
+      background: linear-gradient(135deg, #00a8ff, #1a2980);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .logo {
+      font-size: 50px;
+      color: white;
+    }
+    
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00ffff;
+      background: linear-gradient(45deg, #00ffff, #00a8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    
+    .tagline {
+      font-size: 18px;
+      color: #ccf7ff;
+      max-width: 500px;
+      margin: 0 auto 25px;
+    }
+    
+    .referral-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    
+    .referral-card h2 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #00ffff;
+    }
+    
+    .referral-link-container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+    
+    .referral-link {
+      font-size: 16px;
+      word-break: break-all;
+      color: #ccf7ff;
+      font-weight: 500;
+      flex: 1;
+      padding-right: 15px;
+    }
+    
+    .copy-btn {
+      background: var(--copy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 10px rgba(255, 165, 2, 0.3);
+    }
+    
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 165, 2, 0.4);
+    }
+    
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+    
+    .buttons-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
+      font-size: 17px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.3s;
+      text-align: left;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .btn i {
+      font-size: 24px;
+      margin-right: 12px;
+      width: 30px;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .whatsapp { background: var(--whatsapp); }
+    .facebook { background: var(--facebook); }
+    .instagram { background: var(--instagram); }
+    .share { background: var(--share); }
+    
+    .how-it-works {
+      margin: 40px 0;
+    }
+    
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    
+    .step-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 25px 20px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid rgba(0, 255, 255, 0.1);
+    }
+    
+    .step-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #00a8ff, #1a2980);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      color: white;
+    }
+    
+    .step-number {
+      background: #00a8ff;
+      color: #002;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .step-card h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #00ffff;
+    }
+    
+    .step-card p {
+      font-size: 15px;
+      color: #ccf7ff;
+    }
+    
+    .rewards {
+      background: linear-gradient(135deg, #0f2027, #203a43);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px 0;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .rewards h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    }
+    
+    .reward-amount {
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #ffcc00, #ff9900);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 20px 0;
+      text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+    }
+    
+    .reward-details {
       display: flex;
       justify-content: center;
-      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .reward-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
       padding: 20px;
-      color: #fff;
+      flex: 1;
+      min-width: 200px;
+      max-width: 250px;
+      border: 1px solid rgba(0, 255, 255, 0.1);
     }
-
-    canvas#bgCanvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .container {
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
-      animation: fadeIn 1s ease-in-out;
-      z-index: 1;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2, p, .socials a {
-      text-align: center;
-      text-shadow: 0 0 10px cyan, 0 0 20px #00ffff;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-size: 28px;
+    
+    .reward-item i {
+      font-size: 40px;
       color: #00ffff;
+      margin-bottom: 15px;
     }
-
-    .input-group {
-      margin: 15px 0;
-      position: relative;
-    }
-
-    .input-group i {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #00ffff;
-      text-shadow: 0 0 8px #00ffff;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px 12px 12px 38px;
-      border: 2px solid #b2ffff;
-      border-radius: 10px;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.8);
-      color: #000;
-    }
-
-    .input-group input:focus {
-      border-color: #00e6e6;
-      background: #ffffff;
-      outline: none;
-    }
-
-    button {
-      background: linear-gradient(to right, #00c853, #00e676);
-      color: white;
-      border: none;
-      padding: 14px;
-      font-size: 18px;
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 20px;
-      cursor: pointer;
-      transition: 0.4s;
-      box-shadow: 0 0 15px #00ff99;
-      text-shadow: 0 0 4px #fff;
-    }
-
-    button:hover {
-      transform: scale(1.02);
-      background: linear-gradient(to right, #00b248, #00e676);
-    }
-
-    .socials {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .socials p {
+    
+    .reward-item h3 {
+      color: #ffcc00;
       margin-bottom: 10px;
-      font-weight: bold;
-      font-size: 16px;
+    }
+    
+    .reward-item p {
+      color: #ccf7ff;
+      font-size: 14px;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 40, 60, 0.95);
       color: #00ffff;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(-30px);
+      transition: all 0.4s;
     }
-
-    .socials a {
-      margin: 0 10px;
-      font-size: 28px;
-      transition: transform 0.3s;
+    
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
     }
-
-    .socials a:hover {
-      transform: scale(1.2);
+    
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #88d8f0;
+      font-size: 14px;
+      padding: 20px;
+      border-top: 1px solid rgba(0, 255, 255, 0.1);
     }
-
-    .instagram { color: #C13584; }
-    .facebook { color: #1877F2; }
-    .whatsapp { color: #25D366; }
-
-    @media (max-width: 500px) {
-      h2 { font-size: 24px; }
+    
+    @media (max-width: 768px) {
+      .buttons-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .step-card {
+        padding: 20px 15px;
+      }
+      
+      .reward-details {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      h1 {
+        font-size: 28px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .referral-link-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .copy-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .btn {
+        font-size: 16px;
+        padding: 14px;
+      }
     }
   </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
-
-<div class="container">
-  <h2>🎁 रेफर करें और कमाएं</h2>
-  <form id="referForm">
-    <div class="input-group">
-      <i class="fas fa-user"></i>
-      <input type="text" name="Name" placeholder="👤 आपका नाम" required>
+  <div class="container">
+    <!-- Notification -->
+    <div class="notification" id="notification">
+      <i class="fas fa-check-circle"></i>
+      <span id="notification-text">लिंक कॉपी हो गया!</span>
     </div>
-    <div class="input-group">
-      <i class="fas fa-phone-alt"></i>
-      <input type="tel" name="Mobile" placeholder="📱 आपका मोबाइल नंबर" pattern="[0-9]{10}" required>
+    
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <i class="fas fa-gift logo"></i>
+      </div>
+      <h1>🎁 Refer Karein & Kamaayen</h1>
+      <p class="tagline">अपने दोस्तों को Banda Ki Seva ऐप रेफर करें और पाए 3 टाइम फ्री डिलेवरी बिल्कुल फ्री</p>
     </div>
-    <div class="input-group">
-      <i class="fas fa-user-friends"></i>
-      <input type="text" name="Referred Person Name" placeholder="👥 जिसे रेफर किया उसका नाम" required>
+    
+    <!-- Referral Card -->
+    <div class="referral-card">
+      <h2><i class="fas fa-link"></i> आपका रेफरल लिंक</h2>
+      
+      <div class="referral-link-container">
+        <div class="referral-link" id="referralLink">
+          https://bandakiseva.com/?ref=BANDA7733
+        </div>
+        <button class="copy-btn" onclick="copyReferral()">
+          <i class="fas fa-copy"></i> कॉपी
+        </button>
+      </div>
+      
+      <p style="text-align: center; color: #88d8f0; font-size: 15px; margin-top: 10px;">
+        ऊपर दिए गए लिंक को कॉपी करें और अपने दोस्तों के साथ शेयर करें
+      </p>
     </div>
-    <div class="input-group">
-      <i class="fas fa-phone-square-alt"></i>
-      <input type="tel" name="Referred Mobile" placeholder="📞 उसका मोबाइल नंबर" pattern="[0-9]{10}" required>
+    
+    <!-- Share Buttons -->
+    <div class="buttons-container">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=🎁%20Join%20Banda%20Ki%20Seva%20and%20Earn%20₹50!%0A👉%20https://bandakiseva.com/?ref=BANDA123" target="_blank" class="btn whatsapp">
+        <i class="fab fa-whatsapp"></i> WhatsApp पर Refer करें
+      </a>
+      
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://bandakiseva.com/?ref=BANDA123" target="_blank" class="btn facebook">
+        <i class="fab fa-facebook-f"></i> Facebook पर Refer करें
+      </a>
+      
+      <!-- Instagram -->
+      <button class="btn instagram" onclick="copyReferral()">
+        <i class="fab fa-instagram"></i> Instagram के लिए लिंक कॉपी करें
+      </button>
+      
+      <!-- Share All -->
+      <button class="btn share" onclick="shareAll()">
+        <i class="fas fa-share-alt"></i> सभी Apps पर Refer करें
+      </button>
     </div>
-    <button type="submit">🚀 सबमिट करें</button>
-  </form>
-
-  <div class="socials">
-    <p>📢 हमें फ़ॉलो करें:</p>
-    <a class="instagram" href="https://instagram.com/yourpage" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a class="facebook" href="https://facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a class="whatsapp" href="https://wa.me/916351598832" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    
+    <!-- How it Works -->
+    <div class="how-it-works">
+      <h2><i class="fas fa-cogs"></i> कैसे काम करता है</h2>
+      
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-share-alt"></i>
+          </div>
+          <h3>अपना लिंक शेयर करें</h3>
+          <p>अपने दोस्तों के साथ अपना रेफरल लिंक शेयर करें</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3>दोस्त ऐप डाउनलोड करें</h3>
+          <p>आपका दोस्त आपके लिंक से ऐप डाउनलोड करता है</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-icon">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <h3>पैसे कमाएँ</h3>
+          <p>जब आपका दोस्त अपना पहला ऑर्डर पूरा करता है, तो आपको 3 डिलेवरी बिल्कुल फ्री मिलती  हैं</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rewards Section -->
+    <div class="rewards">
+      <h2><i class="fas fa-gift"></i> आपकी रिवार्ड</h2>
+      
+      <div class="reward-amount">₹50 तक</div>
+      
+      <p>हर सफल रेफरल के लिए आपको मिलेंगे</p>
+      
+      <div class="reward-details">
+        <div class="reward-item">
+          <i class="fas fa-wallet"></i>
+          <h3>आसान निकासी</h3>
+          <p>3 time free delevery </p>
+        </div>
+        
+        <div class="reward-item">
+          <i class="fas fa-users"></i>
+          <h3>कोई सीमा नहीं</h3>
+          <p>जितने चाहें उतने दोस्तों को रेफर कर सकते हैं और अधिक कमाएँ</p>
+        </div>
+        
+        <div class="reward-item">
+          <i class="fas fa-bolt"></i>
+          <h3>तुरंत क्रेडिट</h3>
+          <p>पैसे 24 घंटे के भीतर आपके खाते में क्रेडिट हो जाते हैं</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p>© 2025 Banda Ki Seva. सभी अधिकार सुरक्षित</p>
+      <p>रेफरल प्रोग्राम के नियम और शर्तें लागू होती हैं</p>
+    </div>
   </div>
-</div>
 
-<script>
-  document.getElementById("referForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+  <script>
+    // Referral tracking & Telegram message
+    window.onload = function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
 
-    const formData = new FormData(this);
-    const data = {};
-    formData.forEach((value, key) => { data[key] = value.trim(); });
+      if (refCode) {
+        localStorage.setItem("referralBy", refCode);
 
-    const mobilePattern = /^[0-9]{10}$/;
-    if (!mobilePattern.test(data["Mobile"]) || !mobilePattern.test(data["Referred Mobile"])) {
-      alert("📵 कृपया मोबाइल नंबर सही भरें (10 अंकों में)।");
-      return;
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent) ? "📱 मोबाइल" : "💻 डेस्कटॉप";
+        const message = `🎯 *नया रेफरल लिंक खोला गया!*\n🔗 Referral Code: ${refCode}\n🕒 समय: ${new Date().toLocaleString()}\n${isMobile}`;
+
+        const botToken = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
+        const chatId = "6798434092";
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "Markdown"
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("✅ Telegram message sent:", data);
+        })
+        .catch(err => {
+          console.error("❌ Telegram Error:", err);
+        });
+      }
+    };
+
+    // Copy to clipboard
+    function copyReferral() {
+      const link = document.getElementById("referralLink").innerText;
+      navigator.clipboard.writeText(link).then(() => {
+        showNotification("✅ लिंक कॉपी हो गया!");
+      });
     }
 
-    fetch("https://api.sheetbest.com/sheets/5ab33cde-913b-4d42-b205-d8cb1e4e229e", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (response.ok) {
-        alert("✅ रेफर सफलतापूर्वक भेजा गया! धन्यवाद 🙏");
-        document.getElementById("referForm").reset();
+    // Show notification
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      
+      notificationText.innerText = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // Share via native
+    function shareAll() {
+      const url = "https://bandakiseva.com/?ref=BANDA123";
+      const text = "🎁 Banda Ki Seva ऐप से जुड़ें और ₹50 तक कमाएं!\n👉 " + url;
+
+      if (navigator.share) {
+        navigator.share({
+          title: "Banda Ki Seva",
+          text: text,
+          url: url
+        }).then(() => {
+          showNotification("✅ शेयर हो गया");
+        }).catch((err) => {
+          showNotification("⚠️ शेयर विफल: " + err);
+        });
       } else {
-        alert("⚠️ कुछ गलत हुआ, कृपया फिर से प्रयास करें।");
+        showNotification("⚠️ आपका ब्राउज़र शेयर सपोर्ट नहीं करता");
       }
-    })
-    .catch(error => {
-      alert("🚫 नेटवर्क त्रुटि: " + error.message);
-    });
-  });
-</script>
-
-<script>
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-let w, h, t = 0;
-
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-function draw() {
-  ctx.clearRect(0, 0, w, h);
-  for (let i = 0; i < 200; i++) {
-    const angle = i * 0.3 + t;
-    const radius = 150 + 50 * Math.sin(t / 25 + i / 12);
-    const x = w/2 + radius * Math.cos(angle);
-    const y = h/2 + radius * Math.sin(angle);
-    const hue = (i * 4 + t * 30) % 360;
-    ctx.beginPath();
-    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
-    ctx.fill();
-  }
-  t += 0.02;
-  requestAnimationFrame(draw);
-}
-draw();
-</script>
-
+    }
+  </script>
 </body>
 </html>
