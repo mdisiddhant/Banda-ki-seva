@@ -523,7 +523,10 @@
     
     <div class="form-group">
       <label for="custArea"><i class="fas fa-map-marker-alt"></i> एरिया</label>
-      <input id="custArea" placeholder="जैसे: कचहरी रोड, शहर">
+<select id="custArea" onchange="checkArea()" required>
+  <option value="">-- एरिया चुनें --</option>
+  <option value="Swaraj Colony">Swaraj Colony</option>
+</select>
     </div>
     
     <div class="order-summary">
