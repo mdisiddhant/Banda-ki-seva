@@ -3,81 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Panel - Banda Ki Seva</title>
+  <title>Banda Ki Seva</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f2f2f2;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      text-align: center;
     }
-    .container {
-      max-width: 500px;
-      margin: 80px auto;
+    a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    .login-box, .admin-panel {
       background: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      max-width: 400px;
+      margin: 20px auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    .admin-panel {
-      max-width: 800px;
-      margin: 40px auto;
-      display: none;
-    }
-    h2, h3 {
-      text-align: center;
-    }
-    input[type="text"], input[type="password"] {
+    input {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
+      margin: 8px 0;
       border-radius: 5px;
+      border: 1px solid #ccc;
     }
     button {
       width: 100%;
-      background-color: #007bff;
+      padding: 10px;
+      background: #007bff;
       color: white;
-      padding: 12px;
       border: none;
-      border-radius: 5px;
       font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .error {
-      color: red;
-      text-align: center;
-      display: none;
+      border-radius: 5px;
     }
     .card {
       background: white;
+      margin: 15px;
       padding: 20px;
-      margin: 15px 0;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    ul {
-      padding-left: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: left;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔐 Login Form -->
-  <div class="container" id="loginSection">
-    <h2>🔐 Admin Login</h2>
+  <h1>🙏 Banda Ki Seva</h1>
+
+  <!-- 🔗 Admin Login Link -->
+  <a onclick="openAdmin()">🛡️ Admin Login</a>
+
+  <!-- 🔐 Hidden Login Form -->
+  <div id="loginBox" class="login-box hidden">
+    <h3>Admin Login</h3>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <p class="error" id="errorMsg">❌ गलत Username या Password</p>
-    <button onclick="login()">Login</button>
+    <p id="errorMsg" style="color: red; display: none;">गलत जानकारी</p>
+    <button onclick="adminLogin()">Login</button>
   </div>
 
-  <!-- ✅ Admin Panel -->
-  <div class="admin-panel" id="adminPanel">
-    <h2>📋 Banda Ki Seva - Admin Panel</h2>
+  <!-- 📋 Admin Panel -->
+  <div id="adminPanel" class="admin-panel hidden">
+    <h2>📋 Admin Panel - Banda Ki Seva</h2>
     <div class="card">
       <h3>👤 कुल यूज़र</h3>
       <p>125 Registered Users</p>
@@ -91,21 +87,25 @@
       <ul>
         <li>Digital Seva Record</li>
         <li>Courier Orders</li>
-        <li>Local Delivery Track</li>
+        <li>Local Delivery</li>
         <li>VIP Membership</li>
       </ul>
     </div>
   </div>
 
   <script>
-    function login() {
-      var username = document.getElementById("username").value.trim();
-      var password = document.getElementById("password").value.trim();
-      var error = document.getElementById("errorMsg");
+    function openAdmin() {
+      document.getElementById("loginBox").classList.remove("hidden");
+    }
 
-      if (username === "admin" && password === "banda@123") {
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
+    function adminLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const error = document.getElementById("errorMsg");
+
+      if (user === "admin" && pass === "banda@123") {
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
       } else {
         error.style.display = "block";
       }
