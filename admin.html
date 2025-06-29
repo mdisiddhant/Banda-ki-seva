@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Panel - Banda Ki Seva</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background: #f2f2f2;
       margin: 0;
       padding: 0;
     }
-    .login-box, .admin-panel {
-      max-width: 400px;
+    .container {
+      max-width: 500px;
       margin: 80px auto;
       background: white;
       padding: 30px;
@@ -20,8 +20,9 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
     .admin-panel {
-      display: none;
       max-width: 800px;
+      margin: 40px auto;
+      display: none;
     }
     h2, h3 {
       text-align: center;
@@ -65,16 +66,16 @@
 </head>
 <body>
 
-  <!-- 🔐 Admin Login Section -->
-  <div class="login-box" id="loginSection">
-    <h2>🛠️ Admin Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <p class="error" id="error-msg">❌ गलत Username या Password</p>
+  <!-- 🔐 Login Form -->
+  <div class="container" id="loginSection">
+    <h2>🔐 Admin Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <p class="error" id="errorMsg">❌ गलत Username या Password</p>
     <button onclick="login()">Login</button>
   </div>
 
-  <!-- 📋 Admin Panel Section -->
+  <!-- ✅ Admin Panel -->
   <div class="admin-panel" id="adminPanel">
     <h2>📋 Banda Ki Seva - Admin Panel</h2>
     <div class="card">
@@ -98,15 +99,15 @@
 
   <script>
     function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorMsg = document.getElementById("error-msg");
+      var username = document.getElementById("username").value.trim();
+      var password = document.getElementById("password").value.trim();
+      var error = document.getElementById("errorMsg");
 
       if (username === "admin" && password === "banda@123") {
         document.getElementById("loginSection").style.display = "none";
         document.getElementById("adminPanel").style.display = "block";
       } else {
-        errorMsg.style.display = "block";
+        error.style.display = "block";
       }
     }
   </script>
