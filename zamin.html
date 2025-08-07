@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ज़मीन खरीदें/बेचें - प्रीमियम सेवा</title>
+  <title>ज़मीन खरीदें/बेचें/पूछताछ - प्रीमियम सेवा</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -27,14 +27,24 @@
       padding: 20px;
     }
     
+    .logo-container {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .logo-container img {
+      height: 80px;
+      filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+    }
+    
     .header {
       text-align: center;
-      margin: 20px 0 40px;
+      margin-bottom: 20px;
       position: relative;
     }
     
     .header h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       background: linear-gradient(to right, #333, #555);
       -webkit-background-clip: text;
       background-clip: text;
@@ -42,27 +52,37 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
       position: relative;
       display: inline-block;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--buy-color), 0 0 20px var(--buy-color);
+      }
+      to {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--sell-color), 0 0 40px var(--sell-color);
+      }
     }
     
     .tabs {
       display: flex;
       justify-content: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
     }
     
     .tab-btn {
-      padding: 12px 25px;
+      padding: 10px 20px;
       border: none;
       border-radius: 50px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.3s;
     }
     
@@ -86,14 +106,30 @@
       margin: 0 auto;
       background: white;
       border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .form-panel {
+      display: none;
+    }
+    
+    .form-panel.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .form-title {
       text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
     }
     
     #buyForm .form-title {
@@ -108,37 +144,62 @@
       color: var(--inquiry-color);
     }
     
+    .form-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: currentColor;
+    }
+    
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     
     label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 600;
+      color: #555;
     }
     
     input, select, textarea {
       width: 100%;
-      padding: 12px 15px;
+      padding: 10px 12px;
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
+      background: #f9f9f9;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #aaa;
+      background: white;
     }
     
     button[type="submit"] {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       margin-top: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
     #buyForm button[type="submit"] {
@@ -175,99 +236,85 @@
     
     .file-input-label {
       display: block;
-      padding: 12px 15px;
+      padding: 10px 12px;
       background-color: #f0f0f0;
       border: 2px dashed #ccc;
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
-    }
-    
-    .location-picker {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .location-picker button {
-      padding: 10px 15px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .preview-images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
-    .preview-images img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-    
-    .confirmation {
-      text-align: center;
-      padding: 20px;
-      display: none;
-    }
-    
-    /* New styles for area and budget selection */
-    .area-selection, .budget-selection {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-    
-    .area-option, .budget-option {
-      padding: 10px;
-      border: 2px solid #e0e0e0;
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s;
     }
     
-    .area-option:hover, .budget-option:hover {
-      border-color: var(--buy-color);
-      background-color: rgba(76, 175, 80, 0.1);
+    .file-input-label:hover {
+      background-color: #e5e5e5;
+      border-color: #aaa;
     }
     
-    .area-option.selected, .budget-option.selected {
-      border-color: var(--buy-color);
-      background-color: rgba(76, 175, 80, 0.2);
-      font-weight: bold;
+    .preview-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
     }
     
-    .custom-area, .custom-budget {
-      grid-column: 1 / -1;
+    .preview-images img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid #ddd;
     }
     
-    /* Map container styles */
-    .map-container {
-      height: 300px;
-      margin-top: 15px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid #e0e0e0;
+    .confirmation {
+      text-align: center;
+      padding: 20px;
       display: none;
+      animation: fadeIn 0.5s ease;
     }
     
-    #sellMap {
-      display: block; /* Always show for sell form */
+    .confirmation i {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+    
+    .confirmation h3 {
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .confirmation p {
+      color: #666;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .tab-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+      
+      .form-container {
+        padding: 15px;
+      }
+      
+      .form-title {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <div class="logo-container">
+    <img src="https://i.postimg.cc/G2kr4hz6/logo.png" alt="Company Logo">
+  </div>
+  
   <div class="header">
-    <h1><i class="fas fa-landmark"></i> ज़मीन खरीदें/बेचें</h1>
+    <h1><i class="fas fa-landmark"></i> ज़मीन खरीदें/बेचें/पूछताछ</h1>
   </div>
   
   <div class="tabs">
@@ -299,37 +346,18 @@
         </div>
         
         <div class="form-group">
-          <label><i class="fas fa-map-marker-alt"></i> इच्छित क्षेत्र चुनें</label>
-          <div class="area-selection">
-            <div class="area-option" data-value="north">जरेली कोठी</div>
-            <div class="area-option" data-value="south">भूरा गढ़</div>
-            <div class="area-option" data-value="east">कनवारा</div>
-            <div class="area-option" data-value="west">केवटरा</div>
-            <div class="area-option" data-value="central">बाय पास</div>
-            <div class="area-option custom-area">
-              <input type="text" id="buyCustomArea" placeholder="अन्य क्षेत्र (अपना इच्छित क्षेत्र लिखें)">
-            </div>
-          </div>
-          <input type="hidden" id="buyArea">
+          <label for="buyLocation"><i class="fas fa-map-marker-alt"></i> इच्छित स्थान</label>
+          <input type="text" id="buyLocation" required>
         </div>
         
         <div class="form-group">
-          <label><i class="fas fa-wallet"></i> आपका बजट रेंज</label>
-          <div class="budget-selection">
-            <div class="budget-option" data-value="10-20">10-20 लाख</div>
-            <div class="budget-option" data-value="20-50">20-50 लाख</div>
-            <div class="budget-option" data-value="50-100">50 लाख - 1 करोड़</div>
-            <div class="budget-option" data-value="100+">1 करोड़ से अधिक</div>
-            <div class="budget-option custom-budget">
-              <input type="text" id="buyCustomBudget" placeholder="कस्टम बजट (लिखें)">
-            </div>
-          </div>
-          <input type="hidden" id="buyBudget">
+          <label for="buyBudget"><i class="fas fa-wallet"></i> बजट (लगभग)</label>
+          <input type="text" id="buyBudget" required>
         </div>
         
         <div class="form-group">
           <label for="buyRequirements"><i class="fas fa-clipboard-list"></i> आपकी आवश्यकताएँ</label>
-          <textarea id="buyRequirements" rows="4" required></textarea>
+          <textarea id="buyRequirements" rows="3" required></textarea>
         </div>
         
         <div class="form-group">
@@ -349,7 +377,7 @@
       </form>
       
       <div id="buyConfirmation" class="confirmation">
-        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--buy-color);"></i>
+        <i class="fas fa-check-circle" style="color: var(--buy-color);"></i>
         <h3>आपका अनुरोध प्राप्त हुआ!</h3>
         <p>हमारा विशेषज्ञ टीम आपसे जल्द ही संपर्क करेगा।</p>
       </div>
@@ -372,13 +400,7 @@
         
         <div class="form-group">
           <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
-          <div class="location-picker">
-            <input type="text" id="sellLocation" required placeholder="पता या लैंडमार्क लिखें">
-            <button type="button" onclick="initMap('sell')"><i class="fas fa-map-pin"></i> मैप पर चुनें</button>
-          </div>
-          <div id="sellMap" class="map-container"></div>
-          <input type="hidden" id="sellLat">
-          <input type="hidden" id="sellLng">
+          <input type="text" id="sellLocation" required>
         </div>
         
         <div class="form-group">
@@ -393,7 +415,7 @@
         
         <div class="form-group">
           <label for="sellDescription"><i class="fas fa-info-circle"></i> ज़मीन का विवरण</label>
-          <textarea id="sellDescription" rows="4" required></textarea>
+          <textarea id="sellDescription" rows="3" required></textarea>
         </div>
         
         <div class="form-group">
@@ -413,7 +435,7 @@
       </form>
       
       <div id="sellConfirmation" class="confirmation">
-        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--sell-color);"></i>
+        <i class="fas fa-check-circle" style="color: var(--sell-color);"></i>
         <h3>आपकी जानकारी प्राप्त हुई!</h3>
         <p>हमारा टीम आपकी ज़मीन का मूल्यांकन करके जल्द ही संपर्क करेगा।</p>
       </div>
@@ -447,7 +469,7 @@
         
         <div class="form-group">
           <label for="inquiryDetails"><i class="fas fa-comment-alt"></i> आपकी पूछताछ</label>
-          <textarea id="inquiryDetails" rows="4" required></textarea>
+          <textarea id="inquiryDetails" rows="3" required></textarea>
         </div>
         
         <div class="form-group">
@@ -467,7 +489,7 @@
       </form>
       
       <div id="inquiryConfirmation" class="confirmation">
-        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--inquiry-color);"></i>
+        <i class="fas fa-check-circle" style="color: var(--inquiry-color);"></i>
         <h3>आपकी पूछताछ प्राप्त हुई!</h3>
         <p>हमारा विशेषज्ञ आपके प्रश्न का उत्तर 24 घंटे के भीतर देगा।</p>
       </div>
@@ -488,23 +510,24 @@
       document.getElementById(tabName + 'Form').classList.add('active');
     }
     
-    // इमेज प्रिव्यू फंक्शन
+    // इमेज प्रिव्यू फंक्शन (अब 5 तक इमेज अपलोड होगी)
     function setupImagePreview(inputId, previewId) {
       const input = document.getElementById(inputId);
       const preview = document.getElementById(previewId);
       
       input.addEventListener('change', function() {
         preview.innerHTML = '';
-        if (this.files) {
+        if (this.files && this.files.length > 0) {
           const files = Array.from(this.files).slice(0, 5); // अधिकतम 5 इमेज
           
-          files.forEach(file => {
+          files.forEach((file, index) => {
             if (file.type.match('image.*')) {
               const reader = new FileReader();
               
               reader.onload = function(e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
+                img.title = `Image ${index + 1}`;
                 preview.appendChild(img);
               }
               
@@ -519,141 +542,6 @@
     setupImagePreview('buyPhotos', 'buyPreview');
     setupImagePreview('sellPhotos', 'sellPreview');
     setupImagePreview('inquiryFiles', 'inquiryPreview');
-    
-    // एरिया सिलेक्शन
-    document.querySelectorAll('.area-option').forEach(option => {
-      option.addEventListener('click', function() {
-        if (!this.classList.contains('custom-area')) {
-          document.querySelectorAll('.area-option').forEach(opt => {
-            opt.classList.remove('selected');
-          });
-          this.classList.add('selected');
-          document.getElementById('buyArea').value = this.dataset.value;
-        }
-      });
-    });
-    
-    // बजट सिलेक्शन
-    document.querySelectorAll('.budget-option').forEach(option => {
-      option.addEventListener('click', function() {
-        if (!this.classList.contains('custom-budget')) {
-          document.querySelectorAll('.budget-option').forEach(opt => {
-            opt.classList.remove('selected');
-          });
-          this.classList.add('selected');
-          document.getElementById('buyBudget').value = this.dataset.value;
-        }
-      });
-    });
-    
-    // कस्टम एरिया और बजट हेंडलिंग
-    document.getElementById('buyCustomArea').addEventListener('input', function() {
-      document.getElementById('buyArea').value = this.value;
-    });
-    
-    document.getElementById('buyCustomBudget').addEventListener('input', function() {
-      document.getElementById('buyBudget').value = this.value;
-    });
-    
-    // Google Maps integration
-    let map;
-    let marker;
-    
-    function initMap(type) {
-      const mapContainer = document.getElementById(`${type}Map`);
-      const locationInput = document.getElementById(`${type}Location`);
-      
-      // Show map container
-      mapContainer.style.display = 'block';
-      
-      // Initialize map
-      map = new google.maps.Map(mapContainer, {
-        center: { lat: 28.6139, lng: 77.2090 }, // Default to Delhi
-        zoom: 12
-      });
-      
-      // Add marker
-      marker = new google.maps.Marker({
-        map: map,
-        draggable: true
-      });
-      
-      // Search box integration
-      const searchBox = new google.maps.places.SearchBox(locationInput);
-      
-      // Bias the SearchBox results towards current map's viewport
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
-      
-      // Listen for the event fired when the user selects a prediction
-      searchBox.addListener('places_changed', function() {
-        const places = searchBox.getPlaces();
-        
-        if (places.length == 0) {
-          return;
-        }
-        
-        // For each place, get the icon, name and location
-        const bounds = new google.maps.LatLngBounds();
-        
-        places.forEach(function(place) {
-          if (!place.geometry) {
-            console.log("Returned place contains no geometry");
-            return;
-          }
-          
-          // Set position
-          marker.setPosition(place.geometry.location);
-          
-          if (place.geometry.viewport) {
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-          
-          // Update hidden fields
-          document.getElementById(`${type}Lat`).value = place.geometry.location.lat();
-          document.getElementById(`${type}Lng`).value = place.geometry.location.lng();
-        });
-        
-        map.fitBounds(bounds);
-      });
-      
-      // Marker dragend event
-      marker.addListener('dragend', function() {
-        const position = marker.getPosition();
-        document.getElementById(`${type}Lat`).value = position.lat();
-        document.getElementById(`${type}Lng`).value = position.lng();
-        
-        // Reverse geocode to get address
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ location: position }, function(results, status) {
-          if (status === 'OK') {
-            if (results[0]) {
-              locationInput.value = results[0].formatted_address;
-            }
-          }
-        });
-      });
-      
-      // Click on map to add marker
-      map.addListener('click', function(e) {
-        marker.setPosition(e.latLng);
-        document.getElementById(`${type}Lat`).value = e.latLng.lat();
-        document.getElementById(`${type}Lng`).value = e.latLng.lng();
-        
-        // Reverse geocode
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ location: e.latLng }, function(results, status) {
-          if (status === 'OK') {
-            if (results[0]) {
-              locationInput.value = results[0].formatted_address;
-            }
-          }
-        });
-      });
-    }
     
     // फॉर्म सबमिशन
     const TELEGRAM_TOKEN = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
@@ -672,34 +560,19 @@
         data[key] = value;
       });
       
-      // For buy form, get area and budget from hidden fields
-      if (formType === 'buy') {
-        data['area'] = document.getElementById('buyArea').value;
-        data['budget'] = document.getElementById('buyBudget').value;
-      }
-      
       // टेलीग्राम मैसेज तैयार करें
       let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
       
       for (const [key, value] of Object.entries(data)) {
-        if(!['Photos', 'Files', 'Lat', 'Lng'].includes(key) && value) {
-          const label = form.querySelector(`[for="${key}"]`)?.textContent.trim() || 
-                       (key === 'area' ? 'इच्छित क्षेत्र' : 
-                        key === 'budget' ? 'बजट रेंज' : key);
+        if(!['Photos', 'Files'].includes(key) && value) {
+          const label = form.querySelector(`[for="${key}"]`).textContent.trim();
           message += `🔹 ${label}: ${value}\n`;
         }
       }
       
-      // लोकेशन जोड़ें (अगर उपलब्ध हो)
-      const lat = document.getElementById(`${formType}Lat`).value;
-      const lng = document.getElementById(`${formType}Lng`).value;
-      if(lat && lng) {
-        message += `\n📍 लोकेशन: https://www.google.com/maps?q=${lat},${lng}`;
-      }
-      
       try {
         // 1. टेलीग्राम पर टेक्स्ट मैसेज भेजें
-        await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
           method: "POST",
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -709,7 +582,7 @@
           })
         });
         
-        // 2. टेलीग्राम पर इमेज भेजें
+        // 2. टेलीग्राम पर इमेज भेजें (यदि कोई हो)
         const filesInput = document.getElementById(`${formType}${formType === 'inquiry' ? 'Files' : 'Photos'}`);
         if(filesInput.files.length > 0) {
           const files = Array.from(filesInput.files).slice(0, 5); // अधिकतम 5 फाइल
@@ -740,11 +613,6 @@
           form.style.display = 'block';
           confirmation.style.display = 'none';
           document.getElementById(`${formType}Preview`).innerHTML = '';
-          document.querySelectorAll('.area-option, .budget-option').forEach(el => {
-            el.classList.remove('selected');
-          });
-          document.getElementById('buyArea').value = '';
-          document.getElementById('buyBudget').value = '';
         }, 5000);
         
       } catch (error) {
@@ -769,11 +637,5 @@
       submitForm('landInquiryForm');
     });
   </script>
-  
-  <!-- Load Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places&callback=initMap"
-    async defer>
-    
- </script>
 </body>
-</html>
+ </html>
