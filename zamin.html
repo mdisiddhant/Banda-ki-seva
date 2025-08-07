@@ -3,445 +3,593 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium ज़मीन सेवाएँ</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
+  <title>ज़मीन खरीदें/बेचें - प्रीमियम सेवा</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <!-- Custom CSS -->
   <style>
-    @keyframes gradientFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    :root {
+      --buy-color: #4CAF50;
+      --sell-color: #FF5722;
+      --inquiry-color: #2196F3;
+      --text-glow: 0 0 10px currentColor;
     }
     
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
-      100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-    }
-    
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-    
-    .gradient-bg {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradientFlow 15s ease infinite;
-    }
-    
-    .glow-border {
-      position: relative;
-      z-index: 1;
-    }
-    
-    .glow-border::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      z-index: -1;
-      background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-      background-size: 400%;
-      border-radius: inherit;
-      opacity: 0;
-      transition: 0.5s;
-      animation: gradientFlow 20s linear infinite;
-    }
-    
-    .glow-border:hover::before {
-      opacity: 1;
-      filter: blur(5px);
-    }
-    
-    .input-glow:focus {
-      animation: pulseGlow 2s infinite;
-    }
-    
-    .floating {
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .card-hover-effect {
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       transition: all 0.3s ease;
-      transform-style: preserve-3d;
     }
     
-    .card-hover-effect:hover {
-      transform: translateY(-5px) rotateX(5deg);
-      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      min-height: 100vh;
+      padding: 20px;
     }
     
-    .emoji-float {
-      animation: float 4s ease-in-out infinite;
-      text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    .header {
+      text-align: center;
+      margin: 20px 0 40px;
+      position: relative;
     }
     
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    .header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(to right, #333, #555);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      display: inline-block;
     }
     
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
     
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(#3b82f6, #8b5cf6);
-      border-radius: 10px;
+    .tab-btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
     }
     
-    /* Custom radio buttons */
-    .custom-radio input:checked ~ .radio-mark {
-      background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-      box-shadow: 0 0 0 2px white, 0 0 0 4px #3b82f6;
+    #buyBtn {
+      background-color: var(--buy-color);
+      color: white;
+    }
+    
+    #sellBtn {
+      background-color: var(--sell-color);
+      color: white;
+    }
+    
+    #inquiryBtn {
+      background-color: var(--inquiry-color);
+      color: white;
+    }
+    
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .form-title {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+    
+    #buyForm .form-title {
+      color: var(--buy-color);
+    }
+    
+    #sellForm .form-title {
+      color: var(--sell-color);
+    }
+    
+    #inquiryForm .form-title {
+      color: var(--inquiry-color);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    
+    button[type="submit"] {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    #buyForm button[type="submit"] {
+      background-color: var(--buy-color);
+      color: white;
+    }
+    
+    #sellForm button[type="submit"] {
+      background-color: var(--sell-color);
+      color: white;
+    }
+    
+    #inquiryForm button[type="submit"] {
+      background-color: var(--inquiry-color);
+      color: white;
+    }
+    
+    .file-input {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .file-input input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      display: block;
+      padding: 12px 15px;
+      background-color: #f0f0f0;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .location-picker {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .location-picker button {
+      padding: 10px 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .preview-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .preview-images img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    
+    .confirmation {
+      text-align: center;
+      padding: 20px;
+      display: none;
     }
   </style>
 </head>
-<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
-  <div class="w-full max-w-2xl">
-    <!-- Header with floating emoji -->
-    <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-white mb-2 emoji-float">🏡</h1>
-      <h2 class="text-3xl font-extrabold text-white animate__animated animate__fadeInDown">
-        Premium <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-500">ज़मीन सेवाएँ</span>
-      </h2>
-      <p class="text-white/80 mt-2 animate__animated animate__fadeIn animate__delay-1s">
-        अपनी ड्रीम प्रॉपर्टी खोजें या बेचें
-      </p>
-    </div>
+<body>
 
-    <!-- Tabs Navigation -->
-    <div class="flex justify-center mb-8 animate__animated animate__fadeIn animate__delay-1s">
-      <div class="inline-flex rounded-full bg-white/10 backdrop-blur-sm p-1">
-        <button onclick="openTab('buy')" id="buyBtn" class="tab-btn active px-6 py-2 rounded-full font-medium text-white transition-all duration-300 hover:bg-white/20 flex items-center gap-2">
-          <i class="fas fa-hand-holding-usd"></i> खरीदें
-        </button>
-        <button onclick="openTab('sell')" id="sellBtn" class="tab-btn px-6 py-2 rounded-full font-medium text-white transition-all duration-300 hover:bg-white/20 flex items-center gap-2">
-          <i class="fas fa-rupee-sign"></i> बेचें
-        </button>
-        <button onclick="openTab('inquiry')" id="inquiryBtn" class="tab-btn px-6 py-2 rounded-full font-medium text-white transition-all duration-300 hover:bg-white/20 flex items-center gap-2">
-          <i class="fas fa-question-circle"></i> पूछताछ
-        </button>
-      </div>
-    </div>
-
-    <!-- Form Container -->
-    <div class="glow-border bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl animate__animated animate__fadeInUp animate__delay-1s">
-      <!-- Buy Form -->
-      <div id="buyForm" class="form-panel active p-8 card-hover-effect">
-        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <i class="fas fa-hand-holding-usd text-yellow-300"></i> 
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-yellow-500">ज़मीन खरीदें</span>
-        </h3>
-        
-        <form id="landBuyForm" class="space-y-5">
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-user text-blue-300"></i> आपका नाम
-            </label>
-            <input type="text" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="अपना पूरा नाम" required>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-phone text-green-300"></i> मोबाइल नंबर
-            </label>
-            <input type="tel" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="10 अंकों का नंबर" pattern="[0-9]{10}" required>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-map-marker-alt text-red-300"></i> पसंदीदा लोकेशन
-            </label>
-            <div class="flex gap-2">
-              <input type="text" class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="शहर/इलाका" required>
-              <button type="button" class="px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-300 flex items-center gap-2">
-                <i class="fas fa-map-pin"></i> मैप
-              </button>
-            </div>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-wallet text-purple-300"></i> बजट रेंज
-            </label>
-            <div class="grid grid-cols-2 gap-4">
-              <select class="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300">
-                <option value="" disabled selected>न्यूनतम</option>
-                <option>10 लाख</option>
-                <option>25 लाख</option>
-                <option>50 लाख</option>
-                <option>1 करोड़</option>
-              </select>
-              <select class="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300">
-                <option value="" disabled selected>अधिकतम</option>
-                <option>25 लाख</option>
-                <option>50 लाख</option>
-                <option>1 करोड़</option>
-                <option>5 करोड़+</option>
-              </select>
-            </div>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-clipboard-list text-amber-300"></i> विशेष आवश्यकताएँ
-            </label>
-            <textarea rows="3" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="कोई विशेष जरूरतें?"></textarea>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-bell text-pink-300"></i> नोटिफिकेशन प्रिफरेंस
-            </label>
-            <div class="flex flex-wrap gap-4">
-              <label class="inline-flex items-center custom-radio">
-                <input type="radio" name="notification" class="hidden" checked>
-                <span class="radio-mark w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center mr-2 transition-all">
-                  <span class="w-3 h-3 rounded-full bg-white opacity-0 transition-all"></span>
-                </span>
-                <span class="text-white">व्हाट्सएप</span>
-              </label>
-              <label class="inline-flex items-center custom-radio">
-                <input type="radio" name="notification" class="hidden">
-                <span class="radio-mark w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center mr-2 transition-all">
-                  <span class="w-3 h-3 rounded-full bg-white opacity-0 transition-all"></span>
-                </span>
-                <span class="text-white">कॉल</span>
-              </label>
-              <label class="inline-flex items-center custom-radio">
-                <input type="radio" name="notification" class="hidden">
-                <span class="radio-mark w-6 h-6 rounded-full border-2 border-white/30 flex items-center justify-center mr-2 transition-all">
-                  <span class="w-3 h-3 rounded-full bg-white opacity-0 transition-all"></span>
-                </span>
-                <span class="text-white">एसएमएस</span>
-              </label>
-            </div>
-          </div>
-          
-          <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-            <i class="fas fa-paper-plane"></i> अनुरोध भेजें
-          </button>
-        </form>
-      </div>
+  <div class="header">
+    <h1><i class="fas fa-landmark"></i> ज़मीन खरीदें/बेचें</h1>
+  </div>
+  
+  <div class="tabs">
+    <button id="buyBtn" class="tab-btn active" onclick="openTab('buy')">
+      <i class="fas fa-hand-holding-usd"></i> खरीदें
+    </button>
+    <button id="sellBtn" class="tab-btn" onclick="openTab('sell')">
+      <i class="fas fa-rupee-sign"></i> बेचें
+    </button>
+    <button id="inquiryBtn" class="tab-btn" onclick="openTab('inquiry')">
+      <i class="fas fa-question-circle"></i> पूछताछ
+    </button>
+  </div>
+  
+  <div class="form-container">
+    <!-- खरीदें फॉर्म -->
+    <div id="buyForm" class="form-panel active">
+      <h2 class="form-title"><i class="fas fa-hand-holding-usd"></i> ज़मीन खरीदें</h2>
       
-      <!-- Sell Form -->
-      <div id="sellForm" class="form-panel hidden p-8 card-hover-effect">
-        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <i class="fas fa-rupee-sign text-green-300"></i> 
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-500">ज़मीन बेचें</span>
-        </h3>
+      <form id="landBuyForm">
+        <div class="form-group">
+          <label for="buyName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="buyName" required>
+        </div>
         
-        <form id="landSellForm" class="space-y-5">
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-user text-blue-300"></i> आपका नाम
+        <div class="form-group">
+          <label for="buyPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="buyPhone" required pattern="[0-9]{10}">
+        </div>
+        
+        <div class="form-group">
+          <label for="buyLocation"><i class="fas fa-map-marker-alt"></i> जगह (स्थान)</label>
+          <div class="location-picker">
+            <input type="text" id="buyLocation" required>
+            <button type="button" onclick="getLocation('buy')"><i class="fas fa-map-pin"></i> लोकेशन चुनें</button>
+          </div>
+          <input type="hidden" id="buyLat">
+          <input type="hidden" id="buyLng">
+        </div>
+        
+        <div class="form-group">
+          <label for="buyBudget"><i class="fas fa-wallet"></i> बजट (लगभग)</label>
+          <input type="text" id="buyBudget" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="buyRequirements"><i class="fas fa-clipboard-list"></i> आपकी आवश्यकताएँ</label>
+          <textarea id="buyRequirements" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-camera"></i> संदर्भ फ़ोटो (अधिकतम 5)</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फ़ोटो अपलोड करें (क्लिक करें)
+              <input type="file" id="buyPhotos" accept="image/*" multiple>
             </label>
-            <input type="text" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="अपना पूरा नाम" required>
           </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-phone text-green-300"></i> मोबाइल नंबर
-            </label>
-            <input type="tel" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="10 अंकों का नंबर" pattern="[0-9]{10}" required>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-map-marker-alt text-red-300"></i> ज़मीन का स्थान
-            </label>
-            <div class="flex gap-2">
-              <input type="text" class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="पूरा पता" required>
-              <button type="button" class="px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all duration-300 flex items-center gap-2">
-                <i class="fas fa-map-pin"></i> मैप
-              </button>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-white/80 mb-2 flex items-center gap-2">
-                <i class="fas fa-ruler-combined text-amber-300"></i> क्षेत्रफल
-              </label>
-              <div class="flex">
-                <input type="number" class="w-full px-4 py-3 rounded-l-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="जैसे 1000">
-                <select class="px-2 bg-white/20 text-white border-t border-b border-r border-white/20 rounded-r-lg focus:outline-none">
-                  <option>वर्ग फुट</option>
-                  <option>एकड़</option>
-                  <option>हेक्टेयर</option>
-                </select>
-              </div>
-            </div>
-            
-            <div>
-              <label class="block text-white/80 mb-2 flex items-center gap-2">
-                <i class="fas fa-tag text-purple-300"></i> अपेक्षित मूल्य
-              </label>
-              <input type="text" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="रुपये में">
-            </div>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-info-circle text-cyan-300"></i> ज़मीन का विवरण
-            </label>
-            <textarea rows="3" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="ज़मीन के बारे में विस्तृत जानकारी"></textarea>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-images text-pink-300"></i> ज़मीन की तस्वीरें
-            </label>
-            <div class="border-2 border-dashed border-white/20 rounded-lg p-4 text-center hover:border-white/40 transition-all duration-300 cursor-pointer">
-              <i class="fas fa-cloud-upload-alt text-3xl text-white/50 mb-2"></i>
-              <p class="text-white/70">क्लिक करके फोटो अपलोड करें</p>
-              <p class="text-xs text-white/50 mt-1">(अधिकतम 5 फोटो)</p>
-            </div>
-          </div>
-          
-          <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-            <i class="fas fa-paper-plane"></i> विवरण भेजें
-          </button>
-        </form>
-      </div>
+          <div class="preview-images" id="buyPreview"></div>
+        </div>
+        
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> जानकारी भेजें
+        </button>
+      </form>
       
-      <!-- Inquiry Form -->
-      <div id="inquiryForm" class="form-panel hidden p-8 card-hover-effect">
-        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <i class="fas fa-question-circle text-blue-300"></i> 
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-blue-500">पूछताछ</span>
-        </h3>
-        
-        <form id="landInquiryForm" class="space-y-5">
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-user text-blue-300"></i> आपका नाम
-            </label>
-            <input type="text" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="अपना पूरा नाम" required>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-phone text-green-300"></i> मोबाइल नंबर
-            </label>
-            <input type="tel" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="10 अंकों का नंबर" pattern="[0-9]{10}" required>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-question text-purple-300"></i> पूछताछ का प्रकार
-            </label>
-            <select class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" required>
-              <option value="" disabled selected>चुनें...</option>
-              <option>कानूनी सलाह</option>
-              <option>मूल्यांकन</option>
-              <option>दस्तावेज़ सत्यापन</option>
-              <option>अन्य</option>
-            </select>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-comment-dots text-amber-300"></i> आपकी पूछताछ
-            </label>
-            <textarea rows="4" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-400 input-glow transition-all duration-300" placeholder="अपना प्रश्न विस्तार से लिखें" required></textarea>
-          </div>
-          
-          <div>
-            <label class="block text-white/80 mb-2 flex items-center gap-2">
-              <i class="fas fa-paperclip text-pink-300"></i> संलग्नक (यदि कोई हो)
-            </label>
-            <div class="border-2 border-dashed border-white/20 rounded-lg p-4 text-center hover:border-white/40 transition-all duration-300 cursor-pointer">
-              <i class="fas fa-file-upload text-3xl text-white/50 mb-2"></i>
-              <p class="text-white/70">क्लिक करके फाइल अपलोड करें</p>
-              <p class="text-xs text-white/50 mt-1">(PDF, JPG, PNG)</p>
-            </div>
-          </div>
-          
-          <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-            <i class="fas fa-paper-plane"></i> पूछताछ भेजें
-          </button>
-        </form>
+      <div id="buyConfirmation" class="confirmation">
+        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--buy-color);"></i>
+        <h3>आपका अनुरोध प्राप्त हुआ!</h3>
+        <p>हमारा विशेषज्ञ टीम आपसे जल्द ही संपर्क करेगा।</p>
       </div>
     </div>
     
-    <!-- Footer -->
-    <div class="text-center mt-8 text-white/60 text-sm animate__animated animate__fadeIn animate__delay-2s">
-      p>© 2023 Premium Property Services. सर्वाधिकार सुरक्षित</p>
-      <div class="flex justify-center gap-4 mt-3">
-        <a href="#" class="hover:text-white transition-all"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" class="hover:text-white transition-all"><i class="fab fa-facebook"></i></a>
-        <a href="#" class="hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+    <!-- बेचें फॉर्म -->
+    <div id="sellForm" class="form-panel">
+      <h2 class="form-title"><i class="fas fa-rupee-sign"></i> ज़मीन बेचें</h2>
+      
+      <form id="landSellForm">
+        <div class="form-group">
+          <label for="sellName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="sellName" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="sellPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="sellPhone" required pattern="[0-9]{10}">
+        </div>
+        
+        <div class="form-group">
+          <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
+          <div class="location-picker">
+            <input type="text" id="sellLocation" required>
+            <button type="button" onclick="getLocation('sell')"><i class="fas fa-map-pin"></i> लोकेशन चुनें</button>
+          </div>
+          <input type="hidden" id="sellLat">
+          <input type="hidden" id="sellLng">
+        </div>
+        
+        <div class="form-group">
+          <label for="sellArea"><i class="fas fa-ruler-combined"></i> क्षेत्रफल (वर्ग फुट/एकड़)</label>
+          <input type="text" id="sellArea" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="sellPrice"><i class="fas fa-tag"></i> अपेक्षित मूल्य</label>
+          <input type="text" id="sellPrice" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="sellDescription"><i class="fas fa-info-circle"></i> ज़मीन का विवरण</label>
+          <textarea id="sellDescription" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-images"></i> ज़मीन की फ़ोटो (अधिकतम 5)</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फ़ोटो अपलोड करें (क्लिक करें)
+              <input type="file" id="sellPhotos" accept="image/*" multiple>
+            </label>
+          </div>
+          <div class="preview-images" id="sellPreview"></div>
+        </div>
+        
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> जानकारी भेजें
+        </button>
+      </form>
+      
+      <div id="sellConfirmation" class="confirmation">
+        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--sell-color);"></i>
+        <h3>आपकी जानकारी प्राप्त हुई!</h3>
+        <p>हमारा टीम आपकी ज़मीन का मूल्यांकन करके जल्द ही संपर्क करेगा।</p>
+      </div>
+    </div>
+    
+    <!-- पूछताछ फॉर्म -->
+    <div id="inquiryForm" class="form-panel">
+      <h2 class="form-title"><i class="fas fa-question-circle"></i> ज़मीन संबंधी पूछताछ</h2>
+      
+      <form id="landInquiryForm">
+        <div class="form-group">
+          <label for="inquiryName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="inquiryName" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="inquiryPhone" required pattern="[0-9]{10}">
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryType"><i class="fas fa-question"></i> पूछताछ का प्रकार</label>
+          <select id="inquiryType" required>
+            <option value="" disabled selected>चुनें...</option>
+            <option value="कानूनी सलाह">कानूनी सलाह</option>
+            <option value="मूल्यांकन">मूल्यांकन</option>
+            <option value="दस्तावेज़ सत्यापन">दस्तावेज़ सत्यापन</option>
+            <option value="अन्य">अन्य</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryDetails"><i class="fas fa-comment-alt"></i> आपकी पूछताछ</label>
+          <textarea id="inquiryDetails" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-paperclip"></i> संलग्नक (अधिकतम 5 फाइल)</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फाइल अपलोड करें (क्लिक करें)
+              <input type="file" id="inquiryFiles" multiple>
+            </label>
+          </div>
+          <div class="preview-images" id="inquiryPreview"></div>
+        </div>
+        
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> पूछताछ भेजें
+        </button>
+      </form>
+      
+      <div id="inquiryConfirmation" class="confirmation">
+        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--inquiry-color);"></i>
+        <h3>आपकी पूछताछ प्राप्त हुई!</h3>
+        <p>हमारा विशेषज्ञ आपके प्रश्न का उत्तर 24 घंटे के भीतर देगा।</p>
       </div>
     </div>
   </div>
 
   <script>
-    // Tab switching function
+    // टैब स्विच करने का फंक्शन
     function openTab(tabName) {
-      // Hide all tab panels
-      document.querySelectorAll('.form-panel').forEach(panel => {
-        panel.classList.add('hidden');
-        panel.classList.remove('active');
-      });
-      
-      // Deactivate all tab buttons
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
       });
+      document.querySelectorAll('.form-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
       
-      // Show the selected tab panel
-      document.getElementById(tabName + 'Form').classList.remove('hidden');
-      document.getElementById(tabName + 'Form').classList.add('active');
-      
-      // Activate the clicked tab button
       document.getElementById(tabName + 'Btn').classList.add('active');
-      
-      // Add animation
-      document.getElementById(tabName + 'Form').classList.add('animate__animated', 'animate__fadeIn');
+      document.getElementById(tabName + 'Form').classList.add('active');
     }
     
-    // Form submission
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Show success effect
-        const submitBtn = this.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> सफलतापूर्वक भेजा गया!';
-        submitBtn.classList.remove('bg-gradient-to-r');
-        submitBtn.classList.add('bg-green-500');
-        
-        // Reset after 3 seconds
-        setTimeout(() => {
-          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ' + 
-            (form.id.includes('Buy') ? 'अनुरोध भेजें' : 
-             form.id.includes('Sell') ? 'विवरण भेजें' : 'पूछताछ भेजें');
-          submitBtn.classList.add('bg-gradient-to-r');
-          submitBtn.classList.remove('bg-green-500');
-          form.reset();
-        }, 3000);
+    // इमेज प्रिव्यू फंक्शन
+    function setupImagePreview(inputId, previewId) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      
+      input.addEventListener('change', function() {
+        preview.innerHTML = '';
+        if (this.files) {
+          const files = Array.from(this.files).slice(0, 5); // अधिकतम 5 इमेज
+          
+          files.forEach(file => {
+            if (file.type.match('image.*')) {
+              const reader = new FileReader();
+              
+              reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                preview.appendChild(img);
+              }
+              
+              reader.readAsDataURL(file);
+            }
+          });
+        }
       });
+    }
+    
+    // सभी फॉर्म के लिए इमेज प्रिव्यू सेटअप
+    setupImagePreview('buyPhotos', 'buyPreview');
+    setupImagePreview('sellPhotos', 'sellPreview');
+    setupImagePreview('inquiryFiles', 'inquiryPreview');
+    
+    // लोकेशन पिकर
+    function getLocation(type) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            
+            document.getElementById(`${type}Lat`).value = lat;
+            document.getElementById(`${type}Lng`).value = lng;
+            
+            // Google Maps API का उपयोग करके एड्रेस प्राप्त करें
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=YOUR_GOOGLE_API_KEY`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.results && data.results[0]) {
+                  document.getElementById(`${type}Location`).value = data.results[0].formatted_address;
+                }
+              });
+            
+            alert(`लोकेशन सेव हो गई: ${lat}, ${lng}`);
+          },
+          (error) => {
+            alert('लोकेशन प्राप्त करने में त्रुटि: ' + error.message);
+          }
+        );
+      } else {
+        alert('आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता');
+      }
+    }
+    
+    // फॉर्म सबमिशन
+    const TELEGRAM_TOKEN = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
+    const TELEGRAM_CHAT_ID = "6798434092";
+    const WHATSAPP_NUMBER = "6351598832";
+    
+    async function submitForm(formId) {
+      const form = document.getElementById(formId);
+      const formType = formId.replace('land', '').replace('Form', '').toLowerCase();
+      const confirmation = document.getElementById(`${formType}Confirmation`);
+      
+      // फॉर्म डेटा तैयार करें
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      
+      // टेलीग्राम मैसेज तैयार करें
+      let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
+      
+      for (const [key, value] of Object.entries(data)) {
+        if(!['Photos', 'Files', 'Lat', 'Lng'].includes(key) && value) {
+          const label = form.querySelector(`[for="${key}"]`).textContent.trim();
+          message += `🔹 ${label}: ${value}\n`;
+        }
+      }
+      
+      // लोकेशन जोड़ें (अगर उपलब्ध हो)
+      const lat = document.getElementById(`${formType}Lat`).value;
+      const lng = document.getElementById(`${formType}Lng`).value;
+      if(lat && lng) {
+        message += `\n📍 लोकेशन: https://www.google.com/maps?q=${lat},${lng}`;
+      }
+      
+      try {
+        // 1. टेलीग्राम पर टेक्स्ट मैसेज भेजें
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
+          })
+        });
+        
+        // 2. टेलीग्राम पर इमेज भेजें
+        const filesInput = document.getElementById(`${formType}${formType === 'inquiry' ? 'Files' : 'Photos'}`);
+        if(filesInput.files.length > 0) {
+          const files = Array.from(filesInput.files).slice(0, 5); // अधिकतम 5 फाइल
+          
+          for (const file of files) {
+            const formData = new FormData();
+            formData.append("chat_id", TELEGRAM_CHAT_ID);
+            formData.append("photo", file);
+            
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
+              method: "POST",
+              body: formData
+            });
+          }
+        }
+        
+        // 3. व्हाट्सएप पर मैसेज भेजें
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        
+        // 4. कन्फर्मेशन दिखाएं
+        form.style.display = 'none';
+        confirmation.style.display = 'block';
+        
+        // 5 सेकंड बाद फॉर्म रीसेट करें
+        setTimeout(() => {
+          form.reset();
+          form.style.display = 'block';
+          confirmation.style.display = 'none';
+          document.getElementById(`${formType}Preview`).innerHTML = '';
+        }, 5000);
+        
+      } catch (error) {
+        alert('कुछ त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।');
+        console.error(error);
+      }
+    }
+    
+    // फॉर्म सबमिशन इवेंट
+    document.getElementById('landBuyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm('landBuyForm');
     });
     
-    // Add floating animation to emojis periodically
-    setInterval(() => {
-      const emojis = ['🏡', '💰', '🏗️', '🌳', '🏢'];
-      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-      document.querySelector('.emoji-float').textContent = randomEmoji;
-    }, 5000);
+    document.getElementById('landSellForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm('landSellForm');
+    });
+    
+    document.getElementById('landInquiryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      submitForm('landInquiryForm');
+    });
   </script>
 </body>
 </html>
