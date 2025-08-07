@@ -2,401 +2,283 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>जमीन खरीदें / बेचें / पूछताछ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>प्रीमियम ज़मीन सेवाएँ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --buy-color: #FFD700; /* Golden */
-      --sell-color: #FF4500; /* OrangeRed */
-      --inquiry-color: #1E90FF; /* DodgerBlue */
-      --secondary-color: #0F0F1A;
-      --dark-color: #E6E6FA;
-      --space-blue: #0a0a2a;
-      --star-color: rgba(255, 255, 255, 0.8);
+      --buy-color: #4CAF50;
+      --sell-color: #FF5722;
+      --inquiry-color: #2196F3;
+      --text-glow: 0 0 10px currentColor;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
     }
     
     body {
-      font-family: 'Orbitron', 'Arial', sans-serif;
-      background: var(--space-blue);
-      color: var(--dark-color);
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
       min-height: 100vh;
-    }
-
-    @font-face {
-      font-family: 'Orbitron';
-      src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-    }
-    
-    /* Space Background with Stars */
-    .space-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-      overflow: hidden;
-    }
-    
-    /* Floating particles (stars) */
-    .particle {
-      position: absolute;
-      background: var(--star-color);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    
-    /* Shooting stars */
-    .shooting-star {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
       padding: 20px;
-      position: relative;
-      z-index: 1;
     }
     
-    header {
-      background: rgba(15, 15, 26, 0.8);
-      color: var(--buy-color);
-      padding: 20px 0;
+    .header {
       text-align: center;
-      margin-bottom: 30px;
-      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      margin: 20px 0 40px;
       position: relative;
-      overflow: hidden;
     }
     
-    header::after {
-      content: '';
+    .header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(to right, #333, #555);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .header h1::after {
+      content: "";
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--buy-color), transparent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(to right, var(--buy-color), var(--sell-color), var(--inquiry-color));
+      border-radius: 2px;
     }
     
-    h1 {
-      margin: 0;
-      font-size: 32px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px var(--buy-color), 0 0 20px var(--buy-color);
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    
-    @keyframes glow {
-      from { text-shadow: 0 0 5px var(--buy-color), 0 0 10px var(--buy-color); }
-      to { text-shadow: 0 0 10px var(--buy-color), 0 0 20px var(--buy-color), 0 0 30px var(--buy-color); }
-    }
-    
-    .form-selector {
+    .tabs {
       display: flex;
       justify-content: center;
       margin-bottom: 30px;
+      flex-wrap: wrap;
       gap: 15px;
-      perspective: 1000px;
     }
     
-    .form-tab {
+    .tab-btn {
       padding: 12px 25px;
-      border-radius: 6px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
-      font-weight: 600;
-      transition: all 0.4s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s, transform 0.2s;
       position: relative;
       overflow: hidden;
-      transform-style: preserve-3d;
-      border: 1px solid transparent;
     }
     
-    .form-tab::before {
-      content: '';
+    .tab-btn::before {
+      content: "";
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
       transition: 0.5s;
     }
     
-    .form-tab:hover::before {
+    .tab-btn:hover::before {
       left: 100%;
     }
     
-    .form-tab.active {
-      transform: translateY(-5px) rotateX(10deg);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    .tab-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
     
-    .buy-tab {
-      background: rgba(255, 215, 0, 0.15);
-      color: var(--buy-color);
-      border-color: var(--buy-color);
+    .tab-btn.active {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
     
-    .sell-tab {
-      background: rgba(255, 69, 0, 0.15);
-      color: var(--sell-color);
-      border-color: var(--sell-color);
+    #buyBtn {
+      background-color: var(--buy-color);
+      color: white;
     }
     
-    .inquiry-tab {
-      background: rgba(30, 144, 255, 0.15);
-      color: var(--inquiry-color);
-      border-color: var(--inquiry-color);
+    #sellBtn {
+      background-color: var(--sell-color);
+      color: white;
+    }
+    
+    #inquiryBtn {
+      background-color: var(--inquiry-color);
+      color: white;
     }
     
     .form-container {
-      display: none;
-      animation: fadeIn 0.8s ease;
-      perspective: 1000px;
-    }
-    
-    .form-container.active {
-      display: block;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px) rotateX(-15deg); }
-      to { opacity: 1; transform: translateY(0) rotateX(0); }
-    }
-    
-    /* Form Styling */
-    form {
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       max-width: 600px;
       margin: 0 auto;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transform-style: preserve-3d;
-      transition: transform 0.5s;
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       position: relative;
       overflow: hidden;
-      background: rgba(15, 15, 26, 0.6);
     }
     
-    form:hover {
-      transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-    }
-    
-    form::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, 
-        var(--buy-color), 
-        var(--sell-color), 
-        var(--inquiry-color), 
-        var(--buy-color));
-      background-size: 400%;
-      z-index: -1;
-      border-radius: 16px;
-      opacity: 0;
-      transition: 0.5s;
-      animation: animate 20s linear infinite;
-    }
-    
-    form:hover::before {
-      opacity: 0.2;
-      filter: blur(10px);
-    }
-    
-    @keyframes animate {
-      0% { background-position: 0 0; }
-      50% { background-position: 300% 0; }
-      100% { background-position: 0 0; }
-    }
-    
-    .form-title {
-      text-align: center;
-      padding-bottom: 15px;
-      margin-top: 0;
-      font-size: 24px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      position: relative;
-      text-shadow: 0 0 5px currentColor;
-    }
-    
-    .form-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 25%;
-      width: 50%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, currentColor, transparent);
-    }
-    
-    .buy-form .form-title {
-      color: var(--buy-color);
-      animation: textGlow 3s ease infinite;
-    }
-    
-    .sell-form .form-title {
-      color: var(--sell-color);
-      animation: textGlow 3s ease infinite;
-    }
-    
-    .inquiry-form .form-title {
-      color: var(--inquiry-color);
-      animation: textGlow 3s ease infinite;
-    }
-    
-    @keyframes textGlow {
-      0%, 100% { text-shadow: 0 0 5px currentColor; }
-      50% { text-shadow: 0 0 15px currentColor; }
-    }
-    
-    .form-group {
-      margin-bottom: 25px;
-      position: relative;
-    }
-    
-    .form-group::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--buy-color), var(--inquiry-color));
-      transition: width 0.5s ease;
-    }
-    
-    .form-group:hover::after {
-      width: 100%;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: var(--dark-color);
-      transition: all 0.3s;
-    }
-    
-    .form-group:hover label {
-      color: var(--buy-color);
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-    }
-    
-    input, textarea, select {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      font-size: 16px;
-      transition: all 0.4s;
-      background: rgba(0, 0, 0, 0.3);
-      color: var(--dark-color);
-      font-family: 'Arial', sans-serif;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-    }
-    
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--buy-color);
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2);
-      background: rgba(0, 0, 0, 0.5);
-    }
-    
-    /* Typing animation for textarea */
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-      position: relative;
-    }
-    
-    textarea:focus {
-      background: linear-gradient(to bottom, 
-        rgba(0, 0, 0, 0.5) 0%, 
-        rgba(0, 0, 0, 0.5) calc(100% - 2px), 
-        var(--buy-color) calc(100% - 2px), 
-        var(--buy-color) 100%);
-      background-size: 100% 100%;
-      animation: typingEffect 1s steps(1) infinite;
-    }
-    
-    @keyframes typingEffect {
-      0% { background-size: 100% 100%; }
-      50% { background-size: 100% 102%; }
-    }
-    
-    button {
-      color: #000;
-      padding: 14px 25px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 700;
-      transition: all 0.4s;
-      display: block;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      z-index: 1;
-    }
-    
-    button::before {
-      content: '';
+    .form-container::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, 
-        var(--buy-color), 
-        #ffcc00, 
-        var(--buy-color));
-      background-size: 200% 200%;
-      z-index: -1;
-      transition: 0.5s;
-      animation: gradientShift 3s ease infinite;
+      height: 8px;
+      background: linear-gradient(to right, var(--buy-color), var(--sell-color), var(--inquiry-color));
     }
     
-    button:hover {
+    .form-panel {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .form-panel.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-title {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      color: #333;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .form-title i {
+      margin-right: 10px;
+    }
+    
+    #buyForm .form-title {
+      color: var(--buy-color);
+      text-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    }
+    
+    #sellForm .form-title {
+      color: var(--sell-color);
+      text-shadow: 0 0 8px rgba(255, 87, 34, 0.3);
+    }
+    
+    #inquiryForm .form-title {
+      color: var(--inquiry-color);
+      text-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+      font-size: 15px;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+      background-color: #f9f9f9;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #aaa;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+    }
+    
+    input:focus, textarea:focus {
+      animation: inputGlow 2s infinite alternate;
+    }
+    
+    @keyframes inputGlow {
+      from { box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+      to { box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+    }
+    
+    .user-text {
+      color: #333;
+      font-weight: bold;
+      text-shadow: var(--text-glow);
+      animation: textPulse 2s infinite alternate;
+    }
+    
+    @keyframes textPulse {
+      from { text-shadow: 0 0 5px currentColor; }
+      to { text-shadow: 0 0 15px currentColor; }
+    }
+    
+    button[type="submit"] {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #buyForm button[type="submit"] {
+      background-color: var(--buy-color);
+      color: white;
+    }
+    
+    #sellForm button[type="submit"] {
+      background-color: var(--sell-color);
+      color: white;
+    }
+    
+    #inquiryForm button[type="submit"] {
+      background-color: var(--inquiry-color);
+      color: white;
+    }
+    
+    button[type="submit"]:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
     
-    button:active {
-      transform: translateY(0);
+    button[type="submit"]:active {
+      transform: translateY(1px);
     }
     
-    button::after {
-      content: '';
+    button[type="submit"]::after {
+      content: "";
       position: absolute;
       top: 0;
       left: -100%;
@@ -406,390 +288,384 @@
       transition: 0.5s;
     }
     
-    button:hover::after {
+    button[type="submit"]:hover::after {
       left: 100%;
     }
     
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .file-input {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
     }
     
-    .required-field::after {
-      content: " *";
-      color: var(--sell-color);
-    }
-    
-    /* Cursor Follower */
-    .cursor-follower {
-      position: fixed;
-      width: 30px;
-      height: 30px;
-      border: 2px solid var(--buy-color);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: screen;
-      z-index: 9999;
-      transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
-      box-shadow: 0 0 15px var(--buy-color);
-    }
-    
-    .cursor-follower.active {
-      width: 60px;
-      height: 60px;
-      background: rgba(255, 215, 0, 0.2);
-    }
-    
-    /* Ripple Effect */
-    .ripple {
+    .file-input input[type="file"] {
       position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 215, 0, 0.6);
-      transform: scale(0);
-      pointer-events: none;
-      animation: ripple 0.6s linear;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
     }
     
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
+    .file-input-label {
+      display: block;
+      padding: 12px 15px;
+      background-color: #f0f0f0;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
     }
     
-    /* Responsive Design */
+    .file-input-label:hover {
+      background-color: #e0e0e0;
+      border-color: #aaa;
+    }
+    
+    .file-input-label i {
+      margin-right: 8px;
+    }
+    
+    .confirmation {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 10px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .confirmation i {
+      font-size: 50px;
+      color: var(--buy-color);
+      margin-bottom: 15px;
+    }
+    
+    .confirmation h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: var(--buy-color);
+    }
+    
+    .confirmation p {
+      color: #555;
+      line-height: 1.6;
+    }
+    
     @media (max-width: 768px) {
-      .form-selector {
-        flex-direction: column;
-        align-items: center;
+      .header h1 {
+        font-size: 2rem;
       }
       
-      .form-tab {
-        width: 100%;
-        max-width: 300px;
-        text-align: center;
+      .tab-btn {
+        padding: 10px 20px;
+        font-size: 16px;
       }
       
-      h1 {
-        font-size: 24px;
+      .form-container {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Space Background -->
-  <div class="space-bg" id="spaceBg"></div>
+  <div class="header">
+    <h1><i class="fas fa-landmark"></i> प्रीमियम ज़मीन सेवाएँ</h1>
+  </div>
   
-  <!-- Floating Particles -->
-  <div id="particles"></div>
+  <div class="tabs">
+    <button id="buyBtn" class="tab-btn active" onclick="openTab('buy')">
+      <i class="fas fa-hand-holding-usd"></i> खरीदें
+    </button>
+    <button id="sellBtn" class="tab-btn" onclick="openTab('sell')">
+      <i class="fas fa-rupee-sign"></i> बेचें
+    </button>
+    <button id="inquiryBtn" class="tab-btn" onclick="openTab('inquiry')">
+      <i class="fas fa-question-circle"></i> पूछताछ
+    </button>
+  </div>
   
-  <!-- Cursor Follower -->
-  <div class="cursor-follower" id="cursorFollower"></div>
-
-  <header>
-    <div class="container">
-      <h1>जमीन खरीदें / बेचें / पूछताछ</h1>
-    </div>
-  </header>
-
-  <div class="container">
-    <div class="form-selector">
-      <div class="form-tab buy-tab active" onclick="showForm('buy')">जमीन खरीदें</div>
-      <div class="form-tab sell-tab" onclick="showForm('sell')">जमीन बेचें</div>
-      <div class="form-tab inquiry-tab" onclick="showForm('inquiry')">पूछताछ करें</div>
-    </div>
-
-    <!-- Buy Land Form -->
-    <div id="buy-form" class="form-container buy-form active">
-      <form onsubmit="sendToWhatsApp('buy'); return false;">
-        <h3 class="form-title">जमीन खरीदने के लिए फॉर्म</h3>
-        
+  <div class="form-container">
+    <!-- खरीदें फॉर्म -->
+    <div id="buyForm" class="form-panel active">
+      <h2 class="form-title"><i class="fas fa-hand-holding-usd"></i> ज़मीन खरीदें</h2>
+      
+      <form id="landBuyForm">
         <div class="form-group">
-          <label for="buy-name" class="required-field">आपका नाम</label>
-          <input type="text" id="buy-name" required>
+          <label for="buyName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="buyName" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="buy-mobile" class="required-field">मोबाइल नंबर</label>
-          <input type="tel" id="buy-mobile" required>
+          <label for="buyPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="buyPhone" required pattern="[0-9]{10}" class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="buy-location" class="required-field">आप कहाँ जमीन खरीदना चाहते हैं?</label>
-          <input type="text" id="buy-location" required>
+          <label for="buyLocation"><i class="fas fa-map-marker-alt"></i> जगह (स्थान)</label>
+          <input type="text" id="buyLocation" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="buy-area" class="required-field">जमीन का क्षेत्रफल (वर्ग फुट/एकड़)</label>
-          <input type="text" id="buy-area" required>
+          <label for="buyBudget"><i class="fas fa-wallet"></i> बजट (लगभग)</label>
+          <input type="text" id="buyBudget" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="buy-budget" class="required-field">आपका बजट</label>
-          <input type="text" id="buy-budget" required>
+          <label for="buyRequirements"><i class="fas fa-clipboard-list"></i> आपकी आवश्यकताएँ</label>
+          <textarea id="buyRequirements" rows="4" required class="user-input"></textarea>
         </div>
         
         <div class="form-group">
-          <label for="buy-purpose">जमीन का उद्देश्य (आवासीय/वाणिज्यिक/कृषि)</label>
-          <input type="text" id="buy-purpose">
+          <label><i class="fas fa-camera"></i> संदर्भ फ़ोटो (यदि कोई हो)</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फ़ोटो अपलोड करें
+              <input type="file" id="buyPhotos" accept="image/*" multiple>
+            </label>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="buy-details">अतिरिक्त जानकारी</label>
-          <textarea id="buy-details" rows="4"></textarea>
-        </div>
-        
-        <button type="submit">जमीन खरीदने के लिए संपर्क करें</button>
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> जानकारी भेजें
+        </button>
       </form>
+      
+      <div id="buyConfirmation" class="confirmation">
+        <i class="fas fa-check-circle"></i>
+        <h3>आपका अनुरोध प्राप्त हुआ!</h3>
+        <p>हमारा विशेषज्ञ टीम आपसे जल्द ही संपर्क करेगा। कृपया अपना फोन उपलब्ध रखें।</p>
+      </div>
     </div>
-
-    <!-- Sell Land Form -->
-    <div id="sell-form" class="form-container sell-form">
-      <form onsubmit="sendToWhatsApp('sell'); return false;">
-        <h3 class="form-title">जमीन बेचने के लिए फॉर्म</h3>
-        
+    
+    <!-- बेचें फॉर्म -->
+    <div id="sellForm" class="form-panel">
+      <h2 class="form-title"><i class="fas fa-rupee-sign"></i> ज़मीन बेचें</h2>
+      
+      <form id="landSellForm">
         <div class="form-group">
-          <label for="sell-name" class="required-field">आपका नाम</label>
-          <input type="text" id="sell-name" required>
+          <label for="sellName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="sellName" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="sell-mobile" class="required-field">मोबाइल नंबर</label>
-          <input type="tel" id="sell-mobile" required>
+          <label for="sellPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="sellPhone" required pattern="[0-9]{10}" class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="sell-location" class="required-field">जमीन का स्थान</label>
-          <input type="text" id="sell-location" required>
+          <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
+          <input type="text" id="sellLocation" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="sell-area" class="required-field">जमीन का क्षेत्रफल (वर्ग फुट/एकड़)</label>
-          <input type="text" id="sell-area" required>
+          <label for="sellArea"><i class="fas fa-ruler-combined"></i> क्षेत्रफल (वर्ग फुट/एकड़)</label>
+          <input type="text" id="sellArea" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="sell-price" class="required-field">अनुमानित मूल्य</label>
-          <input type="text" id="sell-price" required>
+          <label for="sellPrice"><i class="fas fa-tag"></i> अपेक्षित मूल्य</label>
+          <input type="text" id="sellPrice" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="sell-type">जमीन का प्रकार (आवासीय/वाणिज्यिक/कृषि)</label>
-          <input type="text" id="sell-type">
+          <label for="sellDescription"><i class="fas fa-info-circle"></i> ज़मीन का विवरण</label>
+          <textarea id="sellDescription" rows="4" required class="user-input"></textarea>
         </div>
         
         <div class="form-group">
-          <label for="sell-details">अतिरिक्त जानकारी (कानूनी दस्तावेज आदि)</label>
-          <textarea id="sell-details" rows="4"></textarea>
+          <label><i class="fas fa-images"></i> ज़मीन की फ़ोटो</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फ़ोटो अपलोड करें
+              <input type="file" id="sellPhotos" accept="image/*" multiple>
+            </label>
+          </div>
         </div>
         
-        <button type="submit">जमीन बेचने के लिए संपर्क करें</button>
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> जानकारी भेजें
+        </button>
       </form>
+      
+      <div id="sellConfirmation" class="confirmation">
+        <i class="fas fa-check-circle"></i>
+        <h3>आपकी जानकारी प्राप्त हुई!</h3>
+        <p>हमारा टीम आपकी ज़मीन का मूल्यांकन करके जल्द ही संपर्क करेगा।</p>
+      </div>
     </div>
-
-    <!-- Inquiry Form -->
-    <div id="inquiry-form" class="form-container inquiry-form">
-      <form onsubmit="sendToWhatsApp('inquiry'); return false;">
-        <h3 class="form-title">पूछताछ फॉर्म</h3>
-        
+    
+    <!-- पूछताछ फॉर्म -->
+    <div id="inquiryForm" class="form-panel">
+      <h2 class="form-title"><i class="fas fa-question-circle"></i> ज़मीन संबंधी पूछताछ</h2>
+      
+      <form id="landInquiryForm">
         <div class="form-group">
-          <label for="inquiry-name" class="required-field">आपका नाम</label>
-          <input type="text" id="inquiry-name" required>
+          <label for="inquiryName"><i class="fas fa-user"></i> आपका नाम</label>
+          <input type="text" id="inquiryName" required class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="inquiry-mobile" class="required-field">मोबाइल नंबर</label>
-          <input type="tel" id="inquiry-mobile" required>
+          <label for="inquiryPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
+          <input type="tel" id="inquiryPhone" required pattern="[0-9]{10}" class="user-input">
         </div>
         
         <div class="form-group">
-          <label for="inquiry-subject">विषय</label>
-          <input type="text" id="inquiry-subject">
+          <label for="inquiryType"><i class="fas fa-question"></i> पूछताछ का प्रकार</label>
+          <select id="inquiryType" required class="user-input">
+            <option value="" disabled selected>चुनें...</option>
+            <option value="कानूनी सलाह">कानूनी सलाह</option>
+            <option value="मूल्यांकन">मूल्यांकन</option>
+            <option value="दस्तावेज़ सत्यापन">दस्तावेज़ सत्यापन</option>
+            <option value="अन्य">अन्य</option>
+          </select>
         </div>
         
         <div class="form-group">
-          <label for="inquiry-message" class="required-field">आपका संदेश</label>
-          <textarea id="inquiry-message" rows="4" required></textarea>
+          <label for="inquiryDetails"><i class="fas fa-comment-alt"></i> आपकी पूछताछ</label>
+          <textarea id="inquiryDetails" rows="4" required class="user-input"></textarea>
         </div>
         
-        <button type="submit">पूछताछ भेजें</button>
+        <div class="form-group">
+          <label><i class="fas fa-paperclip"></i> संलग्नक (यदि कोई हो)</label>
+          <div class="file-input">
+            <label class="file-input-label">
+              <i class="fas fa-cloud-upload-alt"></i> फाइल अपलोड करें
+              <input type="file" id="inquiryFiles">
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> पूछताछ भेजें
+        </button>
       </form>
+      
+      <div id="inquiryConfirmation" class="confirmation">
+        <i class="fas fa-check-circle"></i>
+        <h3>आपकी पूछताछ प्राप्त हुई!</h3>
+        <p>हमारा विशेषज्ञ आपके प्रश्न का उत्तर 24 घंटे के भीतर देगा।</p>
+      </div>
     </div>
   </div>
 
   <script>
-    // Show selected form
-    function showForm(formType) {
-      // Hide all forms
-      document.querySelectorAll('.form-container').forEach(form => {
-        form.classList.remove('active');
+    // टैब स्विच करने का फंक्शन
+    function openTab(tabName) {
+      // सभी टैब बटन और पैनल को निष्क्रिय करें
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelectorAll('.form-panel').forEach(panel => {
+        panel.classList.remove('active');
       });
       
-      // Deactivate all tabs
-      document.querySelectorAll('.form-tab').forEach(tab => {
-        tab.classList.remove('active');
+      // चयनित टैब को सक्रिय करें
+      document.getElementById(tabName + 'Btn').classList.add('active');
+      document.getElementById(tabName + 'Form').classList.add('active');
+    }
+    
+    // यूजर इनपुट पर ग्लो इफेक्ट
+    document.querySelectorAll('.user-input').forEach(input => {
+      input.addEventListener('input', function() {
+        if(this.value.trim() !== '') {
+          this.classList.add('user-text');
+          
+          // इनपुट के आधार पर अलग-अलग ग्लो कलर
+          if(this.id.includes('buy')) {
+            this.style.color = 'var(--buy-color)';
+          } else if(this.id.includes('sell')) {
+            this.style.color = 'var(--sell-color)';
+          } else if(this.id.includes('inquiry')) {
+            this.style.color = 'var(--inquiry-color)';
+          }
+        } else {
+          this.classList.remove('user-text');
+          this.style.color = '';
+        }
+      });
+    });
+    
+    // फॉर्म सबमिशन
+    const TOKEN = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
+    const CHAT_ID = "6798434092";
+    
+    // खरीदें फॉर्म
+    document.getElementById('landBuyForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await submitForm('buy');
+    });
+    
+    // बेचें फॉर्म
+    document.getElementById('landSellForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await submitForm('sell');
+    });
+    
+    // पूछताछ फॉर्म
+    document.getElementById('landInquiryForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      await submitForm('inquiry');
+    });
+    
+    async function submitForm(formType) {
+      const form = document.getElementById(`land${formType.charAt(0).toUpperCase() + formType.slice(1)}Form`);
+      const confirmation = document.getElementById(`${formType}Confirmation`);
+      
+      // फॉर्म डेटा तैयार करें
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
       });
       
-      // Show selected form
-      document.getElementById(`${formType}-form`).classList.add('active');
+      // टेलीग्राम मैसेज तैयार करें
+      let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
       
-      // Activate selected tab
-      event.currentTarget.classList.add('active');
-    }
-    
-    // Send to WhatsApp
-    function sendToWhatsApp(formType) {
-      let msg = '';
-      const phoneNumber = '916351598832';
-      
-      if (formType === 'buy') {
-        const name = document.getElementById("buy-name").value;
-        const mobile = document.getElementById("buy-mobile").value;
-        const location = document.getElementById("buy-location").value;
-        const area = document.getElementById("buy-area").value;
-        const budget = document.getElementById("buy-budget").value;
-        const purpose = document.getElementById("buy-purpose").value;
-        const details = document.getElementById("buy-details").value;
-        
-        msg = `जमीन खरीदने के लिए संपर्क:\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📍 स्थान: ${location}\n📏 क्षेत्रफल: ${area}\n💰 बजट: ${budget}`;
-        
-        if (purpose) msg += `\n🎯 उद्देश्य: ${purpose}`;
-        if (details) msg += `\n📝 जानकारी: ${details}`;
-        
-      } else if (formType === 'sell') {
-        const name = document.getElementById("sell-name").value;
-        const mobile = document.getElementById("sell-mobile").value;
-        const location = document.getElementById("sell-location").value;
-        const area = document.getElementById("sell-area").value;
-        const price = document.getElementById("sell-price").value;
-        const type = document.getElementById("sell-type").value;
-        const details = document.getElementById("sell-details").value;
-        
-        msg = `जमीन बेचने के लिए संपर्क:\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}\n📍 स्थान: ${location}\n📏 क्षेत्रफल: ${area}\n💰 मूल्य: ${price}`;
-        
-        if (type) msg += `\n🏠 प्रकार: ${type}`;
-        if (details) msg += `\n📝 जानकारी: ${details}`;
-        
-      } else if (formType === 'inquiry') {
-        const name = document.getElementById("inquiry-name").value;
-        const mobile = document.getElementById("inquiry-mobile").value;
-        const subject = document.getElementById("inquiry-subject").value;
-        const message = document.getElementById("inquiry-message").value;
-        
-        msg = `पूछताछ:\n\n👤 नाम: ${name}\n📞 मोबाइल: ${mobile}`;
-        
-        if (subject) msg += `\n📌 विषय: ${subject}`;
-        msg += `\n📝 संदेश: ${message}`;
-      }
-      
-      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappURL, "_blank");
-    }
-
-    // Create floating particles (stars)
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 100;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Random properties
-        const size = Math.random() * 3 + 1;
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-        const opacity = Math.random() * 0.8 + 0.2;
-        const duration = Math.random() * 20 + 10;
-        const delay = Math.random() * 20;
-        
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}%`;
-        particle.style.top = `${posY}%`;
-        particle.style.opacity = opacity;
-        particle.style.animation = `twinkle ${duration}s ease-in-out ${delay}s infinite`;
-        
-        particlesContainer.appendChild(particle);
-      }
-      
-      // Add shooting stars occasionally
-      setInterval(createShootingStar, 3000);
-    }
-    
-    // Create shooting stars
-    function createShootingStar() {
-      const shootingStar = document.createElement('div');
-      shootingStar.classList.add('shooting-star');
-      
-      const startX = Math.random() * 100;
-      const startY = Math.random() * 30;
-      const duration = Math.random() * 2 + 1;
-      
-      shootingStar.style.left = `${startX}%`;
-      shootingStar.style.top = `${startY}%`;
-      shootingStar.style.animation = `shoot ${duration}s linear`;
-      
-      document.body.appendChild(shootingStar);
-      
-      setTimeout(() => {
-        shootingStar.remove();
-      }, duration * 1000);
-    }
-    
-    // Cursor follower effect
-    const cursorFollower = document.getElementById('cursorFollower');
-    
-    document.addEventListener('mousemove', (e) => {
-      cursorFollower.style.left = `${e.clientX}px`;
-      cursorFollower.style.top = `${e.clientY}px`;
-      
-      // Scale up when hovering interactive elements
-      const target = e.target;
-      if (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.tagName === 'A' || target.classList.contains('form-tab')) {
-        cursorFollower.classList.add('active');
-      } else {
-        cursorFollower.classList.remove('active');
-      }
-    });
-    
-    // Ripple effect
-    document.addEventListener('click', (e) => {
-      const ripple = document.createElement('div');
-      ripple.classList.add('ripple');
-      ripple.style.left = `${e.clientX}px`;
-      ripple.style.top = `${e.clientY}px`;
-      document.body.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-    
-    // Initialize effects when page loads
-    window.onload = function() {
-      createParticles();
-      
-      // Add animation keyframes dynamically
-      const style = document.createElement('style');
-      style.innerHTML = `
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 1; }
+      for (const [key, value] of Object.entries(data)) {
+        if(key !== 'Photos' && key !== 'Files' && value) {
+          const label = form.querySelector(`[for="${key}"]`).textContent.trim();
+          message += `🔹 ${label}: ${value}\n`;
         }
+      }
+      
+      // टेलीग्राम पर मैसेज भेजें
+      try {
+        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
+          })
+        });
         
-        @keyframes shoot {
-          0% { transform: translate(0, 0); opacity: 0; }
-          10% { opacity: 1; }
-          100% { transform: translate(${Math.random() * 500 - 250}px, ${Math.random() * 200 + 100}px); opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
-    };
+        // कन्फर्मेशन दिखाएं
+        form.style.display = 'none';
+        confirmation.style.display = 'block';
+        
+        // 5 सेकंड बाद फॉर्म रीसेट करें
+        setTimeout(() => {
+          form.reset();
+          form.style.display = 'block';
+          confirmation.style.display = 'none';
+          document.querySelectorAll('.user-input').forEach(input => {
+            input.classList.remove('user-text');
+            input.style.color = '';
+          });
+        }, 5000);
+        
+      } catch (error) {
+        alert('कुछ त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।');
+        console.error(error);
+      }
+    }
   </script>
-
 </body>
 </html>
