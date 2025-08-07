@@ -216,6 +216,52 @@
       padding: 20px;
       display: none;
     }
+    
+    /* New styles for area and budget selection */
+    .area-selection, .budget-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .area-option, .budget-option {
+      padding: 10px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .area-option:hover, .budget-option:hover {
+      border-color: var(--buy-color);
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+    
+    .area-option.selected, .budget-option.selected {
+      border-color: var(--buy-color);
+      background-color: rgba(76, 175, 80, 0.2);
+      font-weight: bold;
+    }
+    
+    .custom-area, .custom-budget {
+      grid-column: 1 / -1;
+    }
+    
+    /* Map container styles */
+    .map-container {
+      height: 300px;
+      margin-top: 15px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #e0e0e0;
+      display: none;
+    }
+    
+    #sellMap {
+      display: block; /* Always show for sell form */
+    }
   </style>
 </head>
 <body>
@@ -253,18 +299,32 @@
         </div>
         
         <div class="form-group">
-          <label for="buyLocation"><i class="fas fa-map-marker-alt"></i> जगह (स्थान)</label>
-          <div class="location-picker">
-            <input type="text" id="buyLocation" required>
-            <button type="button" onclick="getLocation('buy')"><i class="fas fa-map-pin"></i> लोकेशन चुनें</button>
+          <label><i class="fas fa-map-marker-alt"></i> इच्छित क्षेत्र चुनें</label>
+          <div class="area-selection">
+            <div class="area-option" data-value="north">उत्तर दिल्ली</div>
+            <div class="area-option" data-value="south">दक्षिण दिल्ली</div>
+            <div class="area-option" data-value="east">पूर्वी दिल्ली</div>
+            <div class="area-option" data-value="west">पश्चिमी दिल्ली</div>
+            <div class="area-option" data-value="central">मध्य दिल्ली</div>
+            <div class="area-option custom-area">
+              <input type="text" id="buyCustomArea" placeholder="अन्य क्षेत्र (अपना इच्छित क्षेत्र लिखें)">
+            </div>
           </div>
-          <input type="hidden" id="buyLat">
-          <input type="hidden" id="buyLng">
+          <input type="hidden" id="buyArea">
         </div>
         
         <div class="form-group">
-          <label for="buyBudget"><i class="fas fa-wallet"></i> बजट (लगभग)</label>
-          <input type="text" id="buyBudget" required>
+          <label><i class="fas fa-wallet"></i> आपका बजट रेंज</label>
+          <div class="budget-selection">
+            <div class="budget-option" data-value="10-20">10-20 लाख</div>
+            <div class="budget-option" data-value="20-50">20-50 लाख</div>
+            <div class="budget-option" data-value="50-100">50 लाख - 1 करोड़</div>
+            <div class="budget-option" data-value="100+">1 करोड़ से अधिक</div>
+            <div class="budget-option custom-budget">
+              <input type="text" id="buyCustomBudget" placeholder="कस्टम बजट (लिखें)">
+            </div>
+          </div>
+          <input type="hidden" id="buyBudget">
         </div>
         
         <div class="form-group">
@@ -313,9 +373,10 @@
         <div class="form-group">
           <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
           <div class="location-picker">
-            <input type="text" id="sellLocation" required>
-            <button type="button" onclick="getLocation('sell')"><i class="fas fa-map-pin"></i> लोकेशन चुनें</button>
+            <input type="text" id="sellLocation" required placeholder="पता या लैंडमार्क लिखें">
+            <button type="button" onclick="initMap('sell')"><i class="fas fa-map-pin"></i> मैप पर चुनें</button>
           </div>
+          <div id="sellMap" class="map-container"></div>
           <input type="hidden" id="sellLat">
           <input type="hidden" id="sellLng">
         </div>
@@ -459,35 +520,139 @@
     setupImagePreview('sellPhotos', 'sellPreview');
     setupImagePreview('inquiryFiles', 'inquiryPreview');
     
-    // लोकेशन पिकर
-    function getLocation(type) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            
-            document.getElementById(`${type}Lat`).value = lat;
-            document.getElementById(`${type}Lng`).value = lng;
-            
-            // Google Maps API का उपयोग करके एड्रेस प्राप्त करें
-            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=YOUR_GOOGLE_API_KEY`)
-              .then(response => response.json())
-              .then(data => {
-                if (data.results && data.results[0]) {
-                  document.getElementById(`${type}Location`).value = data.results[0].formatted_address;
-                }
-              });
-            
-            alert(`लोकेशन सेव हो गई: ${lat}, ${lng}`);
-          },
-          (error) => {
-            alert('लोकेशन प्राप्त करने में त्रुटि: ' + error.message);
+    // एरिया सिलेक्शन
+    document.querySelectorAll('.area-option').forEach(option => {
+      option.addEventListener('click', function() {
+        if (!this.classList.contains('custom-area')) {
+          document.querySelectorAll('.area-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          this.classList.add('selected');
+          document.getElementById('buyArea').value = this.dataset.value;
+        }
+      });
+    });
+    
+    // बजट सिलेक्शन
+    document.querySelectorAll('.budget-option').forEach(option => {
+      option.addEventListener('click', function() {
+        if (!this.classList.contains('custom-budget')) {
+          document.querySelectorAll('.budget-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          this.classList.add('selected');
+          document.getElementById('buyBudget').value = this.dataset.value;
+        }
+      });
+    });
+    
+    // कस्टम एरिया और बजट हेंडलिंग
+    document.getElementById('buyCustomArea').addEventListener('input', function() {
+      document.getElementById('buyArea').value = this.value;
+    });
+    
+    document.getElementById('buyCustomBudget').addEventListener('input', function() {
+      document.getElementById('buyBudget').value = this.value;
+    });
+    
+    // Google Maps integration
+    let map;
+    let marker;
+    
+    function initMap(type) {
+      const mapContainer = document.getElementById(`${type}Map`);
+      const locationInput = document.getElementById(`${type}Location`);
+      
+      // Show map container
+      mapContainer.style.display = 'block';
+      
+      // Initialize map
+      map = new google.maps.Map(mapContainer, {
+        center: { lat: 28.6139, lng: 77.2090 }, // Default to Delhi
+        zoom: 12
+      });
+      
+      // Add marker
+      marker = new google.maps.Marker({
+        map: map,
+        draggable: true
+      });
+      
+      // Search box integration
+      const searchBox = new google.maps.places.SearchBox(locationInput);
+      
+      // Bias the SearchBox results towards current map's viewport
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+      
+      // Listen for the event fired when the user selects a prediction
+      searchBox.addListener('places_changed', function() {
+        const places = searchBox.getPlaces();
+        
+        if (places.length == 0) {
+          return;
+        }
+        
+        // For each place, get the icon, name and location
+        const bounds = new google.maps.LatLngBounds();
+        
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
           }
-        );
-      } else {
-        alert('आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता');
-      }
+          
+          // Set position
+          marker.setPosition(place.geometry.location);
+          
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+          
+          // Update hidden fields
+          document.getElementById(`${type}Lat`).value = place.geometry.location.lat();
+          document.getElementById(`${type}Lng`).value = place.geometry.location.lng();
+        });
+        
+        map.fitBounds(bounds);
+      });
+      
+      // Marker dragend event
+      marker.addListener('dragend', function() {
+        const position = marker.getPosition();
+        document.getElementById(`${type}Lat`).value = position.lat();
+        document.getElementById(`${type}Lng`).value = position.lng();
+        
+        // Reverse geocode to get address
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: position }, function(results, status) {
+          if (status === 'OK') {
+            if (results[0]) {
+              locationInput.value = results[0].formatted_address;
+            }
+          }
+        });
+      });
+      
+      // Click on map to add marker
+      map.addListener('click', function(e) {
+        marker.setPosition(e.latLng);
+        document.getElementById(`${type}Lat`).value = e.latLng.lat();
+        document.getElementById(`${type}Lng`).value = e.latLng.lng();
+        
+        // Reverse geocode
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: e.latLng }, function(results, status) {
+          if (status === 'OK') {
+            if (results[0]) {
+              locationInput.value = results[0].formatted_address;
+            }
+          }
+        });
+      });
     }
     
     // फॉर्म सबमिशन
@@ -507,12 +672,20 @@
         data[key] = value;
       });
       
+      // For buy form, get area and budget from hidden fields
+      if (formType === 'buy') {
+        data['area'] = document.getElementById('buyArea').value;
+        data['budget'] = document.getElementById('buyBudget').value;
+      }
+      
       // टेलीग्राम मैसेज तैयार करें
       let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
       
       for (const [key, value] of Object.entries(data)) {
         if(!['Photos', 'Files', 'Lat', 'Lng'].includes(key) && value) {
-          const label = form.querySelector(`[for="${key}"]`).textContent.trim();
+          const label = form.querySelector(`[for="${key}"]`)?.textContent.trim() || 
+                       (key === 'area' ? 'इच्छित क्षेत्र' : 
+                        key === 'budget' ? 'बजट रेंज' : key);
           message += `🔹 ${label}: ${value}\n`;
         }
       }
@@ -567,6 +740,11 @@
           form.style.display = 'block';
           confirmation.style.display = 'none';
           document.getElementById(`${formType}Preview`).innerHTML = '';
+          document.querySelectorAll('.area-option, .budget-option').forEach(el => {
+            el.classList.remove('selected');
+          });
+          document.getElementById('buyArea').value = '';
+          document.getElementById('buyBudget').value = '';
         }, 5000);
         
       } catch (error) {
@@ -591,5 +769,11 @@
       submitForm('landInquiryForm');
     });
   </script>
+  
+  <!-- Load Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places&callback=initMap"
+    async defer>
+    
+ </script>
 </body>
 </html>
