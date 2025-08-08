@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>स्ट्रीट फूड डिलीवरी - Banda Ki Seva</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banda Ki Seva - स्ट्रीट फूड डिलीवरी</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root {
-    --accent: #ff5722;
-    --accent-light: #ff8a50;
-    --accent-dark: #e64a19;
-    --green: #25D366;
-    --blue: #2196F3;
-    --card: #fff;
-    --bg-gradient: linear-gradient(135deg, #fff7ed, #fff3e0);
-    --shadow: 0 8px 24px rgba(0,0,0,0.08);
-    --glow: 0 0 10px rgba(255, 87, 34, 0.7);
-    --food-bg: linear-gradient(to bottom right, #fff7ed, #ffebd6);
-  }
-  
   * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
     margin: 0;
-    background: var(--bg-gradient);
-    color: #333;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Noto Sans Devanagari', Tahoma, sans-serif;
+  }
+
+  :root {
+    --primary: #FF5722;
+    --primary-light: #FF8A50;
+    --primary-dark: #E64A19;
+    --secondary: #FFC107;
+    --accent: #4CAF50;
+    --light: #FFF8F0;
+    --dark: #333;
+    --text: #444;
+    --card: #FFFFFF;
+    --shadow: 0 5px 15px rgba(0,0,0,0.1);
+    --glow: 0 0 15px rgba(255, 87, 34, 0.4);
+  }
+
+  body {
+    background: linear-gradient(135deg, #fff7ed, #fff3e0);
+    color: var(--text);
     min-height: 100vh;
+    padding-bottom: 40px;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23ff572210" d="M20,20 Q40,5 50,30 T80,20 Q95,40 70,50 T80,80 Q60,95 50,70 T20,80 Q5,60 30,50 T20,20 Z"/></svg>');
     background-size: 150px;
-    padding-bottom: 40px;
   }
-  
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
   /* Header with food pattern */
   header {
-    background: var(--accent);
-    color: #fff;
-    padding: 18px 12px;
+    background: var(--primary);
+    color: white;
     text-align: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 0 15px rgba(255,87,34,0.4);
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-    border-bottom: 4px solid var(--accent-dark);
   }
-  
+
   header::before {
     content: "";
     position: absolute;
@@ -59,888 +64,605 @@
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="10" cy="10" r="3" fill="%23ff8a50" opacity="0.6"/><circle cx="30" cy="20" r="2" fill="%23ff8a50" opacity="0.6"/><circle cx="50" cy="15" r="4" fill="%23ff8a50" opacity="0.6"/><circle cx="20" cy="40" r="3" fill="%23ff8a50" opacity="0.6"/><circle cx="45" cy="35" r="2" fill="%23ff8a50" opacity="0.6"/><circle cx="35" cy="50" r="3" fill="%23ff8a50" opacity="0.6"/></svg>');
     opacity: 0.3;
   }
-  
-  .wrap {
-    max-width: 800px;
-    margin: 24px auto;
-    padding: 0 16px;
-  }
-  
-  /* Intro with glowing animation */
-  .intro {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
-    border: 1px solid rgba(0,0,0,0.05);
-    position: relative;
-    overflow: hidden;
-    animation: glow-pulse 2s infinite alternate;
-    background: linear-gradient(to right, #fff, #fff7e6);
-    border-left: 5px solid var(--accent);
-  }
-  
-  @keyframes glow-pulse {
-    0% {
-      box-shadow: 0 0 5px rgba(255, 87, 34, 0.3), 0 5px 15px rgba(255, 152, 0, 0.1);
-    }
-    100% {
-      box-shadow: 0 0 15px rgba(255, 87, 34, 0.7), 0 10px 25px rgba(255, 152, 0, 0.2);
-    }
-  }
-  
-  .intro::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ff9800, #ff5722, #e91e63);
-  }
-  
-  h1 {
-    margin: 0 0 12px;
-    color: var(--accent);
-    font-size: 1.8rem;
-    line-height: 1.3;
-    text-shadow: 0 0 5px rgba(255,87,34,0.2);
-    position: relative;
-  }
-  
-  .lead {
-    margin: 0;
-    color: #555;
-    font-size: 1.05rem;
-    line-height: 1.5;
-  }
-  
-  .card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: var(--shadow);
-    margin-bottom: 24px;
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    background: var(--food-bg);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .card::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-    pointer-events: none;
-  }
-  
-  .card:hover {
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15), 0 0 15px rgba(255, 87, 34, 0.4);
-    transform: translateY(-3px);
-  }
-  
-  label {
-    display: block;
-    margin-top: 20px;
-    font-weight: 600;
-    color: #444;
-    font-size: 0.95rem;
-    position: relative;
-  }
-  
-  label::after {
-    content: " *";
-    color: #ff5722;
-    opacity: 0.8;
-  }
-  
-  select, input[type="text"], input[type="tel"], textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    margin-top: 8px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: all 0.2s;
-    background: rgba(255,255,255,0.8);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    font-family: inherit;
-  }
-  
-  select:focus, input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255,87,34,0.2);
-    background: #fff;
-  }
-  
-  .flex {
-    display: flex;
-    gap: 16px;
-  }
-  
-  .half {
-    flex: 1;
-  }
-  
-  .small-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 8px;
-    line-height: 1.4;
-    display: block;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-  }
-  
-  /* Payment section styling */
-  .payment-row {
-    background: #fff3e0;
-    padding: 22px;
-    border-radius: 16px;
-    margin-top: 24px;
-    border: 1px solid #ffe0b2;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .payment-row::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ff9800, #ff5722);
-  }
-  
-  .payment-row h3 {
-    margin-top: 0;
-    color: var(--accent-dark);
-    font-size: 1.4rem;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed #ffcc80;
-  }
-  
-  .payment-methods {
-    display: flex;
-    gap: 20px;
-    margin: 15px 0;
-  }
-  
-  .payment-method {
-    flex: 1;
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #ffcc80;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-  }
-  
-  .payment-method:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.2);
-    border-color: var(--accent);
-  }
-  
-  .payment-method.selected {
-    border: 2px solid var(--accent);
-    background: #fff8f0;
-    box-shadow: 0 0 10px rgba(255, 87, 34, 0.3);
-  }
-  
-  .payment-method i {
-    font-size: 2rem;
-    color: var(--accent);
+
+  .logo {
+    font-size: 2.5rem;
     margin-bottom: 10px;
   }
-  
-  /* QR Code Styling */
-  .qr-code-container {
-    text-align: center;
-    margin: 25px 0 15px;
-    padding: 20px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    border: 1px solid #ffe0b2;
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-    100% { transform: translateY(0); }
-  }
-  
-  .qr-code-container p {
-    margin: 10px 0;
-  }
-  
-  .qr-code-img {
-    width: 180px;
-    height: 180px;
+
+  .tagline {
+    font-size: 1.2rem;
+    max-width: 600px;
     margin: 0 auto;
-    display: block;
-    border: 1px solid #eee;
-    padding: 8px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   }
-  
-  /* Customer Details Styling */
-  .customer-details {
-    background: linear-gradient(to bottom, #f9f9f9, #ffffff);
-    padding: 25px;
-    border-radius: 16px;
-    margin-top: 25px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    position: relative;
-  }
-  
-  .customer-details h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    color: var(--accent-dark);
-    font-size: 1.4rem;
-    border-bottom: 1px dashed #ffcc80;
-    text-align: center;
-  }
-  
-  .customer-details::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ff9800, #ff5722);
-  }
-  
-  .btn {
-    display: inline-block;
-    background: var(--accent);
-    color: #fff;
-    padding: 16px 24px;
-    border-radius: 14px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 25px;
-    width: 100%;
-    font-size: 1.1rem;
-    transition: all 0.3s;
-    box-shadow: 0 6px 12px rgba(255,87,34,0.3);
-    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+  /* Intro section */
+  .intro-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
-    letter-spacing: 0.5px;
+    border-left: 5px solid var(--primary);
   }
-  
-  .btn::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255,255,255,0.1);
-    transform: rotate(30deg);
-    transition: all 0.6s;
+
+  .intro-card h1 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
   }
-  
-  .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255,87,34,0.4), 0 0 15px rgba(255,87,34,0.5);
+
+  .intro-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
   }
-  
-  .btn:hover::after {
-    transform: rotate(30deg) translate(100px, 100px);
-  }
-  
-  .btn i {
-    margin-right: 8px;
-  }
-  
-  .preview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 16px;
-  }
-  
-  .preview img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s;
-  }
-  
-  .preview img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
-  
-  .status {
-    margin-top: 16px;
-    padding: 16px;
-    border-radius: 12px;
-    background: #e8f5e9;
-    color: #2e7d32;
-    font-weight: 600;
-    display: none;
-    border: 1px solid #c8e6c9;
-    text-align: center;
-  }
-  
-  .error {
-    background: #ffebee;
-    color: #c62828;
-    display: none;
-    padding: 16px;
-    border-radius: 12px;
-    margin-top: 16px;
-    border: 1px solid #ffcdd2;
-    text-align: center;
-  }
-  
-  .note-italic {
-    font-style: italic;
-    color: #555;
-    margin-top: 16px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding: 12px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-  }
-  
-  footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-    padding: 20px 0;
-    border-top: 1px solid #eee;
-  }
-  
-  /* Order item styling */
-  .order-item {
-    background: rgba(255,255,255,0.8);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 18px;
-    border: 1px dashed #e0e0e0;
-    position: relative;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-  }
-  
-  .remove-item {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #ff5252;
+
+  .highlight {
+    background: linear-gradient(to right, var(--primary-light), var(--primary));
     color: white;
-    border: none;
-    width: 28px;
-    height: 28px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .delivery-note {
+    background: #FFF8E1;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+    border-left: 4px solid var(--secondary);
+    font-size: 0.95rem;
+  }
+
+  /* Form styling */
+  .form-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .section-title {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed var(--primary-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title i {
+    background: var(--primary);
+    color: white;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.2s;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
-  
-  .remove-item:hover {
-    transform: scale(1.1);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+
+  .form-group {
+    margin-bottom: 25px;
   }
-  
-  .add-item-btn {
-    background: var(--blue);
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1rem;
+  }
+
+  .input-icon {
+    position: relative;
+  }
+
+  .input-icon i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: rgba(255, 251, 245, 0.8);
+    transition: all 0.3s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  /* Order items */
+  .order-item {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px dashed var(--primary-light);
+    position: relative;
+  }
+
+  .remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ff5252;
     color: white;
     border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+
+  .flex-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .flex-col {
+    flex: 1;
+  }
+
+  /* Add item button */
+  .add-item {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    cursor: pointer;
-    margin-top: 12px;
-    font-weight: 600;
-    transition: all 0.2s;
-    width: 100%;
-    box-shadow: 0 3px 8px rgba(33,150,243,0.3);
-  }
-  
-  .add-item-btn:hover {
-    background: #1976d2;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(33,150,243,0.4);
-  }
-  
-  .total-amount {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-top: 20px;
-    text-align: center;
-    color: var(--accent);
-    text-shadow: 0 0 3px rgba(255,87,34,0.3);
-    padding: 12px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 12px;
-    border: 1px dashed var(--accent);
-  }
-  
-  .saved-details {
-    background: #e3f2fd;
-    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
     border-radius: 10px;
-    margin-top: 16px;
-    display: none;
-    border: 1px solid #bbdefb;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 0 20px;
+    transition: all 0.3s;
+    width: 100%;
   }
-  
-  .other-item-input {
-    display: none;
-    margin-top: 10px;
-    animation: fadeIn 0.3s ease;
+
+  .add-item:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
   }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+
+  /* Payment section at bottom */
+  .payment-section {
+    background: #FFF3E0;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #FFE0B2;
   }
-  
-  /* Food icons */
-  .food-icon {
-    position: absolute;
+
+  .payment-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .payment-header i {
+    background: var(--primary);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .payment-options {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+
+  .payment-option {
+    flex: 1;
+    padding: 20px;
+    border-radius: 15px;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+
+  .payment-option.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.2);
+  }
+
+  .payment-option i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+
+  .qr-container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    margin: 25px 0;
+  }
+
+  .qr-container img {
+    max-width: 220px;
+    margin: 15px auto;
+    display: block;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .whatsapp-btn {
+    display: block;
+    background: #25D366;
+    color: white;
+    text-align: center;
+    padding: 18px;
+    border-radius: 12px;
     font-size: 1.2rem;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--accent);
-    pointer-events: none;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 25px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
   }
-  
+
+  .whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+  }
+
+  .whatsapp-btn i {
+    margin-right: 10px;
+    font-size: 1.4rem;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .social-link:hover {
+    transform: translateY(-3px);
+    background: var(--primary-dark);
+  }
+
   /* Responsive design */
-  @media (max-width: 600px) {
-    .flex {
+  @media (max-width: 768px) {
+    .flex-row {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .payment-options {
       flex-direction: column;
     }
     
-    .preview img {
-      width: 80px;
-      height: 80px;
-    }
-    
-    h1 {
-      font-size: 1.5rem;
-    }
-    
-    .wrap {
-      padding: 0 12px;
-    }
-    
-    .card, .intro, .payment-row, .customer-details {
-      padding: 20px;
-    }
-    
-    .payment-methods {
+    .contact-info {
       flex-direction: column;
+      gap: 10px;
     }
   }
 </style>
 </head>
 <body>
+  <header>
+    <div class="container">
+      <div class="logo">🍲</div>
+      <h1>Banda Ki Seva</h1>
+      <p class="tagline">स्वराज कॉलोनी के लिए स्ट्रीट फूड डिलीवरी सेवा</p>
+    </div>
+  </header>
 
-<header>🍲 Banda Ki Seva — स्ट्रीट फूड डिलीवरी (स्वराज कॉलोनी)</header>
-
-<div class="wrap">
-  <div class="intro">
-    <h1>क्या आपका मन कर रहा है गरमा-गरम चाट, पाव भाजी, गोलगप्पे या मोमो?</h1>
-    <p class="lead">अब बाहर जाने की ज़रूरत नहीं — <strong>बंदा की सेवा</strong> लाएगा आपके पसंदीदा स्ट्रीट फूड को सीधे आपके दरवाज़े पर। स्वाद वही, सुविधा दोगुनी! (केवल <strong>स्वराज कॉलोनी</strong>)</p>
-    <span class="small-note">डिलीवरी चार्ज: ₹20 — *पहले भुगतान आवश्यक*। नीचे Payment चेकबॉक्स पर टिक करें और फिर ऑर्डर भेजें।</span>
-  </div>
-
-  <form id="orderForm" class="card" autocomplete="off">
-    <div id="savedDetails" class="saved-details">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <strong>सेव्ड डिटेल्स:</strong> 
-          <span id="savedName"></span>, 
-          <span id="savedMobile"></span>
-        </div>
-        <button type="button" onclick="clearSavedDetails()" style="background:none; border:none; color:var(--accent); cursor:pointer; font-weight:bold;">बदलें</button>
+  <div class="container">
+    <!-- Intro Section -->
+    <div class="intro-card">
+      <h1>क्या आपका मन कर रहा है गरमा-गरम चाट, पाव भाजी, गोलगप्पे या मोमो?</h1>
+      <p class="intro-text">अब बाहर जाने की ज़रूरत नहीं — <span class="highlight">बंदा की सेवा</span> लाएगा आपके पसंदीदा स्ट्रीट फूड को सीधे आपके दरवाज़े पर। स्वाद वही, सुविधा दोगुनी!</p>
+      <p class="intro-text">हम स्वराज कॉलोनी में सभी प्रकार के स्ट्रीट फूड की होम डिलीवरी करते हैं।</p>
+      
+      <div class="delivery-note">
+        <strong>डिलीवरी चार्ज:</strong> ₹20 — *पहले भुगतान आवश्यक*<br>
+        <strong>WhatsApp ऑर्डर:</strong> <a href="https://wa.me/916351598832" style="color: #25D366; font-weight: bold;">6351598832</a> पर मैसेज करें
       </div>
     </div>
 
-    <div id="orderItemsContainer">
-      <!-- First order item (default) -->
-      <div class="order-item" data-item-id="1">
-        <button type="button" class="remove-item" onclick="removeOrderItem(1)">×</button>
-        
-        <label>📍 अपना एरिया चुनें (Only Swaraj Colony के लिए ऑर्डर स्वीकार होगा)</label>
-        <div style="position:relative;">
-          <select class="area" required>
+    <!-- Order Form -->
+    <div class="form-card">
+      <h2 class="section-title"><i class="fas fa-utensils"></i> अपना ऑर्डर दर्ज करें</h2>
+      
+      <div class="form-group">
+        <label>📍 अपना एरिया चुनें</label>
+        <div class="input-icon">
+          <i class="fas fa-map-marker-alt"></i>
+          <select required>
             <option value="">-- अपना एरिया चुनें --</option>
             <option value="स्वराज कॉलोनी" selected>स्वराज कॉलोनी</option>
             <option value="अन्य">अन्य</option>
           </select>
-          <i class="fas fa-map-marker-alt food-icon"></i>
-        </div>
-
-        <label>🍽️ पसंदीदा आइटम चुनें</label>
-        <div style="position:relative;">
-          <select class="food" required onchange="toggleOtherInput(this)">
-            <option value="">-- आइटम चुनें --</option>
-            <option>पाव भाजी</option>
-            <option>पानीपुरी / गोलगप्पे</option>
-            <option>तंदूरी मोमो</option>
-            <option>स्टीम मोमो</option>
-            <option>फ्राई मोमो</option>
-            <option>चाट</option>
-            <option>समोसा</option>
-            <option>कुल्फी / मिठाई</option>
-            <option>डोसा</option>
-            <option>इडली-सम्बर</option>
-            <option>चाऊमीन</option>
-            <option>मैगी</option>
-            <option value="अन्य">अन्य (अपना चुनें)</option>
-          </select>
-          <i class="fas fa-utensils food-icon"></i>
-        </div>
-        
-        <div class="other-item-input" id="otherItemInput1">
-          <label>📝 अपना आइटम नाम लिखें</label>
-          <input type="text" class="other-item-name" placeholder="जैसे: पनीर टिक्का, बर्गर आदि">
-        </div>
-
-        <label>📦 मात्रा (उदा. 2 प्लेट / 500 ग्राम)</label>
-        <div style="position:relative;">
-          <input class="qty" type="text" placeholder="उदा: 2 प्लेट" required>
-          <i class="fas fa-weight food-icon"></i>
-        </div>
-        
-        <label>💲 कीमत (अनुमानित, वैकल्पिक)</label>
-        <div style="position:relative;">
-          <input class="price" type="text" placeholder="उदा: ₹50">
-          <i class="fas fa-rupee-sign food-icon"></i>
         </div>
       </div>
-    </div>
 
-    <button type="button" class="add-item-btn" onclick="addNewOrderItem()">
-      <i class="fas fa-plus"></i> और आइटम जोड़ें
-    </button>
+      <div class="order-items">
+        <div class="order-item">
+          <button class="remove-btn">×</button>
+          
+          <div class="form-group">
+            <label>🍽️ पसंदीदा आइटम चुनें</label>
+            <div class="input-icon">
+              <i class="fas fa-hamburger"></i>
+              <select required>
+                <option value="">-- आइटम चुनें --</option>
+                <option>पाव भाजी</option>
+                <option>पानीपुरी / गोलगप्पे</option>
+                <option>तंदूरी मोमो</option>
+                <option>स्टीम मोमो</option>
+                <option>फ्राई मोमो</option>
+                <option>चाट</option>
+                <option>समोसा</option>
+                <option>कुल्फी / मिठाई</option>
+                <option>डोसा</option>
+                <option>इडली-सम्बर</option>
+                <option>चाऊमीन</option>
+                <option>मैगी</option>
+                <option value="अन्य">अन्य (अपना चुनें)</option>
+              </select>
+            </div>
+          </div>
 
-    <div class="total-amount" id="totalAmount">
-      कुल डिलीवरी चार्ज: ₹20
-    </div>
-
-    <div class="payment-row">
-      <h3>भुगतान विधि</h3>
-      
-      <div class="payment-methods">
-        <div class="payment-method selected" data-method="upi">
-          <i class="fas fa-qrcode"></i>
-          <div>UPI पेमेंट</div>
-          <small>(पहले भुगतान)</small>
-        </div>
-        <div class="payment-method" data-method="cod">
-          <i class="fas fa-money-bill-wave"></i>
-          <div>Cash on Delivery</div>
-          <small>(केवल ₹50+ ऑर्डर)</small>
-        </div>
-      </div>
-      
-      <div class="qr-code-container" id="upiQrCode">
-        <p style="margin-top:0; font-weight:bold;">UPI ID: <span style="color:var(--accent);">6351598832@ybl</span></p>
-        <img src="https://i.postimg.cc/cCkX7xCr/Screenshot-20250806-205114.jpg" 
-             alt="UPI QR Code" class="qr-code-img">
-        <p class="small-note">कृपया ₹20 डिलीवरी चार्ज का भुगतान करें और नीचे चेकबॉक्स को टिक करें</p>
-      </div>
-      
-      <label style="display:block; margin-top:20px; background: rgba(255,255,255,0.7); padding: 12px; border-radius: 10px;">
-        <input id="paidCheckbox" type="checkbox" required style="margin-right: 10px;"> 
-        <strong>मैंने डिलीवरी चार्ज का भुगतान कर दिया है</strong>
-      </label>
-    </div>
-
-    <div class="customer-details">
-      <h3>ग्राहक विवरण</h3>
-
-      <div class="flex">
-        <div class="half">
-          <label>👤 आपका नाम</label>
-          <div style="position:relative;">
-            <input id="custName" type="text" placeholder="आपका नाम" required>
-            <i class="fas fa-user food-icon"></i>
+          <div class="flex-row">
+            <div class="flex-col">
+              <label>📦 मात्रा</label>
+              <div class="input-icon">
+                <i class="fas fa-weight"></i>
+                <input type="text" placeholder="उदा: 2 प्लेट" required>
+              </div>
+            </div>
+            
+            <div class="flex-col">
+              <label>💲 कीमत (अनुमानित)</label>
+              <div class="input-icon">
+                <i class="fas fa-rupee-sign"></i>
+                <input type="text" placeholder="उदा: ₹50">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="half">
+      </div>
+
+      <button class="add-item"><i class="fas fa-plus"></i> और आइटम जोड़ें</button>
+
+      <div class="form-group">
+        <label>👤 आपका नाम</label>
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="आपका पूरा नाम" required>
+        </div>
+      </div>
+
+      <div class="flex-row">
+        <div class="flex-col">
           <label>📞 मोबाइल नंबर</label>
-          <div style="position:relative;">
-            <input id="mobile" type="tel" placeholder="10 अंकों का नंबर" required>
-            <i class="fas fa-phone food-icon"></i>
+          <div class="input-icon">
+            <i class="fas fa-phone"></i>
+            <input type="tel" placeholder="10 अंकों का नंबर" required>
+          </div>
+        </div>
+        
+        <div class="flex-col">
+          <label>🏠 हाउस नंबर</label>
+          <div class="input-icon">
+            <i class="fas fa-home"></i>
+            <input type="text" placeholder="आपका हाउस नंबर" required>
           </div>
         </div>
       </div>
 
-      <label>🏠 पूरा पता (स्ट्रिट/हाउस नंबर)</label>
-      <div style="position:relative;">
-        <textarea id="address" rows="3" placeholder="अपना पूरा पता लिखें" required></textarea>
-        <i class="fas fa-home food-icon" style="top: 35px;"></i>
+      <div class="form-group">
+        <label>📍 पूरा पता</label>
+        <div class="input-icon">
+          <i class="fas fa-map-marked-alt"></i>
+          <textarea placeholder="अपना पूरा पता लिखें" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>📸 आइटम फोटो (यदि चाहिए तो)</label>
+        <div class="input-icon">
+          <i class="fas fa-camera"></i>
+          <input type="file" accept="image/*" multiple>
+        </div>
+        <small>आप कई फ़ोटो भेज सकते हैं</small>
       </div>
     </div>
 
-    <label>📸 फोटो जोड़ें (यदि चाहिए तो) — आप कई फ़ोटो भेज सकते हैं</label>
-    <div style="position:relative;">
-      <input id="photos" type="file" accept="image/*" multiple style="padding-top: 12px; padding-bottom: 12px;">
-      <i class="fas fa-camera food-icon"></i>
+    <!-- Payment Section at Bottom -->
+    <div class="payment-section">
+      <div class="payment-header">
+        <i class="fas fa-money-bill-wave"></i>
+        <div>
+          <h2 style="color: var(--primary);">भुगतान विधि</h2>
+          <p>कृपया अपनी पसंदीदा भुगतान विधि चुनें</p>
+        </div>
+      </div>
+
+      <div class="payment-options">
+        <div class="payment-option selected">
+          <i class="fas fa-qrcode"></i>
+          <h3>UPI भुगतान</h3>
+          <p>पहले भुगतान करें</p>
+        </div>
+        <div class="payment-option">
+          <i class="fas fa-money-bill"></i>
+          <h3>कैश ऑन डिलीवरी</h3>
+          <p>केवल ₹50+ ऑर्डर</p>
+        </div>
+      </div>
+
+      <div class="qr-container">
+        <h3>UPI ID: <span style="color: var(--primary);">6351598832@ybl</span></h3>
+        <p>कृपया ₹20 डिलीवरी चार्ज का भुगतान करें</p>
+        <img src="https://i.postimg.cc/cCkX7xCr/Screenshot-20250806-205114.jpg" alt="UPI QR Code">
+        <p>QR कोड स्कैन करके भुगतान करें</p>
+      </div>
+
+      <div style="background: white; padding: 20px; border-radius: 12px; text-align: center;">
+        <label style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <input type="checkbox" required style="width: 20px; height: 20px;">
+          <strong>मैंने डिलीवरी चार्ज का भुगतान कर दिया है</strong>
+        </label>
+      </div>
+
+      <a href="https://wa.me/916351598832" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर भेजें
+      </a>
     </div>
-
-    <div class="preview" id="preview"></div>
-
-    <p class="note-italic">ऑर्डर भेजने पर हम आपकी *लाइव लोकेशन* पूछेंगे ताकि डिलीवरी सही जगह पहुंच सके। कृपया लोकेशन शेयर करने की अनुमति दें।</p>
-
-    <button id="sendBtn" class="btn"><i class="fab fa-telegram"></i> ऑर्डर भेजें (Telegram & WhatsApp)</button>
-
-    <div id="status" class="status">ऑर्डर भेजा जा रहा है — कृपया प्रतीक्षा करें...</div>
-    <div id="err" class="error"></div>
-  </form>
-
-  <div class="note-italic" style="margin-top:20px; text-align:center;">
-    WhatsApp से भी ऑर्डर करने के लिए: <a style="color:var(--green); font-weight:bold;" id="waLink" href="#" target="_blank">यहाँ क्लिक करें</a>
-    <br>या सीधे WhatsApp पर मैसेज करें: <strong>6351598832</strong>
   </div>
 
-  <footer>
-    <div style="margin-bottom:12px;">
-      <a href="#" style="color:var(--accent); margin:0 10px; text-decoration:none;"><i class="fas fa-info-circle"></i> हमारे बारे में</a>
-      <a href="#" style="color:var(--accent); margin:0 10px; text-decoration:none;"><i class="fas fa-utensils"></i> मेनू</a>
-      <a href="#" style="color:var(--accent); margin:0 10px; text-decoration:none;"><i class="fas fa-phone"></i> संपर्क करें</a>
+  <footer class="container">
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <span>6351598832</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-clock"></i>
+        <span>11AM - 10PM</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>स्वराज कॉलोनी</span>
+      </div>
     </div>
-    © 2023 Banda Ki Seva — स्वाद अब आपके दरवाज़े पर<br>
-    <i class="fas fa-phone"></i> संपर्क: 6351598832 | <i class="fas fa-clock"></i> समय: 11AM - 10PM
+
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://wa.me/916351598832" class="social-link"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <p>© 2023 Banda Ki Seva — स्वाद अब आपके दरवाज़े पर</p>
   </footer>
-</div>
 
-<script>
-/* ====== CONFIG ====== */
-const TELEGRAM_BOT_TOKEN = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
-const TELEGRAM_CHAT_ID   = "6798434092";
-const DELIVERY_CHARGE    = 20;
-/* ==================== */
+  <script>
+    // Functionality for payment options
+    document.querySelectorAll('.payment-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.payment-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        this.classList.add('selected');
+      });
+    });
 
-const form = document.getElementById('orderForm');
-const orderItemsContainer = document.getElementById('orderItemsContainer');
-const photosInput = document.getElementById('photos');
-const preview = document.getElementById('preview');
-const statusBox = document.getElementById('status');
-const errBox = document.getElementById('err');
-const waLink = document.getElementById('waLink');
-const upiQrCode = document.getElementById('upiQrCode');
-const totalAmount = document.getElementById('totalAmount');
-const savedDetails = document.getElementById('savedDetails');
-const savedName = document.getElementById('savedName');
-const savedMobile = document.getElementById('savedMobile');
-const customerDetailsSection = document.querySelector('.customer-details');
+    // Functionality for adding order items
+    document.querySelector('.add-item').addEventListener('click', function() {
+      const orderItems = document.querySelector('.order-items');
+      const newItem = document.querySelector('.order-item').cloneNode(true);
+      
+      // Clear inputs in new item
+      newItem.querySelectorAll('input, select').forEach(input => {
+        if(input.type !== 'button') input.value = '';
+      });
+      
+      orderItems.appendChild(newItem);
+      
+      // Add remove functionality
+      newItem.querySelector('.remove-btn').addEventListener('click', function() {
+        if(document.querySelectorAll('.order-item').length > 1) {
+          this.closest('.order-item').remove();
+        } else {
+          alert('कम से कम एक आइटम तो जरूरी है!');
+        }
+      });
+    });
 
-let filesList = [];
-let itemCounter = 1;
-
-// Payment method selection
-document.querySelectorAll('.payment-method').forEach(method => {
-  method.addEventListener('click', function() {
-    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-    this.classList.add('selected');
-    
-    const methodValue = this.dataset.method;
-    document.querySelector(`input[value="${methodValue}"]`).checked = true;
-    updateTotalAmount();
-  });
-});
-
-// Toggle other item input
-function toggleOtherInput(selectElement) {
-  const itemId = selectElement.closest('.order-item').dataset.itemId;
-  const otherInput = document.getElementById(`otherItemInput${itemId}`);
-  
-  if (selectElement.value === 'अन्य') {
-    otherInput.style.display = 'block';
-  } else {
-    otherInput.style.display = 'none';
-  }
-}
-
-// Check for saved details on page load
-document.addEventListener('DOMContentLoaded', function() {
-  const savedData = localStorage.getItem('customerDetails');
-  if (savedData) {
-    const data = JSON.parse(savedData);
-    document.getElementById('custName').value = data.name;
-    document.getElementById('mobile').value = data.mobile;
-    document.getElementById('address').value = data.address;
-    
-    // Show saved details section
-    savedDetails.style.display = 'block';
-    savedName.textContent = data.name;
-    savedMobile.textContent = data.mobile;
-    
-    // Hide customer details section
-    customerDetailsSection.style.display = 'none';
-  }
-});
-
-// Clear saved details
-function clearSavedDetails() {
-  localStorage.removeItem('customerDetails');
-  savedDetails.style.display = 'none';
-  customerDetailsSection.style.display = 'block';
-}
-
-// Update total amount display
-function updateTotalAmount() {
-  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-  if (paymentMethod === 'cod') {
-    totalAmount.textContent = 'कैश ऑन डिलीवरी (₹50+ ऑर्डर)';
-  } else {
-    totalAmount.textContent = `कुल डिलीवरी चार्ज: ₹${DELIVERY_CHARGE}`;
-  }
-}
-
-// Add new order item
-function addNewOrderItem() {
-  itemCounter++;
-  const newItem = document.createElement('div');
-  newItem.className = 'order-item';
-  newItem.dataset.itemId = itemCounter;
-  newItem.innerHTML = `
-    <button type="button" class="remove-item" onclick="removeOrderItem(${itemCounter})">×</button>
-    
-    <label>🍽️ पसंदीदा आइटम चुनें</label>
-    <div style="position:relative;">
-      <select class="food" required onchange="toggleOtherInput(this)">
-        <option value="">-- आइटम चुनें --</option>
-        <option>पाव भाजी</option>
-        <option>पानीपुरी / गोलगप्पे</option>
-        <option>तंदूरी मोमो</option>
-        <option>स्टीम मोमो</option>
-        <option>फ्राई मोमो</option>
-        <option>चाट</option>
-        <option>समोसा</option>
-        <option>कुल्फी / मिठाई</option>
-        <option>डोसा</option>
-        <option>इडली-सम्बर</option>
-        <option>चाऊमीन</option>
-        <option>मैगी</option>
-        <option value="अन्य">अन्य (अपना चुनें)</option>
-      </select>
-      <i class="fas fa-utensils food-icon"></i>
-    </div>
-    
-    <div class="other-item-input" id="otherItemInput${itemCounter}">
-      <label>📝 अपना आइटम नाम लिखें</label>
-      <input type="text" class="other-item-name" placeholder="जैसे: पनीर टिक्का, बर्गर आदि">
-    </div>
-
-    <label>📦 मात्रा (उदा. 2 प्लेट / 500 ग्राम)</label>
-    <div style="position:relative;">
-      <input class="qty" type="text" placeholder="उदा: 2 प्लेट" required>
-      <i class="fas fa-weight food-icon"></i>
-    </div>
-    
-    <label>💲 कीमत (अनुमानित, वैकल्पिक)</label>
-    <div style="position:relative;">
-      <input class="price" type="text" placeholder="उदा: ₹50">
-      <i class="fas fa-rupee-sign food-icon"></i>
-    </div>
-  `;
-  orderItemsContainer.appendChild(newItem);
-  updateTotalAmount();
-}
-
-// Remove order item
-function removeOrderItem(itemId) {
-  if (document.querySelectorAll('.order-item').length <= 1) {
-    alert('कम से कम एक आइटम तो जरूरी है!');
-    return;
-  }
-  
-  const itemToRemove = document.querySelector(`.order-item[data-item-id="${itemId}"]`);
-  if (itemToRemove) {
-    itemToRemove.remove();
-    updateTotalAmount();
-  }
-}
-
-// Preview selected images
-photosInput.addEventListener('change', (e) => {
-  preview.innerHTML = "";
-  filesList = Array.from(e.target.files);
-  filesList.forEach(file => {
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    preview.appendChild(img);
-  });
-});
-
-// Form submission handler
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  // Hide previous messages
-  statusBox.style.display = 'none';
-  errBox.style.display = 'none';
-  
-  // Validate form
-  const formValid = form.checkValidity();
-  if (!formValid) {
-    form.reportValidity();
-    return;
-  }
-  
-  // Show status
-  statusBox.style.display = 'block';
-  statusBox.textContent = 'ऑर्डर भेजा जा रहा है — कृपया प्रतीक्षा करें...';
-  
-  // Simulate sending
-  setTimeout(() => {
-    statusBox.textContent = '✅ ऑर्डर सफलतापूर्वक भेज दिया गया!';
-    form.reset();
-    preview.innerHTML = "";
-    filesList = [];
-  }, 2000);
-});
-
-// Initialize
-updateTotalAmount();
-</script>
+    // Add remove functionality to initial items
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if(document.querySelectorAll('.order-item').length > 1) {
+          this.closest('.order-item').remove();
+        } else {
+          alert('कम से कम एक आइटम तो जरूरी है!');
+        }
+      });
+    });
+  </script>
 </body>
-</html>
+  </html>
