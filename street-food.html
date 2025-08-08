@@ -19,12 +19,14 @@
     --primary-dark: #E64A19;
     --secondary: #FFC107;
     --accent: #4CAF50;
+    --telegram: #2AABEE;
     --light: #FFF8F0;
     --dark: #333;
     --text: #444;
     --card: #FFFFFF;
     --shadow: 0 5px 15px rgba(0,0,0,0.1);
     --glow: 0 0 15px rgba(255, 87, 34, 0.4);
+    --text-glow: 0 0 8px rgba(255, 87, 34, 0.6);
   }
 
   body {
@@ -68,21 +70,33 @@
   .logo {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    text-shadow: var(--text-glow);
   }
 
   .tagline {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     max-width: 600px;
     margin: 0 auto;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  /* Glow text effect */
+  .glow-text {
+    text-shadow: var(--text-glow);
+    animation: glow-pulse 2s infinite alternate;
+  }
+  
+  @keyframes glow-pulse {
+    from { text-shadow: 0 0 5px rgba(255, 87, 34, 0.4); }
+    to { text-shadow: 0 0 15px rgba(255, 87, 34, 0.8); }
   }
 
   /* Intro section */
   .intro-card {
     background: var(--card);
     border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
+    padding: 25px;
+    margin-bottom: 25px;
     box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
@@ -91,13 +105,13 @@
 
   .intro-card h1 {
     color: var(--primary);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-bottom: 15px;
     line-height: 1.4;
   }
 
   .intro-text {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 15px;
   }
@@ -105,34 +119,35 @@
   .highlight {
     background: linear-gradient(to right, var(--primary-light), var(--primary));
     color: white;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 8px;
     font-weight: bold;
+    display: inline-block;
   }
 
   .delivery-note {
     background: #FFF8E1;
-    padding: 15px;
+    padding: 12px;
     border-radius: 12px;
     margin-top: 15px;
     border-left: 4px solid var(--secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   /* Form styling */
   .form-card {
     background: var(--card);
     border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
+    padding: 25px;
+    margin-bottom: 25px;
     box-shadow: var(--shadow);
     position: relative;
   }
 
   .section-title {
     color: var(--primary);
-    font-size: 1.5rem;
-    margin-bottom: 25px;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 2px dashed var(--primary-light);
     display: flex;
@@ -143,24 +158,25 @@
   .section-title i {
     background: var(--primary);
     color: white;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.9rem;
   }
 
   .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
     font-weight: 600;
     color: var(--dark);
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .input-icon {
@@ -169,18 +185,19 @@
 
   .input-icon i {
     position: absolute;
-    left: 15px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--primary);
+    font-size: 0.9rem;
   }
 
   input, select, textarea {
     width: 100%;
-    padding: 15px 15px 15px 45px;
+    padding: 14px 14px 14px 40px;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     background: rgba(255, 251, 245, 0.8);
     transition: all 0.3s;
   }
@@ -192,7 +209,7 @@
   }
 
   textarea {
-    min-height: 100px;
+    min-height: 90px;
     resize: vertical;
   }
 
@@ -200,18 +217,18 @@
   .order-item {
     background: #f9f9f9;
     border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 18px;
+    margin-bottom: 18px;
     border: 1px dashed var(--primary-light);
     position: relative;
   }
 
   .remove-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: #ff5252;
     color: white;
@@ -221,12 +238,13 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    font-size: 1.2rem;
   }
 
   .flex-row {
     display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 14px;
+    margin-bottom: 14px;
   }
 
   .flex-col {
@@ -238,17 +256,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     background: var(--primary);
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 12px 18px;
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     margin: 10px 0 20px;
     transition: all 0.3s;
     width: 100%;
+    font-size: 0.95rem;
   }
 
   .add-item:hover {
@@ -260,7 +279,7 @@
   .payment-section {
     background: #FFF3E0;
     border-radius: 20px;
-    padding: 30px;
+    padding: 25px;
     margin-top: 20px;
     box-shadow: var(--shadow);
     border: 1px solid #FFE0B2;
@@ -270,30 +289,30 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   .payment-header i {
     background: var(--primary);
     color: white;
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .payment-options {
     display: flex;
-    gap: 20px;
-    margin-bottom: 25px;
+    gap: 18px;
+    margin-bottom: 20px;
   }
 
   .payment-option {
     flex: 1;
-    padding: 20px;
+    padding: 18px;
     border-radius: 15px;
     background: white;
     text-align: center;
@@ -309,41 +328,51 @@
   }
 
   .payment-option i {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     color: var(--primary);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
   }
 
   .qr-container {
     background: white;
-    padding: 25px;
+    padding: 20px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    margin: 25px 0;
+    margin: 20px 0;
   }
 
   .qr-container img {
-    max-width: 220px;
-    margin: 15px auto;
+    max-width: 200px;
+    margin: 12px auto;
     display: block;
     border: 1px solid #eee;
-    padding: 10px;
+    padding: 8px;
     border-radius: 10px;
   }
 
-  .whatsapp-btn {
-    display: block;
-    background: #25D366;
-    color: white;
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+  }
+  
+  .action-buttons a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 18px;
+    padding: 16px;
     border-radius: 12px;
-    font-size: 1.2rem;
     font-weight: 600;
     text-decoration: none;
-    margin-top: 25px;
     transition: all 0.3s;
+  }
+  
+  .whatsapp-btn {
+    background: #25D366;
+    color: white;
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
   }
 
@@ -352,42 +381,54 @@
     box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
   }
 
-  .whatsapp-btn i {
-    margin-right: 10px;
-    font-size: 1.4rem;
+  .telegram-btn {
+    background: var(--telegram);
+    color: white;
+    box-shadow: 0 5px 15px rgba(42, 171, 238, 0.3);
+  }
+
+  .telegram-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(42, 171, 238, 0.4);
+  }
+
+  .action-buttons i {
+    margin-right: 8px;
+    font-size: 1.3rem;
   }
 
   /* Footer */
   footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 35px;
     color: #666;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .contact-info {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin: 20px 0;
+    gap: 25px;
+    margin: 18px 0;
   }
 
   .contact-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
+    font-size: 0.95rem;
   }
 
   .social-links {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
+    gap: 14px;
+    margin: 18px 0;
   }
 
   .social-link {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: var(--primary);
     color: white;
@@ -407,7 +448,7 @@
   @media (max-width: 768px) {
     .flex-row {
       flex-direction: column;
-      gap: 15px;
+      gap: 14px;
     }
     
     .payment-options {
@@ -418,6 +459,19 @@
       flex-direction: column;
       gap: 10px;
     }
+    
+    .action-buttons {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .intro-card h1 {
+      font-size: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+    }
   }
 </style>
 </head>
@@ -425,27 +479,28 @@
   <header>
     <div class="container">
       <div class="logo">🍲</div>
-      <h1>Banda Ki Seva</h1>
-      <p class="tagline">स्वराज कॉलोनी के लिए स्ट्रीट फूड डिलीवरी सेवा</p>
+      <h1 class="glow-text">Banda Ki Seva</h1>
+      <p class="tagline glow-text">स्वराज कॉलोनी के लिए स्ट्रीट फूड डिलीवरी सेवा</p>
     </div>
   </header>
 
   <div class="container">
     <!-- Intro Section -->
     <div class="intro-card">
-      <h1>क्या आपका मन कर रहा है गरमा-गरम चाट, पाव भाजी, गोलगप्पे या मोमो?</h1>
-      <p class="intro-text">अब बाहर जाने की ज़रूरत नहीं — <span class="highlight">बंदा की सेवा</span> लाएगा आपके पसंदीदा स्ट्रीट फूड को सीधे आपके दरवाज़े पर। स्वाद वही, सुविधा दोगुनी!</p>
-      <p class="intro-text">हम स्वराज कॉलोनी में सभी प्रकार के स्ट्रीट फूड की होम डिलीवरी करते हैं।</p>
+      <h1 class="glow-text">🍛 क्या आपका मन कर रहा है गरमा-गरम चाट, पाव भाजी, गोलगप्पे या मोमो?</h1>
+      <p class="intro-text">🚚 अब बाहर जाने की ज़रूरत नहीं — <span class="highlight glow-text">बंदा की सेवा</span> लाएगा आपके पसंदीदा स्ट्रीट फूड को सीधे आपके दरवाज़े पर। स्वाद वही, सुविधा दोगुनी!</p>
+      <p class="intro-text">📍 हम स्वराज कॉलोनी में सभी प्रकार के स्ट्रीट फूड की होम डिलीवरी करते हैं।</p>
       
       <div class="delivery-note">
-        <strong>डिलीवरी चार्ज:</strong> ₹20 — *पहले भुगतान आवश्यक*<br>
-        <strong>WhatsApp ऑर्डर:</strong> <a href="https://wa.me/916351598832" style="color: #25D366; font-weight: bold;">6351598832</a> पर मैसेज करें
+        <strong>💸 डिलीवरी चार्ज:</strong> ₹20 — *पहले भुगतान आवश्यक*<br>
+        <strong>📲 WhatsApp ऑर्डर:</strong> <a href="https://wa.me/916351598832" style="color: #25D366; font-weight: bold;">6351598832</a> पर मैसेज करें<br>
+        <strong>📩 Telegram ऑर्डर:</strong> <a href="https://t.me/your_telegram_bot" style="color: #2AABEE; font-weight: bold;">@BandaKiSewaBot</a> पर मैसेज करें
       </div>
     </div>
 
     <!-- Order Form -->
     <div class="form-card">
-      <h2 class="section-title"><i class="fas fa-utensils"></i> अपना ऑर्डर दर्ज करें</h2>
+      <h2 class="section-title"><i class="fas fa-utensils"></i> 🍽️ अपना ऑर्डर दर्ज करें</h2>
       
       <div class="form-group">
         <label>📍 अपना एरिया चुनें</label>
@@ -469,19 +524,19 @@
               <i class="fas fa-hamburger"></i>
               <select required>
                 <option value="">-- आइटम चुनें --</option>
-                <option>पाव भाजी</option>
-                <option>पानीपुरी / गोलगप्पे</option>
-                <option>तंदूरी मोमो</option>
-                <option>स्टीम मोमो</option>
-                <option>फ्राई मोमो</option>
-                <option>चाट</option>
-                <option>समोसा</option>
-                <option>कुल्फी / मिठाई</option>
-                <option>डोसा</option>
-                <option>इडली-सम्बर</option>
-                <option>चाऊमीन</option>
-                <option>मैगी</option>
-                <option value="अन्य">अन्य (अपना चुनें)</option>
+                <option>🍞 पाव भाजी</option>
+                <option>💧 पानीपुरी / गोलगप्पे</option>
+                <option>🥟 तंदूरी मोमो</option>
+                <option>🥟 स्टीम मोमो</option>
+                <option>🥟 फ्राई मोमो</option>
+                <option>🧆 चाट</option>
+                <option>🥟 समोसा</option>
+                <option>🍦 कुल्फी / मिठाई</option>
+                <option>🥘 डोसा</option>
+                <option>🥣 इडली-सम्बर</option>
+                <option>🍜 चाऊमीन</option>
+                <option>🍜 मैगी</option>
+                <option value="अन्य">🔮 अन्य (अपना चुनें)</option>
               </select>
             </div>
           </div>
@@ -506,7 +561,7 @@
         </div>
       </div>
 
-      <button class="add-item"><i class="fas fa-plus"></i> और आइटम जोड़ें</button>
+      <button class="add-item"><i class="fas fa-plus"></i> ➕ और आइटम जोड़ें</button>
 
       <div class="form-group">
         <label>👤 आपका नाम</label>
@@ -548,7 +603,7 @@
           <i class="fas fa-camera"></i>
           <input type="file" accept="image/*" multiple>
         </div>
-        <small>आप कई फ़ोटो भेज सकते हैं</small>
+        <small>📷 आप कई फ़ोटो भेज सकते हैं</small>
       </div>
     </div>
 
@@ -557,41 +612,46 @@
       <div class="payment-header">
         <i class="fas fa-money-bill-wave"></i>
         <div>
-          <h2 style="color: var(--primary);">भुगतान विधि</h2>
-          <p>कृपया अपनी पसंदीदा भुगतान विधि चुनें</p>
+          <h2 style="color: var(--primary);" class="glow-text">💰 भुगतान विधि</h2>
+          <p>💳 कृपया अपनी पसंदीदा भुगतान विधि चुनें</p>
         </div>
       </div>
 
       <div class="payment-options">
         <div class="payment-option selected">
           <i class="fas fa-qrcode"></i>
-          <h3>UPI भुगतान</h3>
+          <h3>📱 UPI भुगतान</h3>
           <p>पहले भुगतान करें</p>
         </div>
         <div class="payment-option">
           <i class="fas fa-money-bill"></i>
-          <h3>कैश ऑन डिलीवरी</h3>
+          <h3>💵 कैश ऑन डिलीवरी</h3>
           <p>केवल ₹50+ ऑर्डर</p>
         </div>
       </div>
 
       <div class="qr-container">
-        <h3>UPI ID: <span style="color: var(--primary);">6351598832@ybl</span></h3>
-        <p>कृपया ₹20 डिलीवरी चार्ज का भुगतान करें</p>
+        <h3>📲 UPI ID: <span style="color: var(--primary);" class="glow-text">6351598832@ybl</span></h3>
+        <p>💸 कृपया ₹20 डिलीवरी चार्ज का भुगतान करें</p>
         <img src="https://i.postimg.cc/cCkX7xCr/Screenshot-20250806-205114.jpg" alt="UPI QR Code">
-        <p>QR कोड स्कैन करके भुगतान करें</p>
+        <p>🔳 QR कोड स्कैन करके भुगतान करें</p>
       </div>
 
-      <div style="background: white; padding: 20px; border-radius: 12px; text-align: center;">
+      <div style="background: white; padding: 18px; border-radius: 12px; text-align: center;">
         <label style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-          <input type="checkbox" required style="width: 20px; height: 20px;">
-          <strong>मैंने डिलीवरी चार्ज का भुगतान कर दिया है</strong>
+          <input type="checkbox" required style="width: 18px; height: 18px;">
+          <strong>✅ मैंने डिलीवरी चार्ज का भुगतान कर दिया है</strong>
         </label>
       </div>
 
-      <a href="https://wa.me/916351598832" class="whatsapp-btn">
-        <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर भेजें
-      </a>
+      <div class="action-buttons">
+        <a href="https://wa.me/916351598832" class="whatsapp-btn">
+          <i class="fab fa-whatsapp"></i> WhatsApp पर ऑर्डर भेजें
+        </a>
+        <a href="https://t.me/your_telegram_bot" class="telegram-btn">
+          <i class="fab fa-telegram"></i> Telegram पर ऑर्डर भेजें
+        </a>
+      </div>
     </div>
   </div>
 
@@ -599,25 +659,26 @@
     <div class="contact-info">
       <div class="contact-item">
         <i class="fas fa-phone"></i>
-        <span>6351598832</span>
+        <span>📞 6351598832</span>
       </div>
       <div class="contact-item">
         <i class="fas fa-clock"></i>
-        <span>11AM - 10PM</span>
+        <span>⏰ 11AM - 10PM</span>
       </div>
       <div class="contact-item">
         <i class="fas fa-map-marker-alt"></i>
-        <span>स्वराज कॉलोनी</span>
+        <span>📍 स्वराज कॉलोनी</span>
       </div>
     </div>
 
     <div class="social-links">
       <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
       <a href="https://wa.me/916351598832" class="social-link"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://t.me/your_telegram_bot" class="social-link"><i class="fab fa-telegram"></i></a>
       <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
     </div>
 
-    <p>© 2023 Banda Ki Seva — स्वाद अब आपके दरवाज़े पर</p>
+    <p>© 2023 Banda Ki Seva — 🍽️ स्वाद अब आपके दरवाज़े पर</p>
   </footer>
 
   <script>
@@ -648,7 +709,7 @@
         if(document.querySelectorAll('.order-item').length > 1) {
           this.closest('.order-item').remove();
         } else {
-          alert('कम से कम एक आइटम तो जरूरी है!');
+          alert('⚠️ कम से कम एक आइटम तो जरूरी है!');
         }
       });
     });
@@ -659,10 +720,18 @@
         if(document.querySelectorAll('.order-item').length > 1) {
           this.closest('.order-item').remove();
         } else {
-          alert('कम से कम एक आइटम तो जरूरी है!');
+          alert('⚠️ कम से कम एक आइटम तो जरूरी है!');
         }
+      });
+    });
+    
+    // Form submission prevention for demo
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('🚚 ऑर्डर प्राप्त हुआ! हम आपसे जल्द संपर्क करेंगे।');
       });
     });
   </script>
 </body>
-  </html>
+</html>
