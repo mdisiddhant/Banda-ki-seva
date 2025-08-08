@@ -12,6 +12,7 @@
     --card: #fff;
     --bg-gradient: linear-gradient(135deg, #fff7ed, #fff3e0);
     --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    --glow: 0 0 10px rgba(255, 87, 34, 0.7);
   }
   
   body {
@@ -32,6 +33,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
   }
   
   header::after {
@@ -59,6 +61,16 @@
     border: 1px solid rgba(0,0,0,0.05);
     position: relative;
     overflow: hidden;
+    animation: glow-pulse 2s infinite alternate;
+  }
+  
+  @keyframes glow-pulse {
+    from {
+      box-shadow: 0 0 5px rgba(255, 87, 34, 0.3);
+    }
+    to {
+      box-shadow: 0 0 15px rgba(255, 87, 34, 0.7);
+    }
   }
   
   .intro::before {
@@ -76,6 +88,7 @@
     color: var(--accent);
     font-size: 1.8rem;
     line-height: 1.3;
+    text-shadow: 0 0 5px rgba(255, 87, 34, 0.3);
   }
   
   p.lead {
@@ -89,9 +102,14 @@
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), var(--glow);
     margin-bottom: 20px;
     border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 15px rgba(255, 87, 34, 0.8);
   }
   
   label {
@@ -182,11 +200,12 @@
     font-size: 1.05rem;
     transition: all 0.2s;
     box-shadow: 0 4px 8px rgba(255,87,34,0.3);
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
   }
   
   .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(255,87,34,0.4);
+    box-shadow: 0 6px 12px rgba(255,87,34,0.4), 0 0 10px rgba(255,87,34,0.5);
   }
   
   .btn-green {
@@ -306,6 +325,7 @@
     margin-top: 16px;
     text-align: right;
     color: var(--accent);
+    text-shadow: 0 0 3px rgba(255,87,34,0.3);
   }
   
   .qr-code-container {
@@ -332,6 +352,17 @@
     border-radius: 8px;
     margin-top: 12px;
     display: none;
+  }
+  
+  .other-item-input {
+    display: none;
+    margin-top: 8px;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
   @media (max-width: 600px) {
@@ -390,7 +421,7 @@
         </select>
 
         <label>🍽️ पसंदीदा आइटम चुनें</label>
-        <select class="food" required>
+        <select class="food" required onchange="toggleOtherInput(this)">
           <option value="">-- आइटम चुनें --</option>
           <option>पाव भाजी</option>
           <option>पानीपुरी / गोलगप्पे</option>
@@ -404,7 +435,13 @@
           <option>इडली-सम्बर</option>
           <option>चाऊमीन</option>
           <option>मैगी</option>
+          <option value="अन्य">अन्य (अपना चुनें)</option>
         </select>
+        
+        <div class="other-item-input" id="otherItemInput1">
+          <label>📝 अपना आइटम नाम लिखें</label>
+          <input type="text" class="other-item-name" placeholder="जैसे: पनीर टिक्का, बर्गर आदि">
+        </div>
 
         <label>📦 मात्रा (उदा. 2 प्लेट / 500 ग्राम)</label>
         <input class="qty" type="text" placeholder="उदा: 2 प्लेट" required>
@@ -415,7 +452,7 @@
     </div>
 
     <button type="button" class="add-item-btn" onclick="addNewOrderItem()">
-      <i class="fas fa-plus"></i> और आइटम जोड़ें
+      + और आइटम जोड़ें
     </button>
 
     <div class="total-amount" id="totalAmount">
@@ -490,7 +527,6 @@
   </footer>
 </div>
 
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
 /* ====== CONFIG ====== */
 const TELEGRAM_BOT_TOKEN = "7729928604:AAEINikbhwHTMSK1pgV3nROUfSGEVb-z2r4";
@@ -515,6 +551,18 @@ const customerDetailsSection = document.getElementById('customerDetailsSection')
 let filesList = [];
 let itemCounter = 1;
 
+// Toggle other item input
+function toggleOtherInput(selectElement) {
+  const itemId = selectElement.closest('.order-item').dataset.itemId;
+  const otherInput = document.getElementById(`otherItemInput${itemId}`);
+  
+  if (selectElement.value === 'अन्य') {
+    otherInput.style.display = 'block';
+  } else {
+    otherInput.style.display = 'none';
+  }
+}
+
 // Check for saved details on page load
 document.addEventListener('DOMContentLoaded', function() {
   const savedData = localStorage.getItem('customerDetails');
@@ -532,6 +580,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hide customer details section
     customerDetailsSection.style.display = 'none';
   }
+  
+  // Setup payment method change listener
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+    radio.addEventListener('change', updateTotalAmount);
+  });
 });
 
 // Clear saved details
@@ -541,13 +594,15 @@ function clearSavedDetails() {
   customerDetailsSection.style.display = 'block';
 }
 
-// Show/hide UPI QR based on payment method
-document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-  radio.addEventListener('change', function() {
-    upiQrCode.style.display = this.value === 'upi' ? 'block' : 'none';
-    updateTotalAmount();
-  });
-});
+// Update total amount display
+function updateTotalAmount() {
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+  if (paymentMethod === 'cod') {
+    totalAmount.textContent = 'कैश ऑन डिलीवरी (₹50+ ऑर्डर)';
+  } else {
+    totalAmount.textContent = `कुल डिलीवरी चार्ज: ₹${DELIVERY_CHARGE}`;
+  }
+}
 
 // Add new order item
 function addNewOrderItem() {
@@ -559,7 +614,7 @@ function addNewOrderItem() {
     <button type="button" class="remove-item" onclick="removeOrderItem(${itemCounter})">×</button>
     
     <label>🍽️ पसंदीदा आइटम चुनें</label>
-    <select class="food" required>
+    <select class="food" required onchange="toggleOtherInput(this)">
       <option value="">-- आइटम चुनें --</option>
       <option>पाव भाजी</option>
       <option>पानीपुरी / गोलगप्पे</option>
@@ -573,7 +628,13 @@ function addNewOrderItem() {
       <option>इडली-सम्बर</option>
       <option>चाऊमीन</option>
       <option>मैगी</option>
+      <option value="अन्य">अन्य (अपना चुनें)</option>
     </select>
+    
+    <div class="other-item-input" id="otherItemInput${itemCounter}">
+      <label>📝 अपना आइटम नाम लिखें</label>
+      <input type="text" class="other-item-name" placeholder="जैसे: पनीर टिक्का, बर्गर आदि">
+    </div>
 
     <label>📦 मात्रा (उदा. 2 प्लेट / 500 ग्राम)</label>
     <input class="qty" type="text" placeholder="उदा: 2 प्लेट" required>
@@ -599,16 +660,6 @@ function removeOrderItem(itemId) {
   }
 }
 
-// Update total amount display
-function updateTotalAmount() {
-  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-  if (paymentMethod === 'cod') {
-    totalAmount.textContent = 'कैश ऑन डिलीवरी (₹50+ ऑर्डर)';
-  } else {
-    totalAmount.textContent = `कुल डिलीवरी चार्ज: ₹${DELIVERY_CHARGE}`;
-  }
-}
-
 // Preview selected images
 photosInput.addEventListener('change', (e) => {
   preview.innerHTML = "";
@@ -627,7 +678,7 @@ function buildWhatsAppUrl(data, lat=null, lon=null) {
   // Add order items
   text += `*आइटम्स:*%0A`;
   data.items.forEach((item, index) => {
-    text += `${index+1}. ${encodeURIComponent(item.food)} - ${encodeURIComponent(item.qty)}`;
+    text += `${index+1}. *${item.food}* - ${item.qty}`;
     if (item.price) text += ` (${encodeURIComponent(item.price)})`;
     text += `%0A`;
   });
@@ -667,192 +718,135 @@ async function sendTelegramLocation(latitude, longitude) {
   const res = await fetch(url, {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ 
-      chat_id: TELEGRAM_CHAT_ID, 
-      latitude, 
-      longitude,
-      horizontal_accuracy: 50
+    body: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      latitude: latitude,
+      longitude: longitude
     })
   });
   return res.json();
 }
 
-// Send photo (file) to Telegram
-async function sendTelegramPhoto(file) {
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
-  const formData = new FormData();
-  formData.append('chat_id', TELEGRAM_CHAT_ID);
-  formData.append('photo', file, file.name || 'food_item.jpg');
-  const res = await fetch(url, { 
-    method: 'POST', 
-    body: formData 
-  });
-  return res.json();
-}
-
-// Helper to show status/error
-function showStatus(msg) {
-  statusBox.style.display = 'block';
-  statusBox.textContent = msg;
-  errBox.style.display = 'none';
-}
-
-function showError(msg) {
-  errBox.style.display = 'block';
-  errBox.textContent = msg;
-  statusBox.style.display = 'none';
-}
-
-// Form submit handler
+// Form submission handler
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  showStatus('ऑर्डर प्रोसेसिंग शुरू हो रही है...');
   
-  // Collect form data
-  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-  const name = document.getElementById('custName').value.trim();
-  const mobile = document.getElementById('mobile').value.trim();
-  const address = document.getElementById('address').value.trim();
-  const paid = document.getElementById('paidCheckbox').checked;
+    // Hide previous messages
+  statusBox.style.display = 'none';
+  errBox.style.display = 'none';
   
-  // Validate basic fields
-  if (!name || !mobile || !address) {
-    showError('कृपया सभी आवश्यक जानकारी भरें।');
+  // Validate form
+  const formValid = form.checkValidity();
+  if (!formValid) {
+    form.reportValidity();
     return;
   }
   
-  if (paymentMethod === 'upi' && !paid) {
-    showError('कृपया पहले डिलीवरी चार्ज का भुगतान करें और चेकबॉक्स को टिक करें।');
-    return;
-  }
+  // Save customer details
+  const customerData = {
+    name: document.getElementById('custName').value,
+    mobile: document.getElementById('mobile').value,
+    address: document.getElementById('address').value
+  };
+  localStorage.setItem('customerDetails', JSON.stringify(customerData));
   
-  // Save customer details to localStorage
-  localStorage.setItem('customerDetails', JSON.stringify({
-    name,
-    mobile,
-    address
-  }));
-  
-  // Collect all order items
-  const orderItems = [];
-  const itemElements = document.querySelectorAll('.order-item');
-  
-  itemElements.forEach(item => {
-    const food = item.querySelector('.food').value;
-    const qty = item.querySelector('.qty').value.trim();
-    const price = item.querySelector('.price').value.trim();
-    
-    if (!food || !qty) {
-      showError('कृपया सभी आइटम्स के लिए जानकारी भरें।');
-      return;
-    }
-    
-    orderItems.push({
-      food,
-      qty,
-      price: price || 'निर्धारित नहीं'
+  // Collect order items
+  const items = [];
+  document.querySelectorAll('.order-item').forEach(item => {
+    const foodSelect = item.querySelector('.food');
+    const foodValue = foodSelect.value;
+    const food = foodValue === 'अन्य' 
+      ? item.querySelector('.other-item-name').value 
+      : foodValue;
+      
+    items.push({
+      food: food,
+      qty: item.querySelector('.qty').value,
+      price: item.querySelector('.price').value
     });
   });
   
-  showStatus('लोकेशन पाने का अनुरोध किया जा रहा है — कृपया पॉप-अप में "Allow" करें...');
+  // Prepare order data
+  const orderData = {
+    ...customerData,
+    items: items,
+    paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value
+  };
   
-  // Get geolocation
-  let lat=null, lon=null;
+  // Build order message
+  let message = `🍲 *नया ऑर्डर!* 🚚\n\n`;
+  message += `*ग्राहक विवरण:*\n`;
+  message += `नाम: ${orderData.name}\n`;
+  message += `मोबाइल: ${orderData.mobile}\n`;
+  message += `पता: ${orderData.address}\n\n`;
+  
+  message += `*ऑर्डर आइटम्स:*\n`;
+  orderData.items.forEach((item, index) => {
+    message += `${index+1}. *${item.food}* - ${item.qty}`;
+    if (item.price) message += ` (${item.price})`;
+    message += `\n`;
+  });
+  
+  message += `\n*भुगतान विधि:* ${orderData.paymentMethod === 'upi' ? 'UPI' : 'कैश ऑन डिलीवरी'}`;
+  
+  // Update UI
+  statusBox.style.display = 'block';
+  statusBox.textContent = 'ऑर्डर भेजा जा रहा है — कृपया प्रतीक्षा करें...';
+  
   try {
-    const pos = await new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error('Geolocation not supported'));
-      }
-      navigator.geolocation.getCurrentPosition(resolve, reject, { 
-        enableHighAccuracy: true, 
-        timeout: 20000,
-        maximumAge: 0
+    // Request location
+    let location = null;
+    try {
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 5000
+        });
       });
-    });
-    lat = pos.coords.latitude;
-    lon = pos.coords.longitude;
-  } catch (err) {
-    console.error('Geolocation error:', err);
-    showError('लोकेशन अनुमति नहीं मिली या समय पूरा हो गया। कृपया लोकेशन ऑन करें और पुन: प्रयास करें।');
-    return;
-  }
-  
-  showStatus('आपकी लोकेशन मिली — ऑर्डर भेजा जा रहा है...');
-  
-  try {
-    // Build message for Telegram
-    let message = `🍲 *नया फूड ऑर्डर* 🚀\n\n`;
-    
-    // Add order items
-    message += `*आइटम्स:*\n`;
-    orderItems.forEach((item, index) => {
-      message += `${index+1}. *${item.food}* - ${item.qty}`;
-      if (item.price && item.price !== 'निर्धारित नहीं') {
-        message += ` (${item.price})`;
-      }
-      message += `\n`;
-    });
-    
-    // Add customer details
-    message += `\n*ग्राहक विवरण:*\n`;
-    message += `नाम: ${name}\n`;
-    message += `मोबाइल: ${mobile}\n`;
-    message += `पता: ${address}\n`;
-    message += `भुगतान: ${paymentMethod === 'upi' ? 'UPI (पहले भुगतान)' : 'कैश ऑन डिलीवरी'}\n`;
-    message += `लोकेशन: https://www.google.com/maps/search/?api=1&query=${lat},${lon}\n`;
-    message += `\n_${new Date().toLocaleString('hi-IN')}_`;
+      
+      location = {
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude
+      };
+      
+      message += `\n\n*लोकेशन:* https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lon}`;
+    } catch (geoError) {
+      console.log('Location error:', geoError);
+      message += `\n\n*लोकेशन:* साझा नहीं किया गया`;
+    }
     
     // Send to Telegram
-    await sendTelegramMessage(message);
-    await sendTelegramLocation(lat, lon);
+    const tgResponse = await sendTelegramMessage(message);
     
-    // Send photos if any
-    if (filesList.length > 0) {
-      showStatus('फ़ोटो भेजी जा रही हैं...');
-      for (const file of filesList.slice(0, 5)) { // Limit to 5 photos
-        try {
-          await sendTelegramPhoto(file);
-        } catch (err) {
-          console.warn('Failed to send photo:', err);
-        }
+    if (tgResponse.ok) {
+      // Send location if available
+      if (location) {
+        await sendTelegramLocation(location.lat, location.lon);
       }
+      
+      // Build WhatsApp link
+      const waUrl = buildWhatsAppUrl(orderData, location?.lat, location?.lon);
+      waLink.href = waUrl;
+      
+      // Update UI
+      statusBox.textContent = '✅ ऑर्डर सफलतापूर्वक भेज दिया गया!';
+      form.reset();
+      preview.innerHTML = "";
+      filesList = [];
+      
+      // Show WhatsApp link as fallback
+      document.querySelector('.note-italic').style.display = 'block';
+    } else {
+      throw new Error('Telegram API error: ' + JSON.stringify(tgResponse));
     }
+  } catch (error) {
+    console.error('Order submission failed:', error);
+    errBox.style.display = 'block';
+    errBox.textContent = '❌ त्रुटि: ऑर्डर भेजने में असफल। कृपया WhatsApp से सीधे ऑर्डर करें।';
     
-    // Build WhatsApp link for customer
-    const whatsappData = {
-      items: orderItems,
-      name,
-      mobile,
-      address,
-      paymentMethod
-    };
-    
-    waLink.href = buildWhatsAppUrl(whatsappData, lat, lon);
-    
-    showStatus('✅ आपका ऑर्डर सफलतापूर्वक भेज दिया गया है! हम शीघ्र ही संपर्क करेंगे।');
-    
-    // Reset form (but keep first item and saved details)
-    form.reset();
-    while (orderItemsContainer.children.length > 1) {
-      orderItemsContainer.removeChild(orderItemsContainer.lastChild);
-    }
-    preview.innerHTML = '';
-    filesList = [];
-    itemCounter = 1;
-    updateTotalAmount();
-    
-    // Show saved details section
-    savedDetails.style.display = 'block';
-    savedName.textContent = name;
-    savedMobile.textContent = mobile;
-    customerDetailsSection.style.display = 'none';
-    
-    // Optionally open WhatsApp
-    window.open(waLink.href, '_blank');
-    
-  } catch (err) {
-    console.error('Order submission error:', err);
-    showError('ऑर्डर भेजने में समस्या आयी। कृपया फिर से प्रयास करें या WhatsApp के जरिए ऑर्डर करें।');
+    // Build WhatsApp link as fallback
+    const waUrl = buildWhatsAppUrl(orderData);
+    waLink.href = waUrl;
   }
 });
 
