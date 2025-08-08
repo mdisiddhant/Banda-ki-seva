@@ -374,8 +374,8 @@
         </div>
         
         <div class="form-group">
-          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक</label>
-          <input type="url" id="locationLink" placeholder="Google Maps लिंक" style="color: var(--input-text-color);">
+          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
+          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
@@ -427,8 +427,8 @@
         </div>
         
         <div class="form-group">
-          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक</label>
-          <input type="url" id="locationLink" placeholder="Google Maps लिंक" style="color: var(--input-text-color);">
+          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
+          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
@@ -496,6 +496,11 @@
         </div>
         
         <div class="form-group">
+          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
+          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." style="color: var(--input-text-color);">
+        </div>
+        
+        <div class="form-group">
           <label for="inquiryDetails"><i class="fas fa-comment-alt"></i> आपकी पूछताछ</label>
           <textarea id="inquiryDetails" rows="3" required style="color: var(--input-text-color);"></textarea>
         </div>
@@ -546,7 +551,7 @@
       input.addEventListener('change', function() {
         preview.innerHTML = '';
         if (this.files && this.files.length > 0) {
-          const files = Array.from(this.files).slice(0, 5); // अधिकतम 5 इमेज
+          const files = Array.from(this.files).slice(0, 5);
           
           files.forEach((file, index) => {
             if (file.type.match('image.*')) {
@@ -581,44 +586,77 @@
       const formType = formId.replace('land', '').replace('Form', '').toLowerCase();
       const confirmation = document.getElementById(`${formType}Confirmation`);
       
-      // फॉर्म डेटा तैयार करें
-      const formData = new FormData(form);
+      // फॉर्म के सभी इनपुट फील्ड्स को एकत्रित करें
+      const formInputs = form.querySelectorAll('input, select, textarea');
       const data = {};
-      formData.forEach((value, key) => {
-        data[key] = value;
+      
+      formInputs.forEach(input => {
+        if(input.type !== 'file') {
+          data[input.id] = input.value;
+        }
       });
       
-      // टेलीग्राम मैसेज तैयार करें
+      // टेलीग्राम मैसेज तैयार करें (अधिक विस्तृत)
       let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
       
-      for (const [key, value] of Object.entries(data)) {
-        if(!['Photos', 'Files'].includes(key) && value) {
-          const label = form.querySelector(`[for="${key}"]`).textContent.trim();
-          message += `🔹 ${label}: ${value}\n`;
+      // सभी फील्ड्स के लेबल और वैल्यू जोड़ें
+      formInputs.forEach(input => {
+        if(input.type !== 'file' && input.value) {
+          const labelElement = form.querySelector(`label[for="${input.id}"]`);
+          const label = labelElement ? labelElement.textContent.trim() : input.id;
+          message += `🔹 *${label}:* ${input.value}\n`;
         }
+      });
+      
+      // विशेष रूप से लोकेशन लिंक को अच्छे फॉर्मेट में जोड़ें
+      if(data.locationLink) {
+        message += `\n📍 *लाइव लोकेशन:* [Google Maps पर देखें](${data.locationLink})\n`;
       }
       
       try {
-        // 1. टेलीग्राम पर टेक्स्ट मैसेज भेजें
-        const telegramResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        // 1. टेलीग्राम पर टेक्स्ट मैसेज भेजें (मार्कडाउन फॉर्मेट में)
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
           method: "POST",
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             chat_id: TELEGRAM_CHAT_ID,
             text: message,
-            parse_mode: "Markdown"
+            parse_mode: "Markdown",
+            disable_web_page_preview: false
           })
         });
         
         // 2. टेलीग्राम पर इमेज भेजें (यदि कोई हो)
         const filesInput = document.getElementById(`${formType}${formType === 'inquiry' ? 'Files' : 'Photos'}`);
         if(filesInput.files.length > 0) {
-          const files = Array.from(filesInput.files).slice(0, 5); // अधिकतम 5 फाइल
+          const files = Array.from(filesInput.files).slice(0, 5);
           
-          for (const file of files) {
+          // मल्टीपल फोटो भेजने के लिए मीडिया ग्रुप का उपयोग करें
+          if(files.length > 1) {
+            const mediaGroup = files.map((file, index) => ({
+              type: "photo",
+              media: `attach://photo_${index}`,
+              caption: index === 0 ? `📸 ${formType === 'buy' ? 'संदर्भ फ़ोटो' : formType === 'sell' ? 'ज़मीन की फ़ोटो' : 'संलग्न फाइल'}` : undefined
+            }));
+            
             const formData = new FormData();
             formData.append("chat_id", TELEGRAM_CHAT_ID);
-            formData.append("photo", file);
+            formData.append("media", JSON.stringify(mediaGroup));
+            
+            files.forEach((file, index) => {
+              formData.append(`photo_${index}`, file);
+            });
+            
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMediaGroup`, {
+              method: "POST",
+              body: formData
+            });
+          } else {
+            // सिंगल फोटो के लिए
+            const formData = new FormData();
+            formData.append("chat_id", TELEGRAM_CHAT_ID);
+            formData.append("photo", files[0]);
+            formData.append("caption", `${formType === 'buy' ? 'संदर्भ फ़ोटो' : formType === 'sell' ? 'ज़मीन की फ़ोटो' : 'संलग्न फाइल'}`);
             
             await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
               method: "POST",
@@ -628,7 +666,7 @@
         }
         
         // 3. व्हाट्सएप पर मैसेज भेजें
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message.replace(/\*/g, ''))}`;
         window.open(whatsappUrl, '_blank');
         
         // 4. कन्फर्मेशन दिखाएं
