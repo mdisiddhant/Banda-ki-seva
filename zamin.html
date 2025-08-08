@@ -374,11 +374,6 @@
         </div>
         
         <div class="form-group">
-          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
-          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." required style="color: var(--input-text-color);">
-        </div>
-        
-        <div class="form-group">
           <label for="buyRequirements"><i class="fas fa-clipboard-list"></i> आपकी आवश्यकताएँ</label>
           <textarea id="buyRequirements" rows="3" required style="color: var(--input-text-color);"></textarea>
         </div>
@@ -424,11 +419,6 @@
         <div class="form-group">
           <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
           <input type="text" id="sellLocation" required style="color: var(--input-text-color);">
-        </div>
-        
-        <div class="form-group">
-          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
-          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
@@ -493,11 +483,6 @@
             <option value="दस्तावेज़ सत्यापन">दस्तावेज़ सत्यापन</option>
             <option value="अन्य">अन्य</option>
           </select>
-        </div>
-        
-        <div class="form-group">
-          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक (Google Maps)</label>
-          <input type="url" id="locationLink" placeholder="https://maps.google.com/..." style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
@@ -596,6 +581,25 @@
         }
       });
       
+      // कस्टमर की लाइव लोकेशन प्राप्त करें
+      let locationMessage = "";
+      if(navigator.geolocation) {
+        try {
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+          
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const locationLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          locationMessage = `📍 *लाइव लोकेशन*: [Google Maps पर देखें](${locationLink})\nलैटिट्यूड: ${latitude}\nलॉन्गिट्यूड: ${longitude}\n`;
+        } catch (error) {
+          locationMessage = "⚠️ लोकेशन शेयर करने की अनुमति नहीं मिली\n";
+        }
+      } else {
+        locationMessage = "⚠️ ब्राउज़र लोकेशन सपोर्ट नहीं करता\n";
+      }
+      
       // टेलीग्राम मैसेज तैयार करें (अधिक विस्तृत)
       let message = `📢 *नया ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'} अनुरोध*\n\n`;
       
@@ -608,10 +612,8 @@
         }
       });
       
-      // विशेष रूप से लोकेशन लिंक को अच्छे फॉर्मेट में जोड़ें
-      if(data.locationLink) {
-        message += `\n📍 *लाइव लोकेशन:* [Google Maps पर देखें](${data.locationLink})\n`;
-      }
+      // लोकेशन जानकारी जोड़ें
+      message += `\n${locationMessage}`;
       
       try {
         // 1. टेलीग्राम पर टेक्स्ट मैसेज भेजें (मार्कडाउन फॉर्मेट में)
@@ -665,8 +667,10 @@
           }
         }
         
-        // 3. व्हाट्सएप पर मैसेज भेजें
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message.replace(/\*/g, ''))}`;
+        // 3. व्हाट्सएप पर मैसेज भेजें (बिना मार्कडाउन के)
+        const whatsappMessage = message.replace(/\*/g, '') + 
+          `\nफॉर्म टाइप: ${formType === 'buy' ? 'खरीदारी' : formType === 'sell' ? 'बिक्री' : 'पूछताछ'}`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
         window.open(whatsappUrl, '_blank');
         
         // 4. कन्फर्मेशन दिखाएं
@@ -705,3 +709,4 @@
   </script>
 </body>
 </html>
+   
