@@ -11,6 +11,7 @@
       --sell-color: #FF5722;
       --inquiry-color: #2196F3;
       --text-glow: 0 0 10px currentColor;
+      --input-text-color: #333;
     }
     
     * {
@@ -108,6 +109,7 @@
       border-radius: 15px;
       padding: 20px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      border: 2px solid #e0e0e0;
     }
     
     .form-panel {
@@ -173,12 +175,14 @@
       border-radius: 8px;
       font-size: 15px;
       background: #f9f9f9;
+      color: var(--input-text-color);
     }
     
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: #aaa;
       background: white;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     
     button[type="submit"] {
@@ -243,6 +247,7 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.3s;
+      color: #555;
     }
     
     .file-input-label:hover {
@@ -337,27 +342,45 @@
       <form id="landBuyForm">
         <div class="form-group">
           <label for="buyName"><i class="fas fa-user"></i> आपका नाम</label>
-          <input type="text" id="buyName" required>
+          <input type="text" id="buyName" required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="buyPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
-          <input type="tel" id="buyPhone" required pattern="[0-9]{10}">
+          <input type="tel" id="buyPhone" required pattern="[0-9]{10}" style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="buyLocation"><i class="fas fa-map-marker-alt"></i> इच्छित स्थान</label>
-          <input type="text" id="buyLocation" required>
+          <select id="buyLocation" required style="color: var(--input-text-color);">
+            <option value="" disabled selected>चुनें...</option>
+            <option value="स्वराज कॉलोनी जरेली कोटि">स्वराज कॉलोनी जरेली कोटि</option>
+            <option value="ग्रीन सिटी कॉलोनी">ग्रीन सिटी कॉलोनी</option>
+            <option value="शांति नगर">शांति नगर</option>
+            <option value="महावीर एन्क्लेव">महावीर एन्क्लेव</option>
+          </select>
         </div>
         
         <div class="form-group">
           <label for="buyBudget"><i class="fas fa-wallet"></i> बजट (लगभग)</label>
-          <input type="text" id="buyBudget" required>
+          <select id="buyBudget" required style="color: var(--input-text-color);">
+            <option value="" disabled selected>चुनें...</option>
+            <option value="5-10 लाख">5-10 लाख</option>
+            <option value="10-20 लाख">10-20 लाख</option>
+            <option value="20-50 लाख">20-50 लाख</option>
+            <option value="50 लाख - 1 करोड़">50 लाख - 1 करोड़</option>
+            <option value="1 करोड़ से अधिक">1 करोड़ से अधिक</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक</label>
+          <input type="url" id="locationLink" placeholder="Google Maps लिंक" style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="buyRequirements"><i class="fas fa-clipboard-list"></i> आपकी आवश्यकताएँ</label>
-          <textarea id="buyRequirements" rows="3" required></textarea>
+          <textarea id="buyRequirements" rows="3" required style="color: var(--input-text-color);"></textarea>
         </div>
         
         <div class="form-group">
@@ -390,32 +413,37 @@
       <form id="landSellForm">
         <div class="form-group">
           <label for="sellName"><i class="fas fa-user"></i> आपका नाम</label>
-          <input type="text" id="sellName" required>
+          <input type="text" id="sellName" required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="sellPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
-          <input type="tel" id="sellPhone" required pattern="[0-9]{10}">
+          <input type="tel" id="sellPhone" required pattern="[0-9]{10}" style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="sellLocation"><i class="fas fa-map-marker-alt"></i> ज़मीन का स्थान</label>
-          <input type="text" id="sellLocation" required>
+          <input type="text" id="sellLocation" required style="color: var(--input-text-color);">
+        </div>
+        
+        <div class="form-group">
+          <label for="locationLink"><i class="fas fa-map-marked-alt"></i> लाइव लोकेशन लिंक</label>
+          <input type="url" id="locationLink" placeholder="Google Maps लिंक" style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="sellArea"><i class="fas fa-ruler-combined"></i> क्षेत्रफल (वर्ग फुट/एकड़)</label>
-          <input type="text" id="sellArea" required>
+          <input type="text" id="sellArea" required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="sellPrice"><i class="fas fa-tag"></i> अपेक्षित मूल्य</label>
-          <input type="text" id="sellPrice" required>
+          <input type="text" id="sellPrice" required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="sellDescription"><i class="fas fa-info-circle"></i> ज़मीन का विवरण</label>
-          <textarea id="sellDescription" rows="3" required></textarea>
+          <textarea id="sellDescription" rows="3" required style="color: var(--input-text-color);"></textarea>
         </div>
         
         <div class="form-group">
@@ -448,17 +476,17 @@
       <form id="landInquiryForm">
         <div class="form-group">
           <label for="inquiryName"><i class="fas fa-user"></i> आपका नाम</label>
-          <input type="text" id="inquiryName" required>
+          <input type="text" id="inquiryName" required style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="inquiryPhone"><i class="fas fa-phone"></i> मोबाइल नंबर</label>
-          <input type="tel" id="inquiryPhone" required pattern="[0-9]{10}">
+          <input type="tel" id="inquiryPhone" required pattern="[0-9]{10}" style="color: var(--input-text-color);">
         </div>
         
         <div class="form-group">
           <label for="inquiryType"><i class="fas fa-question"></i> पूछताछ का प्रकार</label>
-          <select id="inquiryType" required>
+          <select id="inquiryType" required style="color: var(--input-text-color);">
             <option value="" disabled selected>चुनें...</option>
             <option value="कानूनी सलाह">कानूनी सलाह</option>
             <option value="मूल्यांकन">मूल्यांकन</option>
@@ -469,7 +497,7 @@
         
         <div class="form-group">
           <label for="inquiryDetails"><i class="fas fa-comment-alt"></i> आपकी पूछताछ</label>
-          <textarea id="inquiryDetails" rows="3" required></textarea>
+          <textarea id="inquiryDetails" rows="3" required style="color: var(--input-text-color);"></textarea>
         </div>
         
         <div class="form-group">
@@ -510,7 +538,7 @@
       document.getElementById(tabName + 'Form').classList.add('active');
     }
     
-    // इमेज प्रिव्यू फंक्शन (अब 5 तक इमेज अपलोड होगी)
+    // इमेज प्रिव्यू फंक्शन (5 तक इमेज अपलोड)
     function setupImagePreview(inputId, previewId) {
       const input = document.getElementById(inputId);
       const preview = document.getElementById(previewId);
@@ -638,4 +666,4 @@
     });
   </script>
 </body>
- </html>
+</html>
